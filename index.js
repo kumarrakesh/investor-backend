@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
   res.json({ message: 'INVESTOR  BACKEND WORKING' })
 })
 
+require('./app/routes/user.routes')(app)
+require('./app/routes/admin.routes')(app)
+require('./app/routes/transaction.routes')(app)
+require('./app/routes/funds.routes')(app)
+
 /* App listning */
 
 app.listen(port, () => {
