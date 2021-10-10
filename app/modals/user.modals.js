@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 require('@mongoosejs/double')
 var userSchema = new mongoose.Schema({
   username: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: String,
     required: [true, 'Username is required'],
     unique: true,
   },

@@ -9,5 +9,5 @@ module.exports = function (app) {
     )
     next()
   })
-  app.get('/api/users', controller.getUsers)
+  app.post('/api/user/signin', controller.getSign)
 }

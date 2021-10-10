@@ -9,5 +9,9 @@ module.exports = function (app) {
     )
     next()
   })
-  app.get('/api/admin/signin', controller.getSignIn)
+  app.post('/api/admin/user/register', controller.addUser)
+
+  app.get('/api/users', controller.allUsers)
+
+  app.delete('/api/user/:id', controller.deleteUser)
 }
