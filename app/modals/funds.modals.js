@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 require('@mongoosejs/double')
+
 var fundSchema = new mongoose.Schema({
   fundname: {
     type: String,
@@ -10,10 +11,18 @@ var fundSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'NAV is required'],
   },
-  units: {
-    type: Number,
-    required: [true, 'Units is required'],
-  },
+  history: [
+    {
+      date: {
+        type: String,
+        required: true,
+      },
+      nav: {
+        type: mongoose.Schema.Types.Double,
+        required: true,
+      },
+    },
+  ],
 })
 
 const Funds = mongoose.model('Funds', fundSchema)

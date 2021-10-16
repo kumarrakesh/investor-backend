@@ -3,6 +3,7 @@ require('@mongoosejs/double')
 var transactionSchema = new mongoose.Schema({
   user: {
     type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Users',
     required: [true, 'User DOC_ID is required in transactiion'],
   },
   fundname: {
@@ -17,16 +18,34 @@ var transactionSchema = new mongoose.Schema({
     type: String,
     default: 'Not Provided by admin',
   },
-  investment: {
+  nav: {
     type: mongoose.Schema.Types.Double,
   },
-  withDraw: {
+  investedAmount: {
     type: mongoose.Schema.Types.Double,
   },
-  gainBalance: {
+  withdrawalAmount: {
     type: mongoose.Schema.Types.Double,
   },
-  totalBalance: {
+  units: {
+    type: mongoose.Schema.Types.Double,
+  },
+  totalUnits: {
+    type: mongoose.Schema.Types.Double,
+  },
+  averageRate: {
+    type: mongoose.Schema.Types.Double,
+  },
+  currentValue: {
+    type: mongoose.Schema.Types.Double,
+  },
+  totalInvested: {
+    type: mongoose.Schema.Types.Double,
+  },
+  gain: {
+    type: mongoose.Schema.Types.Double,
+  },
+  totalGain: {
     type: mongoose.Schema.Types.Double,
   },
 })

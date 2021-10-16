@@ -21,9 +21,6 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Passport Number is Required'],
   },
-  amountInvested: {
-    type: mongoose.Schema.Types.Double,
-  },
   investmentDate: {
     type: Date,
   },
@@ -44,6 +41,19 @@ var userSchema = new mongoose.Schema({
   },
   pincode: {
     type: String,
+  },
+  role: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Roles',
+    required: true,
+  },
+  amountInvested: {
+    type: mongoose.Schema.Types.Double,
+    default: 0,
+  },
+  currentInvestedValue: {
+    type: mongoose.Schema.Types.Double,
+    default: 0,
   },
 })
 

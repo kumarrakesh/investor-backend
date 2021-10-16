@@ -10,4 +10,6 @@ module.exports = function (app) {
     next()
   })
   app.get('/api/funds', controller.getFunds)
+
+  app.post('/api/admin/add/fund', controller.addFund)
 }

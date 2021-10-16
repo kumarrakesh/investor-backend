@@ -1,5 +1,4 @@
-const controller = require('../controller/transaction.controllers')
-const { RouteGuard } = require('../middleware/routeGaurd')
+const controller = require('../controller/query.controllers')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -9,11 +8,15 @@ module.exports = function (app) {
     )
     next()
   })
-  app.get('/api/transactions', controller.getTransactions)
 
-  app.post(
-    '/api/add/transaction',
+  app.get(
+    '/api/query/all',
     [verifyToken, AccessTo(['ADMIN'])],
-    controller.addTransaction
+    controller.getQuery
+  )
+  app.post(
+    '/api/query/update',
+    [verifyToken, AccessTo(['ADMIN'])],
+    controller.updateQuery
   )
 }
