@@ -9,7 +9,19 @@ module.exports = function (app) {
     )
     next()
   })
+
+  //read
+
   app.get('/api/funds', controller.getFunds)
 
+  //create
   app.post('/api/admin/add/fund', controller.addFund)
+
+  //delete
+
+  app.post('/api/admin/remove/fund', controller.removeFund)
+
+  //update
+
+  app.post('/api/admin/update/fund', controller.updateFund)
 }

@@ -19,3 +19,60 @@ exports.addFund = async (req, res) => {
     data: fund,
   })
 }
+
+exports.removeFund = async (req, res) => {
+  const { fundId } = req.body
+
+  if (!fundId) {
+    return res.status(400).json({ status: false, error: 'FUND ID is required' })
+  }
+
+  const removeFund = Funds.remove({ _id: fundId })
+
+  return res
+    .status(200)
+    .json({ status: true, message: 'Fund deleted Succesfully' })
+}
+
+exports.updateFund = async (req, res) => {
+  const { fundname, nav, date } = req.body
+
+  const fund = await Funds.findOne({ fundname: fundname })
+
+  if (!fund) {
+    return res.status(400).json({
+      status: false,
+      error: `No fund exists with name ${fundname} is required`,
+    })
+  }
+
+  fund.nav = nav
+
+  var index = -1
+
+  for (var i = 0; i < fund.history.length; i++) {
+    if (fund.history.date == new Date(date).toDateString()) {
+      index = i
+      break
+    }
+  }
+  if (index == -1) {
+    fund.history.push({ date: new Date(date).toDateString(), nav: nav })
+  } else {
+    fund.history[index].nav = nav
+  }
+
+  await fund.save()
+
+  return res.status(200).json({
+    status: true,
+    message: 'Updated Succesfully',
+    data: fund,
+  })
+}
+
+exports.getFunds = async (req, res) => {
+  const funds = await Funds.find({})
+
+  return res.status(200).json({ status: true, data: funds })
+}

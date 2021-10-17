@@ -1,11 +1,11 @@
 var mongoose = require('mongoose')
 require('@mongoosejs/double')
 var userFundsSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
+  user: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Users',
   },
-  fundName: {
+  fundname: {
     type: String,
     required: true,
   },
@@ -18,6 +18,14 @@ var userFundsSchema = new mongoose.Schema({
     default: 0,
   },
   totalGain: {
+    type: mongoose.Schema.Types.Double,
+    default: 0,
+  },
+  totalUnits: {
+    type: mongoose.Schema.Types.Double,
+    default: 0,
+  },
+  averageNav: {
     type: mongoose.Schema.Types.Double,
     default: 0,
   },
