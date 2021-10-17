@@ -1,5 +1,4 @@
 const controller = require('../controller/transaction.controllers')
-const { RouteGuard } = require('../middleware/routeGaurd')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -11,9 +10,5 @@ module.exports = function (app) {
   })
   app.get('/api/transactions', controller.getTransactions)
 
-  app.post(
-    '/api/add/transaction',
-    [verifyToken, AccessTo(['ADMIN'])],
-    controller.addTransaction
-  )
+  app.post('/api/add/transaction', controller.addTransaction)
 }

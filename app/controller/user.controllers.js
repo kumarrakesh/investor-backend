@@ -137,3 +137,11 @@ exports.deleteUser = async (req, res) => {
     data: 'Deleted Succesfully',
   })
 }
+
+exports.getProfile = async (req, res) => {
+  const userId = req.user._id
+
+  const user = await Users.findById(userId)
+
+  return res.status(200).json({ status: true, data: user })
+}

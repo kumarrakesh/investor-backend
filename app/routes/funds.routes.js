@@ -1,5 +1,4 @@
 const controller = require('../controller/funds.controller')
-const { RouteGuard } = require('../middleware/routeGaurd')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {

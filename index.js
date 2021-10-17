@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 })
 
 require('./app/routes/user.routes')(app)
-require('./app/routes/admin.routes')(app)
 require('./app/routes/transaction.routes')(app)
 require('./app/routes/funds.routes')(app)
 
