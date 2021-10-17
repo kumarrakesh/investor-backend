@@ -9,14 +9,13 @@ module.exports = function (app) {
     next()
   })
 
-  app.get(
-    '/api/query/all',
-    [verifyToken, AccessTo(['ADMIN'])],
-    controller.getQuery
-  )
-  app.post(
-    '/api/query/update',
-    [verifyToken, AccessTo(['ADMIN'])],
-    controller.updateQuery
-  )
+  app.get('/api/query/all', controller.getQuery)
+
+  app.get('/api/query', controller.getQueryofUser)
+
+  app.post('/api/add/query', controller.addQuery)
+
+  app.post('/api/query/update', controller.updateQuery)
+
+  app.delete('/api/query', deleteQuery)
 }
