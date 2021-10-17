@@ -17,5 +17,5 @@ module.exports = function (app) {
 
   app.post('/api/query/update', controller.updateQuery)
 
-  app.delete('/api/query', deleteQuery)
+  app.delete('/api/query', controller.deleteQuery)
 }
