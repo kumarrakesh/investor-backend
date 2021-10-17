@@ -1,6 +1,10 @@
 var mongoose = require('mongoose')
 require('@mongoosejs/double')
 var transactionSchema = new mongoose.Schema({
+  sno: {
+    type: Number,
+    default: 1,
+  },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Users',
@@ -33,7 +37,7 @@ var transactionSchema = new mongoose.Schema({
   totalUnits: {
     type: mongoose.Schema.Types.Double,
   },
-  averageRate: {
+  averageNav: {
     type: mongoose.Schema.Types.Double,
   },
   currentValue: {

@@ -29,6 +29,10 @@ var userFundsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Double,
     default: 0,
   },
+  lastTransaction: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Transactions',
+  },
 })
 
 const UserFunds = mongoose.model('UserFunds', userFundsSchema)
