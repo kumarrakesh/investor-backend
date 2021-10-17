@@ -1,0 +1,3 @@
+# investor_backend
+
+INVESTOR BACKEND NODEJS , EXPRESS , MONGODB , AWS S3 , JWT , MULTER 
