@@ -4,8 +4,6 @@ exports.authorize = (...roles) => {
   return async (req, res, next) => {
     const roleId = req.user.role
 
-    console.log('roles', roles)
-
     const role = await Roles.findById(roleId)
 
     if (!roles.includes(role.role)) {
