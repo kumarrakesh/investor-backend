@@ -1,7 +1,7 @@
 const Querys = require('../modals/query.modals')
 
 exports.deleteQuery = async (req, res) => {
-  const { queryId } = req.body
+  const queryId = req.params.id
 
   if (!queryId) {
     return res
@@ -9,7 +9,7 @@ exports.deleteQuery = async (req, res) => {
       .json({ status: false, error: 'Query ID is required' })
   }
 
-  const removeQuery = Querys.remove({ _id: queryId })
+  const removeQuery = await Querys.remove({ _id: queryId })
 
   return res
     .status(200)
@@ -55,8 +55,8 @@ exports.updateQuery = async (req, res) => {
 
   const query = await Querys.findById(queryId)
 
-  query.subject = subject
-  query.description = description
+  query.subject = subject ? subject : query.subject
+  query.description = description ? description : query.description
   query.isResolved = isResolved
 
   await query.save()

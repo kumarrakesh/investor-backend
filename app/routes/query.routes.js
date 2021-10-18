@@ -1,4 +1,6 @@
 const controller = require('../controller/query.controllers')
+const { authorize } = require('../middleware/autharize')
+const { verifyToken } = require('../middleware/verifyToken')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -9,13 +11,33 @@ module.exports = function (app) {
     next()
   })
 
-  app.get('/api/query/all', controller.getQuery)
+  app.get(
+    '/api/query/all',
+    [verifyToken, authorize('ADMIN')],
+    controller.getQuery
+  )
 
-  app.get('/api/query', controller.getQueryofUser)
+  app.get(
+    '/api/query',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.getQueryofUser
+  )
 
-  app.post('/api/add/query', controller.addQuery)
+  app.post(
+    '/api/add/query',
+    [verifyToken, authorize('USER')],
+    controller.addQuery
+  )
 
-  app.post('/api/query/update', controller.updateQuery)
+  app.post(
+    '/api/query/update',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.updateQuery
+  )
 
-  app.delete('/api/query', controller.deleteQuery)
+  app.delete(
+    '/api/query/:id',
+    [verifyToken, authorize('ADMIN')],
+    controller.deleteQuery
+  )
 }
