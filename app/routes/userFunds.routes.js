@@ -1,4 +1,6 @@
 const controller = require('../controller/userFunds.controllers')
+const { authorize } = require('../middleware/autharize')
+const { verifyToken } = require('../middleware/verifyToken')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -9,5 +11,9 @@ module.exports = function (app) {
     next()
   })
 
-  app.get('/api/user/funds', controller.userFunds)
+  app.get(
+    '/api/user/funds',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.getuserFunds
+  )
 }
