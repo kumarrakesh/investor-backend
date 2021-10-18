@@ -1,6 +1,8 @@
 const Funds = require('../modals/funds.modals')
 
 exports.addFund = async (req, res) => {
+  var { fundname, nav, date } = req.body
+
   req.body.fundname = req.body.fundname.toUpperCase()
 
   const searchFund = await Funds.findOne({ fundname: req.body.fundname })
@@ -8,9 +10,15 @@ exports.addFund = async (req, res) => {
   if (searchFund) {
     return res.status(404).json({
       success: true,
-      data: 'Fund Exists',
+      error: 'Fund Exists',
     })
   }
+
+  req.body.history = []
+
+  req.body.history.push({ date: new Date(date).toDateString(), nav: nav })
+
+  req.body.lastUpdate = new Date(date)
 
   const fund = await Funds.create(req.body)
 
@@ -21,13 +29,13 @@ exports.addFund = async (req, res) => {
 }
 
 exports.removeFund = async (req, res) => {
-  const { fundId } = req.body
+  const fundId = req.params.id
 
   if (!fundId) {
     return res.status(400).json({ status: false, error: 'FUND ID is required' })
   }
 
-  const removeFund = Funds.remove({ _id: fundId })
+  const removeFund = await Funds.remove({ _id: fundId })
 
   return res
     .status(200)
@@ -35,7 +43,9 @@ exports.removeFund = async (req, res) => {
 }
 
 exports.updateFund = async (req, res) => {
-  const { fundname, nav, date } = req.body
+  var { fundname, nav, date } = req.body
+
+  fundname = fundname.toUpperCase()
 
   const fund = await Funds.findOne({ fundname: fundname })
 
@@ -46,12 +56,15 @@ exports.updateFund = async (req, res) => {
     })
   }
 
-  fund.nav = nav
+  if (fund.lastUpdate < new Date(date)) {
+    fund.nav = nav
+    fund.lastUpdate = new Date(date)
+  }
 
   var index = -1
 
   for (var i = 0; i < fund.history.length; i++) {
-    if (fund.history.date == new Date(date).toDateString()) {
+    if (fund.history[i].date == new Date(date).toDateString()) {
       index = i
       break
     }

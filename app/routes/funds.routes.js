@@ -1,4 +1,6 @@
 const controller = require('../controller/funds.controller')
+const { authorize } = require('../middleware/autharize')
+const { verifyToken } = require('../middleware/verifyToken')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -11,16 +13,32 @@ module.exports = function (app) {
 
   //read
 
-  app.get('/api/funds', controller.getFunds)
+  app.get(
+    '/api/funds',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.getFunds
+  )
 
   //create
-  app.post('/api/add/fund', controller.addFund)
+  app.post(
+    '/api/add/fund',
+    [verifyToken, authorize('ADMIN')],
+    controller.addFund
+  )
 
   //delete
 
-  app.post('/api/remove/fund', controller.removeFund)
+  app.delete(
+    '/api/remove/fund/:id',
+    [verifyToken, authorize('ADMIN')],
+    controller.removeFund
+  )
 
   //update
 
-  app.post('/api/update/fund', controller.updateFund)
+  app.post(
+    '/api/update/fund',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.updateFund
+  )
 }

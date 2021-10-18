@@ -11,6 +11,9 @@ var fundSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'NAV is required'],
   },
+  lastUpdate: {
+    type: Date,
+  },
   history: [
     {
       date: {
