@@ -4,13 +4,15 @@ const userFunds = require('../modals/userFunds.modals')
 exports.getTransactions = async (req, res) => {
   const userId = req.user._id
 
-  const { fundname } = req.body
+  var { fundname } = req.body
 
   var transaction
 
   if (!fundname) {
     transaction = await Transactions.find({ user: userId })
   } else {
+    fundname = fundname.toUpperCase()
+
     transaction = await Transactions.find({ user: userId, fundname: fundname })
   }
 
@@ -18,13 +20,17 @@ exports.getTransactions = async (req, res) => {
 }
 
 exports.addTransaction = async (req, res) => {
-  const { userId, fundname, date, narration, nav, investedAmount, units } =
+  var { userId, fundname, date, narration, nav, investedAmount, units } =
     req.body
+
+  fundname = fundname.toUpperCase()
 
   const userFund = await userFunds.findOne({ user: userId, fundname: fundname })
 
   if (!userFund) {
     // FIRST TRANSACTION OF THIS USER IN THE GIVEN FUND
+
+    console.log('FIRST TNX')
 
     if (units < 0) {
       return res
@@ -38,7 +44,7 @@ exports.addTransaction = async (req, res) => {
       totalInvested: investedAmount,
       currentValue: investedAmount,
       totalGain: 0,
-      totalUnits: units,
+      totalUnits: investedAmount / nav,
       averageNav: nav,
     })
 
@@ -51,8 +57,8 @@ exports.addTransaction = async (req, res) => {
       nav: nav,
       investedAmount: investedAmount,
       withdrawalAmount: 0,
-      units: units,
-      totalUnits: units,
+      units: investedAmount / nav,
+      totalUnits: investedAmount / nav,
       averageNav: nav,
       currentValue: investedAmount,
       totalInvested: investedAmount,
@@ -71,25 +77,27 @@ exports.addTransaction = async (req, res) => {
     const lastTransactionId = userFund.lastTransaction
     const lastTransaction = await Transactions.findById(lastTransactionId)
     if (units < 0) {
-      if (lastTransaction.units < units) {
+      console.log(lastTransaction)
+      if (lastTransaction.totalUnits < units) {
         return res
           .status(400)
           .json({ status: false, error: 'Not having units to withdraw' })
       }
 
       var sno = lastTransaction.sno + 1
-      var totalUnits = lastTransaction.units - units
+      var totalUnits = lastTransaction.totalUnits - Math.abs(units)
       var currentValue = nav * totalUnits
       var totalInvested =
-        lastTransaction.totalInvested - lastTransaction.averageNav * units
+        lastTransaction.totalInvested -
+        lastTransaction.averageNav * Math.abs(units)
 
-      var withdrawalAmount = units * nav
+      var withdrawalAmount = Math.abs(units) * nav
       var gain =
         currentValue -
         totalInvested +
-        (withdrawalAmount - lastTransaction.averageNav * units)
-      var totalGain = lastTransaction.gain + gain
-      var averageNav = totalInvested / totalUnits
+        (withdrawalAmount - lastTransaction.averageNav * Math.abs(units))
+      var totalGain = lastTransaction.totalGain + gain
+      var averageNav = totalInvested == 0 ? 0 : totalInvested / totalUnits
 
       const addTransaction = await Transactions.create({
         sno: sno,
@@ -121,11 +129,12 @@ exports.addTransaction = async (req, res) => {
       return res.status(200).json({ status: true, data: addTransaction })
     } else {
       var sno = lastTransaction.sno + 1
-      var totalUnits = lastTransaction.units + units
+      var newunits = investedAmount / nav
+      var totalUnits = lastTransaction.totalUnits + newunits
       var currentValue = nav * totalUnits
       var totalInvested = lastTransaction.totalInvested + investedAmount
       var gain = currentValue - totalInvested
-      var totalGain = lastTransaction.gain + gain
+      var totalGain = lastTransaction.totalGain + gain
       var averageNav = totalInvested / totalUnits
 
       const addTransaction = await Transactions.create({
@@ -137,7 +146,7 @@ exports.addTransaction = async (req, res) => {
         nav: nav,
         investedAmount: investedAmount,
         withdrawalAmount: 0,
-        units: units,
+        units: newunits,
         totalUnits: totalUnits,
         averageNav: averageNav,
         currentValue: currentValue,

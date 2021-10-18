@@ -1,4 +1,6 @@
 const controller = require('../controller/transaction.controllers')
+const { authorize } = require('../middleware/autharize')
+const { verifyToken } = require('../middleware/verifyToken')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -8,7 +10,15 @@ module.exports = function (app) {
     )
     next()
   })
-  app.get('/api/transactions', controller.getTransactions)
+  app.get(
+    '/api/transactions',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.getTransactions
+  )
 
-  app.post('/api/add/transaction', controller.addTransaction)
+  app.post(
+    '/api/add/transaction',
+    [verifyToken, authorize('ADMIN')],
+    controller.addTransaction
+  )
 }
