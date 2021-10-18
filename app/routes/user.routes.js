@@ -1,6 +1,6 @@
 const controller = require('../controller/user.controllers')
 const { verifyToken } = require('../middleware/verifyToken')
-const { AccessTo } = require('../middleware/accessTo')
+const { authorize } = require('../middleware/autharize')
 const uploadImage = require('../config/multer')
 
 module.exports = function (app) {
@@ -22,13 +22,29 @@ module.exports = function (app) {
 
   app.get('/api/users', controller.allUsers)
 
-  app.delete('/api/user/:id', controller.deleteUser)
+  app.delete(
+    '/api/user/:id',
+    [verifyToken, authorize('ADMIN')],
+    controller.deleteUser
+  )
 
   app.post('/api/user/signin', controller.getSignIn)
 
-  app.get('/api/profilePic/:key', controller.getProfilePic)
+  app.get(
+    '/api/profilePic/:key',
+    [verifyToken, authorize('ADMIN', 'USER')],
+    controller.getProfilePic
+  )
 
-  app.get('/api/profile', controller.getProfile)
+  app.get(
+    '/api/profile',
+    [verifyToken, authorize('ADMIN', 'USER')],
+    controller.getProfile
+  )
 
-  app.post('/api/update/profile', controller.updateProfile)
+  app.post(
+    '/api/update/profile',
+    [verifyToken, authorize('USER', 'ADMIN'), uploadImage.single('profilePic')],
+    controller.updateProfile
+  )
 }

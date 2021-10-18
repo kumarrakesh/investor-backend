@@ -3,6 +3,7 @@ require('dotenv').config()
 const bycryptjs = require('bcrypt')
 
 const Users = require('../modals/user.modals')
+const Roles = require('../modals/roles.modals')
 const AWS = require('../utils/aws')
 
 const { validateEmail } = require('../utils/validate')
@@ -21,6 +22,8 @@ exports.getSignIn = async (req, res) => {
       return res.status(404).json({ status: false, error: 'User not found' })
     }
 
+    const role = await Roles.findById(user.role)
+
     const match = await bycryptjs.compare(password, user.password)
     if (match) {
       const token = jwt.sign(
@@ -32,7 +35,9 @@ exports.getSignIn = async (req, res) => {
           expiresIn: '30d',
         }
       )
-      return res.status(200).json({ status: true, token: token })
+      return res
+        .status(200)
+        .json({ status: true, token: token, role: role.role })
     }
     return res
       .status(200)
@@ -86,7 +91,7 @@ exports.addUser = async (req, res) => {
         error: 'User is already registered',
       })
     }
-
+    console.log(req.file)
     if (req.file) {
       const profilePic = await AWS.uploadImage(req)
       req.body.profilePic = profilePic
@@ -107,7 +112,33 @@ exports.addUser = async (req, res) => {
   }
 }
 
-exports.updateProfile = async (req, res) => {}
+exports.updateProfile = async (req, res) => {
+  const { name, passport, maturity, address, city, state, country, pincode } =
+    req.body
+
+  var user = await Users.findById(req.user._id)
+
+  user.name = name
+  user.passport = passport
+  user.maturity = maturity
+  user.address = address
+  user.city = city
+  user.state = state
+  user.country = country
+  user.pincode = pincode
+
+  if (req.file) {
+    const profilePic = await AWS.uploadImage(req)
+    user.profilePic = profilePic
+  }
+
+  await user.save()
+
+  return res.status(200).json({
+    success: true,
+    data: user,
+  })
+}
 
 exports.allUsers = async (req, res) => {
   const users = await Users.find()

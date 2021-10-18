@@ -4,7 +4,7 @@ exports.addRole = async (req, res) => {
   try {
     var { rolename } = req.body
 
-    rolename = rolename.toLowerCase()
+    rolename = rolename.toUpperCase()
 
     const role = await Roles.findOne({ role: rolename })
 
