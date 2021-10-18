@@ -1,4 +1,6 @@
 const controller = require('../controller/roles.controllers')
+const { authorize } = require('../middleware/autharize')
+const { verifyToken } = require('../middleware/verifyToken')
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -9,6 +11,10 @@ module.exports = function (app) {
     next()
   })
 
-  app.post('/api/add/role', controller.addRole)
-  app.get('/api/roles', controller.getRoles)
+  app.post(
+    '/api/add/role',
+    [verifyToken, authorize('ADMIN')],
+    controller.addRole
+  )
+  app.get('/api/roles', [verifyToken, authorize('ADMIN')], controller.getRoles)
 }
