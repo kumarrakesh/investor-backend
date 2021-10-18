@@ -14,13 +14,13 @@ module.exports = function (app) {
   app.get('/api/funds', controller.getFunds)
 
   //create
-  app.post('/api/admin/add/fund', controller.addFund)
+  app.post('/api/add/fund', controller.addFund)
 
   //delete
 
-  app.post('/api/admin/remove/fund', controller.removeFund)
+  app.post('/api/remove/fund', controller.removeFund)
 
   //update
 
-  app.post('/api/admin/update/fund', controller.updateFund)
+  app.post('/api/update/fund', controller.updateFund)
 }

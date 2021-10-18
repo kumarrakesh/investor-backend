@@ -12,6 +12,8 @@ module.exports = function (app) {
     next()
   })
 
+  // --------------------------- API ----------------------------
+
   app.post(
     '/api/admin/user/register',
     uploadImage.single('profilePic'),
@@ -27,4 +29,6 @@ module.exports = function (app) {
   app.get('/api/profilePic/:key', controller.getProfilePic)
 
   app.get('/api/profile', controller.getProfile)
+
+  app.post('/api/update/profile', controller.updateProfile)
 }

@@ -107,6 +107,8 @@ exports.addUser = async (req, res) => {
   }
 }
 
+exports.updateProfile = async (req, res) => {}
+
 exports.allUsers = async (req, res) => {
   const users = await Users.find()
     .select(

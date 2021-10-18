@@ -9,6 +9,6 @@ module.exports = function (app) {
     next()
   })
 
-  app.post('/api/admin/add/role', controller.addRole)
-  app.get('/api/admin/roles', controller.getRoles)
+  app.post('/api/add/role', controller.addRole)
+  app.get('/api/roles', controller.getRoles)
 }
