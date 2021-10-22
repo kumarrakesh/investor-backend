@@ -13,6 +13,7 @@ exports.getTransactions = async (req, res) => {
     const user_Funds = await userFunds
       .find({ user: userId })
       .select('totalInvested currentValue')
+
     var totalInvested = 0
     var currentValue = 0
 
@@ -27,7 +28,7 @@ exports.getTransactions = async (req, res) => {
 
     transaction = await Transactions.find({
       user: userId,
-    }).sort([['date', -1]])
+    })
   } else {
     fundname = fundname.toUpperCase()
 
@@ -38,7 +39,7 @@ exports.getTransactions = async (req, res) => {
     transaction = await Transactions.find({
       user: userId,
       fundname: fundname,
-    }).sort([['date', -1]])
+    })
   }
 
   return res
