@@ -10,7 +10,7 @@ module.exports = function (app) {
     )
     next()
   })
-  app.get(
+  app.post(
     '/api/transactions',
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getTransactions
