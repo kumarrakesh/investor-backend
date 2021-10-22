@@ -7,16 +7,43 @@ exports.getTransactions = async (req, res) => {
   var { fundname } = req.body
 
   var transaction
+  var user_Fund_Info
 
   if (!fundname) {
-    transaction = await Transactions.find({ user: userId })
+    const user_Funds = await userFunds
+      .find({ user: userId })
+      .select('totalInvested currentValue')
+    var totalInvested = 0
+    var currentValue = 0
+
+    for (var i = 0; i < user_Funds.length; i++) {
+      totalInvested += user_Funds[i].totalInvested
+      currentValue += user_Funds[i].currentValue
+    }
+
+    user_Fund_Info = {}
+    user_Fund_Info.totalInvested = totalInvested
+    user_Fund_Info.currentValue = currentValue
+
+    transaction = await Transactions.find({
+      user: userId,
+    }).sort([['date', -1]])
   } else {
     fundname = fundname.toUpperCase()
 
-    transaction = await Transactions.find({ user: userId, fundname: fundname })
+    user_Fund_Info = await userFunds
+      .findOne({ user: userId, fundname: fundname })
+      .select('totalInvested currentValue')
+
+    transaction = await Transactions.find({
+      user: userId,
+      fundname: fundname,
+    }).sort([['date', -1]])
   }
 
-  return res.status(200).json({ satus: true, data: transaction })
+  return res
+    .status(200)
+    .json({ satus: true, data: transaction, header: user_Fund_Info })
 }
 
 exports.addTransaction = async (req, res) => {

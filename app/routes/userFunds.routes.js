@@ -16,4 +16,10 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getuserFunds
   )
+
+  app.get(
+    '/api/user/fundnames',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.getuserFundnames
+  )
 }
