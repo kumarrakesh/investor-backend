@@ -47,4 +47,6 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN'), uploadImage.single('profilePic')],
     controller.updateProfile
   )
+
+  app.get('/api/user/newid', controller.newUserId)
 }

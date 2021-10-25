@@ -182,3 +182,11 @@ exports.getProfile = async (req, res) => {
 
   return res.status(200).json({ status: true, data: user })
 }
+
+exports.newUserId = async (req, res) => {
+  const newID = await Users.count()
+  return res.status(404).json({
+    success: true,
+    userId: newID,
+  })
+}

@@ -29,6 +29,8 @@ module.exports = function (app) {
     controller.addQuery
   )
 
+  app.get('/api/query/newid', controller.newQueryID)
+
   app.post(
     '/api/query/update',
     [verifyToken, authorize('USER', 'ADMIN')],

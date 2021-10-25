@@ -1,5 +1,5 @@
 const Querys = require('../modals/query.modals')
-
+const { sendQueryEmail } = require('../utils/email')
 exports.deleteQuery = async (req, res) => {
   const queryId = req.params.id
 
@@ -39,27 +39,36 @@ exports.addQuery = async (req, res) => {
       .json({ status: false, error: 'All fields are required' })
   }
 
+  var querys = await Querys.count()
+
   const newQuery = await Querys.create({
     subject: subject,
     description: description,
     date: new Date(date),
     isResolved: false,
+    queryId: querys + 1,
     user: req.user._id,
   })
-
-  return res.status(200).json({ status: true, data: newQuery })
+  sendQueryEmail(newQuery, res)
 }
 
 exports.updateQuery = async (req, res) => {
-  const { queryId, subject, description, isResolved } = req.body
+  const { queryId, reply, isResolved } = req.body
 
   const query = await Querys.findById(queryId)
 
-  query.subject = subject ? subject : query.subject
-  query.description = description ? description : query.description
+  if (!query) {
+    return res.status(200).json({ status: false, error: 'Error in Updating' })
+  }
+  query.reply = reply
   query.isResolved = isResolved
 
   await query.save()
 
   return res.status(200).json({ status: true, data: query })
+}
+
+exports.newQueryID = async (req, res) => {
+  const queryID = await Querys.count()
+  return res.status(200).json({ status: true, queryId: queryID })
 }

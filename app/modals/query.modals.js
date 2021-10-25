@@ -9,6 +9,11 @@ var querySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  queryId: {
+    type: String,
+    required: true,
+    default: '1',
+  },
   description: {
     type: String,
     required: true,
@@ -16,6 +21,10 @@ var querySchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
+  },
+  reply: {
+    type: String,
+    default: '',
   },
   isResolved: {
     type: Boolean,
