@@ -70,5 +70,5 @@ exports.updateQuery = async (req, res) => {
 
 exports.newQueryID = async (req, res) => {
   const queryID = await Querys.count()
-  return res.status(200).json({ status: true, queryId: queryID })
+  return res.status(200).json({ status: true, queryId: queryID + 1 })
 }
