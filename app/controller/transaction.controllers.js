@@ -16,15 +16,18 @@ exports.getTransactions = async (req, res) => {
 
     var totalInvested = 0
     var currentValue = 0
+    var totalUnits = 0
 
     for (var i = 0; i < user_Funds.length; i++) {
       totalInvested += user_Funds[i].totalInvested
       currentValue += user_Funds[i].currentValue
+      totalUnits += user_Funds[i].totalUnits
     }
 
     user_Fund_Info = {}
     user_Fund_Info.totalInvested = totalInvested
     user_Fund_Info.currentValue = currentValue
+    user_Fund_Info.totalUnit = totalUnits
 
     transaction = await Transactions.find({
       user: userId,
@@ -34,7 +37,7 @@ exports.getTransactions = async (req, res) => {
 
     user_Fund_Info = await userFunds
       .findOne({ user: userId, fundname: fundname })
-      .select('totalInvested currentValue')
+      .select('totalInvested currentValue totalUnits')
 
     transaction = await Transactions.find({
       user: userId,
