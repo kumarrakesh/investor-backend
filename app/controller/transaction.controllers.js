@@ -27,7 +27,7 @@ exports.getTransactions = async (req, res) => {
     user_Fund_Info = {}
     user_Fund_Info.totalInvested = totalInvested
     user_Fund_Info.currentValue = currentValue
-    user_Fund_Info.totalUnit = totalUnits
+    user_Fund_Info.totalUnits = totalUnits
 
     transaction = await Transactions.find({
       user: userId,

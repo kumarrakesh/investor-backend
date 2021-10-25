@@ -25,7 +25,7 @@ exports.getQueryofUser = async (req, res) => {
 }
 
 exports.getQuery = async (req, res) => {
-  const querys = await Querys.find({})
+  const querys = await Querys.find({}).populate('user', 'name')
 
   return res.status(200).json({ status: true, data: querys })
 }
