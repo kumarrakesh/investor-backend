@@ -52,6 +52,10 @@ exports.getSignIn = async (req, res) => {
 exports.getProfilePic = async (req, res) => {
   const key = req.params.key
 
+  if (key == undefined || key == null) {
+    return res.send('error')
+  }
+
   if (!key) {
     res.send('key required')
   }
