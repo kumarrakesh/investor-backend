@@ -12,7 +12,7 @@ exports.getTransactions = async (req, res) => {
   if (!fundname) {
     const user_Funds = await userFunds
       .find({ user: userId })
-      .select('totalInvested currentValue')
+      .select('totalInvested currentValue totalUnits')
 
     var totalInvested = 0
     var currentValue = 0
