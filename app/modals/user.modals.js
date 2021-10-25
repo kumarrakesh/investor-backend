@@ -10,6 +10,11 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
   },
+  userId: {
+    type: String,
+    default: '1',
+    required: true,
+  },
   name: {
     type: String,
   },

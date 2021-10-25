@@ -64,7 +64,7 @@ exports.getProfilePic = async (req, res) => {
 
 exports.addUser = async (req, res) => {
   try {
-    const {
+    var {
       name,
       username,
       password,
@@ -78,14 +78,16 @@ exports.addUser = async (req, res) => {
       role,
     } = req.body
 
-    req.body.password = await bycryptjs.hash(password, 12)
+    req.body.password = await bycryptjs.hash('12345678', 12)
 
-    if (!validateEmail(username)) {
-      return res.status(404).json({
-        success: false,
-        error: 'Username is not valid Use email format',
-      })
-    }
+    // if (!validateEmail(username)) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     error: 'Username is not valid Use email format',
+    //   })
+    // }
+
+    username = username.toLowerCase()
 
     const searchuser = await Users.findOne({ username: username })
 
@@ -95,11 +97,16 @@ exports.addUser = async (req, res) => {
         error: 'User is already registered',
       })
     }
-    console.log(req.file)
+    // console.log(req.file)
     if (req.file) {
       const profilePic = await AWS.uploadImage(req)
       req.body.profilePic = profilePic
     }
+    const usersCount = await Users.count()
+
+    req.body.userId = usersCount + 1
+
+    req.body.username = username.toLowerCase()
 
     const user = await Users.create(req.body)
 
