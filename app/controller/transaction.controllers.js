@@ -20,9 +20,10 @@ exports.getTransactions = async (req, res) => {
     var totalUnits = 0
 
     for (var i = 0; i < user_Funds.length; i++) {
-      console.log(user_funds[i])
+      var fund = await Funds.findOne({ fundname: user_Funds[i].fundname })
+      console.log(fund)
+      currentValue += fund.nav * user_Funds[i].totalUnits
       totalInvested += user_Funds[i].totalInvested
-      currentValue += user_Funds[i].currentValue
       totalUnits += user_Funds[i].totalUnits
     }
 
