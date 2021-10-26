@@ -67,7 +67,10 @@ exports.updateFund = async (req, res) => {
 
   for (var i = 0; i < fund.history.length; i++) {
     console.log('DATA', new Date(date))
-    if (fund.history[i].date === new Date(date)) {
+
+    console.log(typeof fund.history[i].date)
+    if (fund.history[i].date.getTime() === new Date(date).getTime()) {
+      console.log('match')
       index = i
       break
     }
@@ -106,7 +109,6 @@ exports.getFunds = async (req, res) => {
       },
     },
   ])
-
   // console.log(FundTotalInvested)
 
   for (var i = 0; i < fundsData.length; i++) {
@@ -119,9 +121,19 @@ exports.getFunds = async (req, res) => {
     var fundData = FundTotalInvested.filter(
       (ele) => ele._id == fundsData[i].fundname
     )[0]
+
     fundsData[i].totalInvested = fundData?.totalInvested || 0
     fundsData[i].currentValue = fundsData[i].nav * fundData?.totalUnits || 0
   }
+
+  fundsData.sort(function (a, b) {
+    var keyA = a.fundname,
+      keyB = b.fundname
+    if (keyA < keyB) return -1
+    if (keyA > keyB) return 1
+    return 0
+  })
+
   return res.status(200).json({ status: true, data: fundsData })
 }
 

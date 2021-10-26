@@ -4,6 +4,9 @@ const bycryptjs = require('bcrypt')
 
 const Users = require('../modals/user.modals')
 const Roles = require('../modals/roles.modals')
+const Funds = require('../modals/funds.modals')
+const UserFunds = require('../modals/userFunds.modals')
+
 const AWS = require('../utils/aws')
 
 const { validateEmail } = require('../utils/validate')
@@ -152,15 +155,60 @@ exports.updateProfile = async (req, res) => {
 }
 
 exports.allUsers = async (req, res) => {
-  const users = await Users.find()
-    .select(
-      'username _id name city state country profilePic address passport maturity role'
+  const users = await Users.find().select(
+    'username _id name city state country profilePic address passport maturity role'
+  )
+
+  var usersData = JSON.parse(JSON.stringify(users))
+
+  var usersTotalInvested = await UserFunds.aggregate([
+    { $match: { _id: { $exists: true } } },
+    {
+      $group: {
+        _id: '$user',
+        totalInvested: {
+          $sum: '$totalInvested',
+        },
+        totalUnits: {
+          $sum: '$totalUnits',
+        },
+      },
+    },
+  ])
+
+  console.log(usersTotalInvested)
+
+  for (var i = 0; i < usersData.length; i++) {
+    var timestamp = usersData[i]._id.toString().substring(0, 8)
+
+    var date = new Date(parseInt(timestamp, 16) * 1000)
+
+    usersData[i].dateOfCreation = date
+
+    var userData = usersTotalInvested.filter(
+      (ele) => ele._id == usersData[i]._id
+    )[0]
+
+    var userFunds = await UserFunds.find({ user: usersData[i]._id }).select(
+      'fundname totalUnits'
     )
-    .populate('role')
+
+    var currentValue = 0
+
+    for (var j = 0; j < userFunds.length; j++) {
+      var fund = await Funds.findOne({ fundname: userFunds[j].fundname })
+
+      currentValue += userFunds[j].totalUnits * fund.nav
+      // console.log(userFunds[j].totalUnits * fund.nav)
+    }
+
+    usersData[i].totalInvested = userData?.totalInvested || 0
+    usersData[i].currentValue = currentValue
+  }
 
   return res.status(200).json({
     success: true,
-    data: users,
+    data: usersData,
   })
 }
 

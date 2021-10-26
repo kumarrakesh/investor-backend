@@ -19,13 +19,15 @@ exports.deleteQuery = async (req, res) => {
 exports.getQueryofUser = async (req, res) => {
   const userId = req.user._id
 
-  const querys = await Querys.find({ user: userId })
+  const querys = await Querys.find({ user: userId }).sort({ date: -1 })
 
   return res.status(200).json({ status: true, data: querys })
 }
 
 exports.getQuery = async (req, res) => {
-  const querys = await Querys.find({}).populate('user', 'name')
+  const querys = await Querys.find({})
+    .populate('user', 'name')
+    .sort({ date: -1 })
 
   return res.status(200).json({ status: true, data: querys })
 }

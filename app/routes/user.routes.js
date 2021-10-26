@@ -20,7 +20,7 @@ module.exports = function (app) {
     controller.addUser
   )
 
-  app.get('/api/users', controller.allUsers)
+  app.get('/api/users', [verifyToken, authorize('ADMIN')], controller.allUsers)
 
   app.delete(
     '/api/user/:id',
