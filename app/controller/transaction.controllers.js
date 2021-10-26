@@ -21,7 +21,7 @@ exports.getTransactions = async (req, res) => {
 
     for (var i = 0; i < user_Funds.length; i++) {
       var fund = await Funds.findOne({ fundname: user_Funds[i].fundname })
-      console.log(fund)
+      // console.log(fund)
       currentValue += fund.nav * user_Funds[i].totalUnits
       totalInvested += user_Funds[i].totalInvested
       totalUnits += user_Funds[i].totalUnits
@@ -46,7 +46,7 @@ exports.getTransactions = async (req, res) => {
 
     var fund = await Funds.findOne({ fundname: fundname })
 
-    console.log(fund)
+    // console.log(fund)
 
     user_Fund_Info.currentValue = fund.nav * user_Fund_Info.totalUnits
 
@@ -106,7 +106,7 @@ exports.addTransaction = async (req, res) => {
   if (!userFund) {
     // FIRST TRANSACTION OF THIS USER IN THE GIVEN FUND
 
-    console.log('FIRST TNX')
+    // console.log('FIRST TNX')
 
     if (units < 0) {
       return res
@@ -153,7 +153,7 @@ exports.addTransaction = async (req, res) => {
     const lastTransactionId = userFund.lastTransaction
     const lastTransaction = await Transactions.findById(lastTransactionId)
     if (units < 0) {
-      console.log(lastTransaction)
+      //console.log(lastTransaction)
       if (lastTransaction.totalUnits < units) {
         return res
           .status(400)

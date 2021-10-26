@@ -66,11 +66,11 @@ exports.updateFund = async (req, res) => {
   var index = -1
 
   for (var i = 0; i < fund.history.length; i++) {
-    console.log('DATA', new Date(date))
+    //  console.log('DATA', new Date(date))
 
-    console.log(typeof fund.history[i].date)
+    // console.log(typeof fund.history[i].date)
     if (fund.history[i].date.getTime() === new Date(date).getTime()) {
-      console.log('match')
+      //   console.log('match')
       index = i
       break
     }
