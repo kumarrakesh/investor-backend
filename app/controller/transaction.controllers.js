@@ -1,5 +1,6 @@
 const Transactions = require('../modals/transaction.modals')
 const userFunds = require('../modals/userFunds.modals')
+const Funds = require('../modals/funds.modals')
 
 exports.getTransactions = async (req, res) => {
   const userId = req.user._id
@@ -12,13 +13,14 @@ exports.getTransactions = async (req, res) => {
   if (!fundname) {
     const user_Funds = await userFunds
       .find({ user: userId })
-      .select('totalInvested currentValue totalUnits')
+      .select('totalInvested currentValue totalUnits fundname')
 
     var totalInvested = 0
     var currentValue = 0
     var totalUnits = 0
 
     for (var i = 0; i < user_Funds.length; i++) {
+      console.log(user_funds[i])
       totalInvested += user_Funds[i].totalInvested
       currentValue += user_Funds[i].currentValue
       totalUnits += user_Funds[i].totalUnits
@@ -37,7 +39,15 @@ exports.getTransactions = async (req, res) => {
 
     user_Fund_Info = await userFunds
       .findOne({ user: userId, fundname: fundname })
-      .select('totalInvested currentValue totalUnits')
+      .select('totalInvested currentValue totalUnits fundname')
+
+    user_Fund_Info = JSON.parse(JSON.stringify(user_Fund_Info))
+
+    var fund = await Funds.findOne({ fundname: fundname })
+
+    console.log(fund)
+
+    user_Fund_Info.currentValue = fund.nav * user_Fund_Info.totalUnits
 
     transaction = await Transactions.find({
       user: userId,
