@@ -61,6 +61,13 @@ exports.getTransactions = async (req, res) => {
       keyB = new Date(b.date)
     if (keyA < keyB) return 1
     if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
     return 0
   })
 
@@ -74,6 +81,25 @@ exports.addTransaction = async (req, res) => {
     req.body
 
   fundname = fundname.toUpperCase()
+
+  const fund = await Funds.findOne({ fundname: fundname })
+
+  if (!fund) {
+    return res.status(400).json({ status: false, error: 'Fund not exists' })
+  }
+
+  var timestamp = fund._id.toString().substring(0, 8)
+
+  var fundStartDate = new Date(parseInt(timestamp, 16) * 1000).getTime()
+
+  if (new Date(date).getTime() < fundStartDate) {
+    return res.status(400).json({
+      status: false,
+      error: `Trx MUst be after fund start date ${new Date(
+        parseInt(timestamp, 16) * 1000
+      )}`,
+    })
+  }
 
   const userFund = await userFunds.findOne({ user: userId, fundname: fundname })
 
