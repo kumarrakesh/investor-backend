@@ -1,4 +1,5 @@
 const Funds = require('../modals/funds.modals')
+const UserFunds = require('../modals/userFunds.modals')
 
 exports.addFund = async (req, res) => {
   var { fundname, nav, date } = req.body
@@ -15,8 +16,9 @@ exports.addFund = async (req, res) => {
   }
 
   req.body.history = []
-
-  req.body.history.push({ date: new Date(date).toDateString(), nav: nav })
+  var fundCount = await Funds.count()
+  req.body.fundId = fundCount + 1
+  req.body.history.push({ date: new Date(date), nav: nav })
 
   req.body.lastUpdate = new Date(date)
 
@@ -56,7 +58,7 @@ exports.updateFund = async (req, res) => {
     })
   }
 
-  if (fund.lastUpdate < new Date(date)) {
+  if (fund.lastUpdate <= new Date(date)) {
     fund.nav = nav
     fund.lastUpdate = new Date(date)
   }
@@ -64,13 +66,14 @@ exports.updateFund = async (req, res) => {
   var index = -1
 
   for (var i = 0; i < fund.history.length; i++) {
-    if (fund.history[i].date == new Date(date).toDateString()) {
+    console.log('DATA', new Date(date))
+    if (fund.history[i].date === new Date(date)) {
       index = i
       break
     }
   }
   if (index == -1) {
-    fund.history.push({ date: new Date(date).toDateString(), nav: nav })
+    fund.history.push({ date: new Date(date), nav: nav })
   } else {
     fund.history[index].nav = nav
   }
@@ -87,5 +90,42 @@ exports.updateFund = async (req, res) => {
 exports.getFunds = async (req, res) => {
   const funds = await Funds.find({})
 
-  return res.status(200).json({ status: true, data: funds })
+  var fundsData = JSON.parse(JSON.stringify(funds))
+
+  var FundTotalInvested = await UserFunds.aggregate([
+    { $match: { _id: { $exists: true } } },
+    {
+      $group: {
+        _id: '$fundname',
+        totalInvested: {
+          $sum: '$totalInvested',
+        },
+        totalUnits: {
+          $sum: '$totalUnits',
+        },
+      },
+    },
+  ])
+
+  // console.log(FundTotalInvested)
+
+  for (var i = 0; i < fundsData.length; i++) {
+    var timestamp = fundsData[i]._id.toString().substring(0, 8)
+
+    var date = new Date(parseInt(timestamp, 16) * 1000)
+
+    fundsData[i].dateOfCreation = date
+
+    var fundData = FundTotalInvested.filter(
+      (ele) => ele._id == fundsData[i].fundname
+    )[0]
+    fundsData[i].totalInvested = fundData?.totalInvested || 0
+    fundsData[i].currentValue = fundsData[i].nav * fundData?.totalUnits || 0
+  }
+  return res.status(200).json({ status: true, data: fundsData })
+}
+
+exports.newFundID = async (req, res) => {
+  const fundID = await Funds.count()
+  return res.status(200).json({ status: true, fundID: fundID + 1 })
 }

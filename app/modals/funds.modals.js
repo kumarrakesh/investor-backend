@@ -7,6 +7,10 @@ var fundSchema = new mongoose.Schema({
     unique: true,
     required: [true, 'Fund name is required'],
   },
+  fundId: {
+    type: String,
+    default: '1',
+  },
   nav: {
     type: Number,
     required: [true, 'NAV is required'],
@@ -17,7 +21,7 @@ var fundSchema = new mongoose.Schema({
   history: [
     {
       date: {
-        type: String,
+        type: Date,
         required: true,
       },
       nav: {

@@ -34,6 +34,8 @@ module.exports = function (app) {
     controller.removeFund
   )
 
+  app.get('/api/fund/newid', controller.newFundID)
+
   //update
 
   app.post(
