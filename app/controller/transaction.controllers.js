@@ -56,6 +56,14 @@ exports.getTransactions = async (req, res) => {
     })
   }
 
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    return 0
+  })
+
   return res
     .status(200)
     .json({ satus: true, data: transaction, header: user_Fund_Info })
