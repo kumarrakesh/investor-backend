@@ -46,7 +46,7 @@ exports.getTransactions = async (req, res) => {
 
     var fund = await Funds.findOne({ fundname: fundname })
 
-    // console.log(fund)
+    //  console.log(fund)
 
     user_Fund_Info.currentValue = fund.nav * user_Fund_Info.totalUnits
 
@@ -101,6 +101,13 @@ exports.addTransaction = async (req, res) => {
     })
   }
 
+  if (new Date(date).getTime() > new Date().getTime()) {
+    return res.status(400).json({
+      status: false,
+      error: 'Cannat add future transaction',
+    })
+  }
+
   const userFund = await userFunds.findOne({ user: userId, fundname: fundname })
 
   if (!userFund) {
@@ -152,6 +159,14 @@ exports.addTransaction = async (req, res) => {
   } else {
     const lastTransactionId = userFund.lastTransaction
     const lastTransaction = await Transactions.findById(lastTransactionId)
+
+    if (new Date(lastTransaction.date).getTime() > new Date(date).getTime()) {
+      return res.status(400).json({
+        status: false,
+        error: 'No past Transaction can be added',
+      })
+    }
+
     if (units < 0) {
       //console.log(lastTransaction)
       if (lastTransaction.totalUnits < units) {
@@ -182,7 +197,7 @@ exports.addTransaction = async (req, res) => {
         date: new Date(date),
         narration: narration,
         nav: nav,
-        investedAmount: 0,
+        investedAmount: -1 * lastTransaction.averageNav * Math.abs(units),
         units: units,
         totalUnits: totalUnits,
         withdrawalAmount: withdrawalAmount,

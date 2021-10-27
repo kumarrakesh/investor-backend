@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+var mongoose = require('mongoose')
 const bycryptjs = require('bcrypt')
 
 const Users = require('../modals/user.modals')
 const Roles = require('../modals/roles.modals')
 const Funds = require('../modals/funds.modals')
 const UserFunds = require('../modals/userFunds.modals')
+const Transactions = require('../modals/transaction.modals')
 
 const AWS = require('../utils/aws')
 
@@ -244,4 +246,72 @@ exports.newUserId = async (req, res) => {
     success: true,
     userId: newID + 1,
   })
+}
+
+exports.getDashboard = async (req, res) => {
+  const { year } = req.body
+
+  const userId = req.user._id
+
+  //  const transaction = await Transactions.find({ user: userId })
+
+  // const transaction = await Transactions.find({
+  //   $where: `this.date.getFullYear() <= ${year}`,
+  // })
+
+  // const transaction = await Transactions.find({
+  //   $expr: { $lte: [{ $year: '$date' }, year] },
+  // })
+
+  // { year: { $year : "$accessDate" }, month: { $month : "$accessDate" }
+
+  var response = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+
+  for (var i = 0; i <= 11; i++) {
+    var lastDate = new Date(year, i + 1, 0)
+    var transaction = await Transactions.aggregate([
+      {
+        $match: {
+          // $expr: {
+          //   $and: [
+          //     { $lte: [{ $year: '$date' }, year] },
+          //     { $lte: [{ $month: '$date' }, i + 1] },
+          //   ],
+          // },
+          date: { $lte: lastDate },
+          user: mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $group: {
+          _id: '$fundname',
+          investedAmount: {
+            $sum: '$investedAmount',
+          },
+          units: {
+            $sum: '$units',
+          },
+        },
+      },
+    ])
+    // console.log(i + 1, transaction)
+    response[i].investedAmount = 0
+    response[i].currentAmount = 0
+    response[i].month = i + 1
+    for (var j = 0; j < transaction.length; j++) {
+      var fundname = transaction[j]._id
+
+      var fund = await Funds.find({
+        fundname: fundname,
+        'history.date': { $lte: new Date(year, i + 1, 0) },
+      }).sort({ 'history.date': 'desc' })
+
+      // console.log('fund ', fundname, fund[0]?.history[0])
+
+      response[i].investedAmount += transaction[j].investedAmount
+      response[i].currentAmount +=
+        transaction[j].units * (fund[0]?.history[0]?.nav || 0)
+    }
+  }
+  return res.json({ status: true, data: response })
 }
