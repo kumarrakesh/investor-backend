@@ -69,14 +69,22 @@ exports.updateFund = async (req, res) => {
     //  console.log('DATA', new Date(date))
 
     // console.log(typeof fund.history[i].date)
-    if (fund.history[i].date.getTime() === new Date(date).getTime()) {
+
+    if (
+      fund.history[i].date.getTime() ===
+      new Date(new Date(date).setHours(0, 0, 0, 0)).getTime()
+    ) {
       //   console.log('match')
       index = i
       break
     }
   }
+  console.log(new Date(new Date(date).setHours(0, 0, 0, 0)))
   if (index == -1) {
-    fund.history.push({ date: new Date(date), nav: nav })
+    fund.history.push({
+      date: new Date(new Date(date).setHours(0, 0, 0, 0)),
+      nav: nav,
+    })
   } else {
     fund.history[index].nav = nav
   }

@@ -2,6 +2,15 @@ const Transactions = require('../modals/transaction.modals')
 const userFunds = require('../modals/userFunds.modals')
 const Funds = require('../modals/funds.modals')
 
+// const clearDb = async () => {
+//   var a = await Transactions.remove({})
+//   var b = await userFunds.remove({})
+
+//   console.log(a, b)
+// }
+
+// clearDb()
+
 exports.getTransactions = async (req, res) => {
   const userId = req.user._id
 
