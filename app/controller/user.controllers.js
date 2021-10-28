@@ -15,13 +15,19 @@ const { validateEmail } = require('../utils/validate')
 
 exports.getSignIn = async (req, res) => {
   try {
-    const { username, password } = req.body
+    var { username, password } = req.body
 
     if (!username || !password) {
       return res.json({ error: 'Both Username and password required' })
     }
 
+    username = username.toLowerCase()
+
+    // console.log(username)
+
     const user = await Users.findOne({ username })
+
+    // console.log(user)
 
     if (!user) {
       return res.status(404).json({ status: false, error: 'User not found' })
@@ -83,7 +89,9 @@ exports.addUser = async (req, res) => {
       role,
     } = req.body
 
-    req.body.password = await bycryptjs.hash('12345678', 12)
+    req.body.password = await bycryptjs.hash(password, 12)
+
+    req.body.role = '616d2f588d908648c28d63a1'
 
     // if (!validateEmail(username)) {
     //   return res.status(404).json({
@@ -114,6 +122,8 @@ exports.addUser = async (req, res) => {
     req.body.username = username.toLowerCase()
 
     const user = await Users.create(req.body)
+
+    console.log(user)
 
     return res.status(200).json({
       success: true,
@@ -178,7 +188,7 @@ exports.allUsers = async (req, res) => {
     },
   ])
 
-  console.log(usersTotalInvested)
+  // console.log(usersTotalInvested)
 
   for (var i = 0; i < usersData.length; i++) {
     var timestamp = usersData[i]._id.toString().substring(0, 8)
@@ -207,6 +217,14 @@ exports.allUsers = async (req, res) => {
     usersData[i].totalInvested = userData?.totalInvested || 0
     usersData[i].currentValue = currentValue
   }
+
+  usersData.sort(function (a, b) {
+    var keyA = new Date(a.dateOfCreation).getTime(),
+      keyB = new Date(b.dateOfCreation).getTime()
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    return 0
+  })
 
   return res.status(200).json({
     success: true,
