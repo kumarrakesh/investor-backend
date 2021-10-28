@@ -249,7 +249,13 @@ exports.newUserId = async (req, res) => {
 }
 
 exports.getDashboard = async (req, res) => {
-  const { year } = req.body
+  var { year } = req.body
+
+  if (!year) {
+    year = new Date().getFullYear()
+  }
+
+  console.log('Year', year)
 
   const userId = req.user._id
 
@@ -297,7 +303,7 @@ exports.getDashboard = async (req, res) => {
     // console.log(i + 1, transaction)
     response[i].investedAmount = 0
     response[i].currentAmount = 0
-    response[i].month = i + 1
+    // response[i].month = i + 1
     for (var j = 0; j < transaction.length; j++) {
       var fundname = transaction[j]._id
 
