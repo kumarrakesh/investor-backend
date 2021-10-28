@@ -76,6 +76,27 @@ exports.getTransactions = async (req, res) => {
     .json({ satus: true, data: transaction, header: user_Fund_Info })
 }
 
+exports.getTransactionsAll = async (req, res) => {
+  var transaction = await Transactions.find({}).populate('user')
+
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
+
+  return res.status(200).json({ satus: true, data: transaction })
+}
+
 exports.addTransaction = async (req, res) => {
   var { userId, fundname, date, narration, nav, investedAmount, units } =
     req.body

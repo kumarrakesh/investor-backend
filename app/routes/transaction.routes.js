@@ -17,6 +17,12 @@ module.exports = function (app) {
   )
 
   app.post(
+    '/api/transactions/all',
+    [verifyToken, authorize('ADMIN')],
+    controller.getTransactionsAll
+  )
+
+  app.post(
     '/api/add/transaction',
     [verifyToken, authorize('ADMIN')],
     controller.addTransaction
