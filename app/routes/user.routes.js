@@ -30,11 +30,7 @@ module.exports = function (app) {
 
   app.post('/api/user/signin', controller.getSignIn)
 
-  app.get(
-    '/api/profilePic/:key',
-    [verifyToken, authorize('ADMIN', 'USER')],
-    controller.getProfilePic
-  )
+  app.get('/api/profilePic/:key', controller.getProfilePic)
 
   app.get(
     '/api/profile',
