@@ -167,9 +167,7 @@ exports.updateProfile = async (req, res) => {
 }
 
 exports.allUsers = async (req, res) => {
-  const users = await Users.find().select(
-    'username _id name city state country profilePic address passport maturity role'
-  )
+  const users = await Users.find()
 
   var usersData = JSON.parse(JSON.stringify(users))
 
