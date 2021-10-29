@@ -89,6 +89,7 @@ exports.addUser = async (req, res) => {
       role,
     } = req.body
 
+    console.log(req.body)
     req.body.password = await bycryptjs.hash(password, 12)
 
     req.body.role = '616d2f588d908648c28d63a1'
