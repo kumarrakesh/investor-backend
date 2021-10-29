@@ -18,7 +18,10 @@ exports.addFund = async (req, res) => {
   req.body.history = []
   var fundCount = await Funds.count()
   req.body.fundId = fundCount + 1
-  req.body.history.push({ date: new Date(date), nav: nav })
+  req.body.history.push({
+    date: new Date(new Date(date).setHours(0, 0, 0, 0)),
+    nav: nav,
+  })
 
   req.body.lastUpdate = new Date(date)
 

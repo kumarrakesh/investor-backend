@@ -408,16 +408,32 @@ exports.getDashboard = async (req, res) => {
     for (var j = 0; j < transaction.length; j++) {
       var fundname = transaction[j]._id
 
-      var fund = await Funds.find({
+      var fund = await Funds.findOne({
         fundname: fundname,
-        'history.date': { $lte: new Date(year, i + 1, 0) },
-      }).sort({ 'history.date': 'desc' })
+      })
 
-      // console.log('fund ', fundname, fund[0]?.history[0])
+      var lastestFund = fund.history.filter((history) => {
+        return history.date.getTime() <= new Date(year, i + 1, 0).getTime()
+      })
+
+      lastestFund.sort(function (a, b) {
+        var keyA = new Date(a.date),
+          keyB = new Date(b.date)
+        if (keyA < keyB) return 1
+        if (keyA > keyB) return -1
+        else {
+          if (a.sno < b.sno) {
+            return 1
+          } else {
+            return -1
+          }
+        }
+        return 0
+      })
 
       response[i].investedAmount += transaction[j].investedAmount
       response[i].currentAmount +=
-        transaction[j].units * (fund[0]?.history[0]?.nav || 0)
+        transaction[j].units * (lastestFund[0]?.nav || 0)
     }
   }
   return res.json({ status: true, data: response })
