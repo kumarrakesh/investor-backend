@@ -2,13 +2,15 @@ const Transactions = require('../modals/transaction.modals')
 const userFunds = require('../modals/userFunds.modals')
 const Funds = require('../modals/funds.modals')
 const Querys = require('../modals/query.modals')
+const Users = require('../modals/user.modals')
 
 // const clearDb = async () => {
 //   var a = await Transactions.remove({})
 //   var b = await userFunds.remove({})
 //   var c = await Funds.remove({})
 //   var d = await Querys.remove({})
-//   console.log(a, b, c, d)
+//   var e = await Users.remove({})
+//   console.log(a, b, c, d, e)
 // }
 
 // clearDb()

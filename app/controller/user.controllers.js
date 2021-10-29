@@ -231,7 +231,7 @@ exports.updateProfileAdmin = async (req, res) => {
 }
 
 exports.allUsers = async (req, res) => {
-  const users = await Users.find()
+  const users = await Users.find({ role: '616d2f588d908648c28d63a1' })
 
   var usersData = JSON.parse(JSON.stringify(users))
 
