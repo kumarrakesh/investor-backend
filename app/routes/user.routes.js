@@ -51,4 +51,9 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getDashboard
   )
+  app.post(
+    '/api/update/profile/admin',
+    [verifyToken, authorize('USER', 'ADMIN'), uploadImage.single('profilePic')],
+    controller.updateProfileAdmin
+  )
 }

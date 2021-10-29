@@ -184,6 +184,50 @@ exports.updateProfile = async (req, res) => {
   })
 }
 
+exports.updateProfileAdmin = async (req, res) => {
+  const {
+    userId,
+    name,
+    passport,
+    maturity,
+    address,
+    city,
+    state,
+    country,
+    pincode,
+    password,
+  } = req.body
+
+  var user = await Users.findById(userId)
+
+  console.log(user)
+
+  user.name = name
+  user.passport = passport
+  user.maturity = maturity
+  user.address = address
+  user.city = city
+  user.state = state
+  user.country = country
+  user.pincode = pincode
+
+  if (password) {
+    user.password = await bycryptjs.hash(password, 12)
+  }
+
+  if (req.file) {
+    const profilePic = await AWS.uploadImage(req)
+    user.profilePic = profilePic
+  }
+
+  await user.save()
+
+  return res.status(200).json({
+    success: true,
+    data: user,
+  })
+}
+
 exports.allUsers = async (req, res) => {
   const users = await Users.find()
 
