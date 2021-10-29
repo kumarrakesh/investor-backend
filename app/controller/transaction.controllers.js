@@ -119,6 +119,10 @@ exports.addTransaction = async (req, res) => {
 
   fundname = fundname.toUpperCase()
 
+  investedAmount = parseInt(investedAmount)
+
+  units = parseInt(units)
+
   const fund = await Funds.findOne({ fundname: fundname })
 
   if (!fund) {
