@@ -136,7 +136,7 @@ exports.addTransaction = async (req, res) => {
   if (new Date(date).getTime() < fundStartDate) {
     return res.status(400).json({
       status: false,
-      error: `Transaction Date Must be after last one`,
+      error: `Transaction Date Must be after fund start Date`,
     })
   }
 
@@ -202,7 +202,7 @@ exports.addTransaction = async (req, res) => {
     if (new Date(lastTransaction.date).getTime() > new Date(date).getTime()) {
       return res.status(400).json({
         status: false,
-        error: 'No past Transaction can be added',
+        error: 'Transaction Date must be after last transaction date',
       })
     }
 
