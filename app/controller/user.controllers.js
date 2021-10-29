@@ -152,7 +152,11 @@ exports.updateProfile = async (req, res) => {
     password,
   } = req.body
 
+  console.log(req.body)
+
   var user = await Users.findById(req.user._id)
+
+  console.log(user)
 
   user.name = name
   user.passport = passport

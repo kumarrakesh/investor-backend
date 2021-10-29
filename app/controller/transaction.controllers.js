@@ -1,17 +1,20 @@
 const Transactions = require('../modals/transaction.modals')
 const userFunds = require('../modals/userFunds.modals')
 const Funds = require('../modals/funds.modals')
+const Querys = require('../modals/query.modals')
 
 // const clearDb = async () => {
 //   var a = await Transactions.remove({})
 //   var b = await userFunds.remove({})
-
-//   console.log(a, b)
+//   var c = await Funds.remove({})
+//   var d = await Querys.remove({})
+//   console.log(a, b, c, d)
 // }
 
 // clearDb()
 
 exports.getTransactions = async (req, res) => {
+  // console.log(req.user)
   const userId = req.user._id
 
   var { fundname } = req.body
@@ -50,6 +53,8 @@ exports.getTransactions = async (req, res) => {
     user_Fund_Info = await userFunds
       .findOne({ user: userId, fundname: fundname })
       .select('totalInvested currentValue totalUnits fundname')
+
+    console.log(user_Fund_Info)
 
     user_Fund_Info = JSON.parse(JSON.stringify(user_Fund_Info))
 
