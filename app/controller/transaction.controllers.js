@@ -132,9 +132,7 @@ exports.addTransaction = async (req, res) => {
   if (new Date(date).getTime() < fundStartDate) {
     return res.status(400).json({
       status: false,
-      error: `Trx MUst be after fund start date ${new Date(
-        parseInt(timestamp, 16) * 1000
-      )}`,
+      error: `Transaction Date Must be after last one`,
     })
   }
 

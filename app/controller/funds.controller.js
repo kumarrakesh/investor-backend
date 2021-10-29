@@ -40,7 +40,9 @@ exports.removeFund = async (req, res) => {
     return res.status(400).json({ status: false, error: 'FUND ID is required' })
   }
 
-  const removeFund = await Funds.remove({ _id: fundId })
+  const removeFund = await Funds.deleteOne({ _id: fundId })
+
+  console.log(removeFund)
 
   return res
     .status(200)
