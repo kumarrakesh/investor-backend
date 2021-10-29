@@ -46,7 +46,7 @@ module.exports = function (app) {
 
   app.get('/api/user/newid', controller.newUserId)
 
-  app.get(
+  app.post(
     '/api/user/dashboard',
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getDashboard

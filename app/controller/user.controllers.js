@@ -255,7 +255,28 @@ exports.getProfile = async (req, res) => {
 
   const user = await Users.findById(userId)
 
-  return res.status(200).json({ status: true, data: user })
+  var usersTotalInvested = await UserFunds.aggregate([
+    { $match: { user: mongoose.Types.ObjectId(userId) } },
+    {
+      $group: {
+        _id: null,
+        totalInvested: {
+          $sum: '$totalInvested',
+        },
+        totalUnits: {
+          $sum: '$totalUnits',
+        },
+      },
+    },
+  ])
+
+  //console.log(usersTotalInvested)
+
+  return res.status(200).json({
+    status: true,
+    data: user,
+    AmountInvested: usersTotalInvested[0]?.totalInvested || 0,
+  })
 }
 
 exports.newUserId = async (req, res) => {
