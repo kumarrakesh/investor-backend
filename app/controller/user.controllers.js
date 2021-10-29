@@ -139,8 +139,17 @@ exports.addUser = async (req, res) => {
 }
 
 exports.updateProfile = async (req, res) => {
-  const { name, passport, maturity, address, city, state, country, pincode } =
-    req.body
+  const {
+    name,
+    passport,
+    maturity,
+    address,
+    city,
+    state,
+    country,
+    pincode,
+    password,
+  } = req.body
 
   var user = await Users.findById(req.user._id)
 
@@ -152,6 +161,10 @@ exports.updateProfile = async (req, res) => {
   user.state = state
   user.country = country
   user.pincode = pincode
+
+  if (password) {
+    user.password = await bycryptjs.hash(password, 12)
+  }
 
   if (req.file) {
     const profilePic = await AWS.uploadImage(req)
