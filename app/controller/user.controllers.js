@@ -193,7 +193,7 @@ exports.allUsers = async (req, res) => {
 
     var date = new Date(parseInt(timestamp, 16) * 1000)
 
-    usersData[i].dateOfCreation = userData[i]?.maturity
+    usersData[i].dateOfCreation = usersData[i]?.maturity
 
     var userData = usersTotalInvested.filter(
       (ele) => ele._id == usersData[i]._id
