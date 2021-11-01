@@ -25,6 +25,8 @@ exports.addFund = async (req, res) => {
 
   req.body.lastUpdate = new Date(date)
 
+  req.body.fundStartDate = new Date(new Date(date).setHours(0, 0, 0, 0))
+
   const fund = await Funds.create(req.body)
 
   return res.status(200).json({
@@ -129,7 +131,7 @@ exports.getFunds = async (req, res) => {
 
     var date = new Date(parseInt(timestamp, 16) * 1000)
 
-    fundsData[i].dateOfCreation = date
+    fundsData[i].dateOfCreation = fundsData[i].fundStartDate
 
     var fundData = FundTotalInvested.filter(
       (ele) => ele._id == fundsData[i].fundname

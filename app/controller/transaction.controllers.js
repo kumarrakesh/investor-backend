@@ -129,9 +129,7 @@ exports.addTransaction = async (req, res) => {
     return res.status(400).json({ status: false, error: 'Fund not exists' })
   }
 
-  var timestamp = fund._id.toString().substring(0, 8)
-
-  var fundStartDate = new Date(parseInt(timestamp, 16) * 1000).getTime()
+  var fundStartDate = fund.fundStartDate
 
   if (new Date(date).getTime() <= fundStartDate) {
     return res.status(400).json({
