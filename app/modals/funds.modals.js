@@ -11,6 +11,11 @@ var fundSchema = new mongoose.Schema({
     type: String,
     default: '1',
   },
+  fundStartDate: {
+    type: Date,
+    default: new Date(),
+    required: true,
+  },
   nav: {
     type: Number,
     required: [true, 'NAV is required'],

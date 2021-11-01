@@ -133,7 +133,7 @@ exports.addTransaction = async (req, res) => {
 
   var fundStartDate = new Date(parseInt(timestamp, 16) * 1000).getTime()
 
-  if (new Date(date).getTime() < fundStartDate) {
+  if (new Date(date).getTime() <= fundStartDate) {
     return res.status(400).json({
       status: false,
       error: `Transaction Date Must be after fund start Date`,
