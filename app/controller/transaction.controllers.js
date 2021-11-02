@@ -301,7 +301,12 @@ exports.addTransaction = async (req, res) => {
 }
 
 exports.downloadReport = async (req, res) => {
-  const transaction = await Transactions.find({})
+  const { fundname } = req.body
+  const userId = req.user._id
+  var transaction
+  if (!fundname) transaction = await Transactions.find({ user: userId })
+  else
+    transaction = await Transactions.find({ user: userId, fundname: fundname })
 
   const pdffile = await transactionReport(transaction)
 

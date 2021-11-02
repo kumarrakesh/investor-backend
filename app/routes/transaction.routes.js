@@ -22,7 +22,11 @@ module.exports = function (app) {
     controller.getTransactionsAll
   )
 
-  app.get('/api/transactions/download', controller.downloadReport)
+  app.post(
+    '/api/transactions/download',
+    [verifyToken, authorize('ADMIN', 'USER')],
+    controller.downloadReport
+  )
 
   app.post(
     '/api/add/transaction',
