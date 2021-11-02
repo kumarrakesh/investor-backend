@@ -139,6 +139,14 @@ exports.getFunds = async (req, res) => {
 
     fundsData[i].totalInvested = fundData?.totalInvested || 0
     fundsData[i].currentValue = fundsData[i].nav * fundData?.totalUnits || 0
+
+    fundsData[i].history.sort(function (a, b) {
+      var keyA = new Date(a.date).getTime(),
+        keyB = new Date(b.date).getTime()
+      if (keyA < keyB) return 1
+      if (keyA > keyB) return -1
+      return 0
+    })
   }
 
   fundsData.sort(function (a, b) {

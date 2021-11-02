@@ -3,6 +3,7 @@ const userFunds = require('../modals/userFunds.modals')
 const Funds = require('../modals/funds.modals')
 const Querys = require('../modals/query.modals')
 const Users = require('../modals/user.modals')
+const { transactionReport } = require('../PdfTemplate/transactionReport')
 
 // const clearDb = async () => {
 //   var a = await Transactions.remove({})
@@ -297,4 +298,14 @@ exports.addTransaction = async (req, res) => {
       return res.status(200).json({ status: true, data: addTransaction })
     }
   }
+}
+
+exports.downloadReport = async (req, res) => {
+  const transaction = await Transactions.find({})
+
+  const pdffile = await transactionReport(transaction)
+
+  var data = pdffile
+  res.contentType('application/pdf')
+  res.send(data)
 }
