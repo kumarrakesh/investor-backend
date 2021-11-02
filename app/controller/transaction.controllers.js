@@ -308,6 +308,21 @@ exports.downloadReport = async (req, res) => {
   else
     transaction = await Transactions.find({ user: userId, fundname: fundname })
 
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
+
   const pdffile = await transactionReport(transaction)
 
   var data = pdffile
