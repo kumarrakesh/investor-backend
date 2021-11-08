@@ -89,7 +89,7 @@ exports.addUser = async (req, res) => {
       role,
     } = req.body
 
-    console.log(req.body)
+    // console.log(req.body)
     req.body.password = await bycryptjs.hash(password, 12)
 
     req.body.role = '616d2f588d908648c28d63a1'
@@ -222,7 +222,7 @@ exports.updateProfileAdmin = async (req, res) => {
 
   await user.save()
 
-  console.log(user)
+  // console.log(user)
 
   return res.status(200).json({
     success: true,
@@ -231,7 +231,7 @@ exports.updateProfileAdmin = async (req, res) => {
 }
 
 exports.allUsers = async (req, res) => {
-  const users = await Users.find({ role: '616d2f588d908648c28d63a1' })
+  const users = await Users.find({ role: '616d2f588d908648c28d63a1' }) //Only Users Not Admin
 
   var usersData = JSON.parse(JSON.stringify(users))
 
