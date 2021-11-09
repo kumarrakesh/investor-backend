@@ -362,8 +362,6 @@ exports.deleteUser = async (req, res) => {
 exports.getProfile = async (req, res) => {
   const userId = req.user._id
 
-  const user = await Users.findById(userId)
-
   var usersTotalInvested = await Folios.aggregate([
     { $match: { user: mongoose.Types.ObjectId(userId) } },
     {
@@ -383,7 +381,7 @@ exports.getProfile = async (req, res) => {
 
   return res.status(200).json({
     status: true,
-    data: user,
+    data: req.user,
     AmountCommited: usersTotalInvested[0]?.totalCommited || 0,
     AmountContributed: usersTotalInvested[0]?.totalInvested || 0,
   })
