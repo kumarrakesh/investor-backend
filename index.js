@@ -21,6 +21,8 @@ require('./app/routes/funds.routes')(app)
 require('./app/routes/userFunds.routes.js')(app)
 require('./app/routes/roles.routes.js')(app)
 require('./app/routes/query.routes.js')(app)
+require('./app/routes/folioTransaction.routes')(app)
+require('./app/routes/folio.routes')(app)
 
 /* App listning */
 
