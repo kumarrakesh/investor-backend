@@ -2,7 +2,7 @@ const Folios = require('../modals/folio.modals')
 const FolioNewId = require('../modals/folioId.modals')
 
 exports.addFolio = async (req, res) => {
-  const { userId, commitment, yield } = req.body
+  const { userId, commitment, yield, date } = req.body
 
   var FolioDB = await FolioNewId.find({})
 
@@ -27,6 +27,7 @@ exports.addFolio = async (req, res) => {
     commitment: commitment,
     contribution: 0,
     yield: yield,
+    date: new Date(new Date(date).setHours(0, 0, 0, 0)),
   })
 
   if (!newFolio) {

@@ -5,17 +5,6 @@ const Querys = require('../modals/query.modals')
 const Users = require('../modals/user.modals')
 const { transactionReport } = require('../PdfTemplate/transactionReport')
 
-// const clearDb = async () => {
-//   var a = await Transactions.remove({})
-//   var b = await userFunds.remove({})
-//   var c = await Funds.remove({})
-//   var d = await Querys.remove({})
-//   var e = await Users.remove({})
-//   console.log(a, b, c, d, e)
-// }
-
-// clearDb()
-
 exports.getTransactions = async (req, res) => {
   // console.log(req.user)
   const userId = req.user._id

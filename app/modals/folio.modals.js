@@ -19,6 +19,10 @@ var folioSchema = new mongoose.Schema({
   yield: {
     type: mongoose.Schema.Types.Double,
   },
+  date: {
+    type: Date,
+    required: true,
+  },
 })
 
 const Folios = mongoose.model('Folios', folioSchema)

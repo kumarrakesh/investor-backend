@@ -1,12 +1,25 @@
 const Folios = require('../modals/folio.modals')
+
+const FolioNewId = require('../modals/folioId.modals')
+
 const FolioTransactions = require('../modals/folioTransaction.modals')
 
 const Users = require('../modals/user.modals')
 
+// const clearDb = async () => {
+//   var a = await FolioTransactions.remove({})
+//   var b = await FolioNewId.remove({})
+//   var c = await Folios.remove({})
+//   console.log(a, b, c)
+// }
+
+// clearDb()
 exports.getTransactions = async (req, res) => {
   const { folioId } = req.body
 
-  const transactions = await FolioTransactions.find({ folio: folioId })
+  const transactions = await FolioTransactions.find({
+    folio: folioId,
+  }).populate('addedBy', 'name')
 
   res.status(200).json({ status: true, data: transactions })
 }
@@ -26,18 +39,27 @@ exports.addTransaction = async (req, res) => {
     }
   }
 
-  userFolio.contribution += parseFloat(amount)
+  if (new Date(userFolio.date).getTime() > new Date(date).getTime()) {
+    return res.status(400).json({
+      status: false,
+      error: 'Date must be greater or equal to folio creation date',
+    })
+  }
+  userFolio.contribution +=
+    type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
 
   await userFolio.save()
 
   console.log(userFolio)
+
+  // console.log(req.user)
 
   const newFolioTransaction = await FolioTransactions.create({
     user: userId,
     folio: userFolio._id,
     addedBy: req.user._id,
     type: type,
-    amount: amount,
+    amount: type == '3' ? -1 * parseFloat(amount) : parseFloat(amount),
     date: new Date(date),
   })
 

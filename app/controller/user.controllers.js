@@ -28,7 +28,7 @@ exports.getSignIn = async (req, res) => {
 
     const user = await Users.findOne({ username })
 
-    // console.log(user)
+    console.log(user)
 
     if (!user) {
       return res.status(404).json({ status: false, error: 'User not found' })
