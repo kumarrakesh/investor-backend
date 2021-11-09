@@ -26,6 +26,12 @@ exports.addTransaction = async (req, res) => {
     }
   }
 
+  userFolio.contribution += parseFloat(amount)
+
+  await userFolio.save()
+
+  console.log(userFolio)
+
   const newFolioTransaction = await FolioTransactions.create({
     user: userId,
     folio: userFolio._id,

@@ -383,7 +383,7 @@ exports.getProfile = async (req, res) => {
     status: true,
     data: req.user,
     AmountCommited: usersTotalInvested[0]?.totalCommited || 0,
-    AmountContributed: usersTotalInvested[0]?.totalInvested || 0,
+    AmountContributed: usersTotalInvested[0]?.totalContribution || 0,
   })
 }
 
