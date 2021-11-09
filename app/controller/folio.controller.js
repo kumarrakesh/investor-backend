@@ -37,17 +37,17 @@ exports.editFolio = async (req, res) => {
   return res.status(200).json({ status: true, data: folio })
 }
 
-exports.getUserFolio = async () => {
+exports.getUserFolio = async (req, res) => {
   const userFolio = await Folios.find({ user: req.user._id }).populate('user')
 
   return res.status(200).json({ status: true, data: userFolio })
 }
-exports.getAllFolio = async () => {
+exports.getAllFolio = async (req, res) => {
   const allFolio = await Folios.find({}).populate('user')
 
   return res.status(200).json({ status: true, data: allFolio })
 }
-exports.getFolioInfo = async () => {
+exports.getFolioInfo = async (req, res) => {
   const { folioId } = req.body
 
   const folio = await Folios.findById(folioId).populate('user')

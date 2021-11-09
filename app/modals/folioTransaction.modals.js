@@ -1,10 +1,6 @@
 var mongoose = require('mongoose')
 require('@mongoosejs/double')
 var transactionSchema = new mongoose.Schema({
-  sno: {
-    type: Number,
-    required: true,
-  },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Users',
