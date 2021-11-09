@@ -12,6 +12,7 @@ const Transactions = require('../modals/transaction.modals')
 const AWS = require('../utils/aws')
 
 const { validateEmail } = require('../utils/validate')
+const Folios = require('../modals/folio.modals')
 
 exports.getSignIn = async (req, res) => {
   try {
@@ -317,16 +318,16 @@ exports.getProfile = async (req, res) => {
 
   const user = await Users.findById(userId)
 
-  var usersTotalInvested = await UserFunds.aggregate([
+  var usersTotalInvested = await Folios.aggregate([
     { $match: { user: mongoose.Types.ObjectId(userId) } },
     {
       $group: {
         _id: null,
-        totalInvested: {
-          $sum: '$totalInvested',
+        totalCommited: {
+          $sum: '$commitment',
         },
-        totalUnits: {
-          $sum: '$totalUnits',
+        totalContribution: {
+          $sum: '$contribution',
         },
       },
     },
@@ -337,7 +338,8 @@ exports.getProfile = async (req, res) => {
   return res.status(200).json({
     status: true,
     data: user,
-    AmountInvested: usersTotalInvested[0]?.totalInvested || 0,
+    AmountCommited: usersTotalInvested[0]?.totalCommited || 0,
+    AmountContributed: usersTotalInvested[0]?.totalContribution || 0,
   })
 }
 
