@@ -29,5 +29,9 @@ module.exports = function (app) {
     controller.getTransactions
   )
 
-  app.get('/api/download/folio/transaction', controller.getTransactionsPDF)
+  app.post(
+    '/api/download/folio/transaction',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.getTransactionsPDF
+  )
 }

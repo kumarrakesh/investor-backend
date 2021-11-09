@@ -2,7 +2,7 @@ var html_to_pdf = require('html-pdf-node')
 
 let options = { format: 'A4' }
 
-exports.transactionReport = async (transactions) => {
+exports.transactionReport = async (user, transactions) => {
   const template = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <HTML>
   <HEAD>
