@@ -14,6 +14,7 @@ const Users = require('../modals/user.modals')
 // }
 
 // clearDb()
+
 exports.getTransactions = async (req, res) => {
   const { folioId } = req.body
 

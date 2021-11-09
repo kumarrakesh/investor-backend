@@ -1,34 +1,673 @@
-<!DOCTYPE html>
-<html>
-<head>
-  
-</head>
-<body style="margin:10px;color: rgb(18, 18, 97);">
-    <div style="justify-content: center;align-items: center;display: flex;">
-        <table style="border: 1px solid lightgray;border-radius: 5px;background-color: rgb(231, 230, 230);">
-            <thead>
-              <tr style="font-family:sans-serif;font-weight: 300;font-size: x-small;">
-                <th>Date of Transaction</th>
-                <th>Fund Name</th>
-                <th>Narration</th>
-                <th>Invested Amount</th>
-                <th>WithDrawal Amount</th>
-                <th>Current Value</th>
-                <th>Total Balance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr">
-                <td style="border-right:1px solid black;margin: 10px;display: flex;align-items: center;justify-content: center;">Col Data 1</td>
-                <td style="border-right:1px solid black;">Col Data 2</td>
-                <td style="border-right:1px solid black;">Col Data 3</td>
-                <td style="border-right:1px solid black;">Col Data 4</td>
-                <td style="border-right:1px solid black;">Col Data 2</td>
-                <td style="border-right:1px solid black;">Col Data 3</td>
-                <td>Col Data 4</td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>pdf-html</TITLE>
+<META name="generator" content="BCL easyConverter SDK 5.0.252">
+<META name="author" content="Kapil Ahuja">
+<STYLE type="text/css">
+
+body {margin-top: 0px;margin-left: 0px;}
+
+#page_1 {position:relative; overflow: hidden;margin: 9px 0px 19px 96px;padding: 0px;border: none;width: 720px;}
+
+#page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
+#page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
+
+
+
+
+.dclr {clear:both;float:none;height:1px;margin:0px;padding:0px;overflow:hidden;}
+
+.ft0{font: bold 15px 'Times New Roman';line-height: 17px;}
+.ft1{font: bold 13px 'Times New Roman';line-height: 15px;}
+.ft2{font: 1px 'Times New Roman';line-height: 1px;}
+.ft3{font: 13px 'Times New Roman';line-height: 15px;}
+.ft4{font: 15px 'Times New Roman';line-height: 16px;}
+.ft5{font: 1px 'Times New Roman';line-height: 12px;}
+.ft6{font: 1px 'Times New Roman';line-height: 9px;}
+.ft7{font: 1px 'Times New Roman';line-height: 6px;}
+.ft8{font: bold 12px 'Times New Roman';line-height: 15px;}
+.ft9{font: 1px 'Times New Roman';line-height: 13px;}
+.ft10{font: 1px 'Times New Roman';line-height: 8px;}
+.ft11{font: bold 13px 'Times New Roman';color: #4472c4;line-height: 15px;}
+.ft12{font: 9px 'Times New Roman';line-height: 12px;position: relative; bottom: 5px;}
+
+.p0{text-align: left;padding-left: 199px;margin-top: 88px;margin-bottom: 0px;}
+.p1{text-align: left;padding-left: 89px;margin-top: 12px;margin-bottom: 0px;}
+.p2{text-align: left;padding-left: 459px;margin-top: 11px;margin-bottom: 0px;}
+.p3{text-align: left;padding-left: 8px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p4{text-align: left;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p5{text-align: left;padding-left: 2px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p6{text-align: left;padding-left: 6px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p7{text-align: left;padding-left: 3px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p8{text-align: left;padding-left: 1px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p9{text-align: left;padding-left: 4px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p10{text-align: center;padding-right: 52px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p11{text-align: center;padding-left: 3px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p12{text-align: center;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p13{text-align: center;padding-right: 8px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p14{text-align: center;padding-left: 4px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p15{text-align: center;padding-left: 10px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p16{text-align: center;padding-right: 1px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p17{text-align: center;padding-left: 27px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p18{text-align: center;padding-left: 26px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p19{text-align: right;padding-right: 16px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p20{text-align: right;padding-right: 39px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p21{text-align: right;padding-right: 49px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p22{text-align: left;padding-left: 69px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p23{text-align: center;padding-left: 2px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p24{text-align: center;padding-right: 10px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p25{text-align: center;padding-left: 7px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p26{text-align: center;padding-right: 2px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p27{text-align: center;padding-right: 19px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p28{text-align: center;padding-right: 11px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p29{text-align: center;padding-right: 18px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p30{text-align: center;padding-right: 7px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p31{text-align: right;padding-right: 14px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p32{text-align: right;padding-right: 29px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p33{text-align: left;padding-left: 58px;margin-top: 30px;margin-bottom: 0px;}
+.p34{text-align: left;margin-top: 239px;margin-bottom: 0px;}
+.p35{text-align: left;margin-top: 0px;margin-bottom: 0px;}
+
+.td0{border-left: #000000 1px solid;border-right: #d0cece 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 214px;vertical-align: bottom;background: #d0cece;}
+.td1{border-right: #d0cece 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 6px;vertical-align: bottom;background: #d0cece;}
+.td2{border-right: #000000 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 83px;vertical-align: bottom;background: #d0cece;}
+.td3{border-right: #d0cece 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;background: #d0cece;}
+.td4{border-right: #000000 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 202px;vertical-align: bottom;background: #d0cece;}
+.td5{border-right: #000000 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 76px;vertical-align: bottom;background: #d0cece;}
+.td6{border-right: #000000 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 93px;vertical-align: bottom;background: #d0cece;}
+.td7{border-left: #000000 1px solid;border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 105px;vertical-align: bottom;}
+.td8{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;}
+.td9{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
+.td10{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;}
+.td11{border-right: #000000 1px solid;border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 83px;vertical-align: bottom;}
+.td12{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 4px;vertical-align: bottom;}
+.td13{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 203px;vertical-align: bottom;}
+.td14{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 17px;vertical-align: bottom;}
+.td15{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 12px;vertical-align: bottom;}
+.td16{border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 48px;vertical-align: bottom;}
+.td17{border-right: #000000 1px solid;border-top: #000000 1px solid;padding: 0px;margin: 0px;width: 93px;vertical-align: bottom;}
+.td18{border-left: #000000 1px solid;padding: 0px;margin: 0px;width: 45px;vertical-align: bottom;}
+.td19{padding: 0px;margin: 0px;width: 47px;vertical-align: bottom;}
+.td20{padding: 0px;margin: 0px;width: 13px;vertical-align: bottom;}
+.td21{padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;}
+.td22{padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
+.td23{padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;}
+.td24{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 83px;vertical-align: bottom;}
+.td25{padding: 0px;margin: 0px;width: 4px;vertical-align: bottom;}
+.td26{padding: 0px;margin: 0px;width: 203px;vertical-align: bottom;}
+.td27{padding: 0px;margin: 0px;width: 17px;vertical-align: bottom;}
+.td28{padding: 0px;margin: 0px;width: 12px;vertical-align: bottom;}
+.td29{padding: 0px;margin: 0px;width: 48px;vertical-align: bottom;}
+.td30{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 93px;vertical-align: bottom;}
+.td31{border-left: #000000 1px solid;padding: 0px;margin: 0px;width: 105px;vertical-align: bottom;}
+.td32{padding: 0px;margin: 0px;width: 96px;vertical-align: bottom;}
+.td33{padding: 0px;margin: 0px;width: 10px;vertical-align: bottom;}
+.td34{padding: 0px;margin: 0px;width: 97px;vertical-align: bottom;}
+.td35{border-left: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 92px;vertical-align: bottom;}
+.td36{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 13px;vertical-align: bottom;}
+.td37{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;}
+.td38{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
+.td39{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;}
+.td40{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 83px;vertical-align: bottom;}
+.td41{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 4px;vertical-align: bottom;}
+.td42{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 96px;vertical-align: bottom;}
+.td43{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 10px;vertical-align: bottom;}
+.td44{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 97px;vertical-align: bottom;}
+.td45{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 17px;vertical-align: bottom;}
+.td46{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 12px;vertical-align: bottom;}
+.td47{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 48px;vertical-align: bottom;}
+.td48{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 93px;vertical-align: bottom;}
+.td49{border-left: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 45px;vertical-align: bottom;}
+.td50{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 47px;vertical-align: bottom;}
+.td51{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;}
+.td52{border-left: #000000 1px solid;padding: 0px;margin: 0px;width: 45px;vertical-align: bottom;background: #d0cece;}
+.td53{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 46px;vertical-align: bottom;background: #d0cece;}
+.td54{padding: 0px;margin: 0px;width: 13px;vertical-align: bottom;background: #d0cece;}
+.td55{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 2px;vertical-align: bottom;background: #d0cece;}
+.td56{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;background: #d0cece;}
+.td57{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 6px;vertical-align: bottom;background: #d0cece;}
+.td58{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 290px;vertical-align: bottom;background: #d0cece;}
+.td59{padding: 0px;margin: 0px;width: 17px;vertical-align: bottom;background: #d0cece;}
+.td60{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 11px;vertical-align: bottom;background: #d0cece;}
+.td61{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 47px;vertical-align: bottom;background: #d0cece;}
+.td62{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 93px;vertical-align: bottom;background: #d0cece;}
+.td63{border-left: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 45px;vertical-align: bottom;background: #d0cece;}
+.td64{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 46px;vertical-align: bottom;background: #d0cece;}
+.td65{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 13px;vertical-align: bottom;background: #d0cece;}
+.td66{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 2px;vertical-align: bottom;background: #d0cece;}
+.td67{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;background: #d0cece;}
+.td68{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 6px;vertical-align: bottom;background: #d0cece;}
+.td69{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 83px;vertical-align: bottom;background: #d0cece;}
+.td70{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;background: #d0cece;}
+.td71{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 96px;vertical-align: bottom;background: #d0cece;}
+.td72{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 9px;vertical-align: bottom;background: #d0cece;}
+.td73{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 96px;vertical-align: bottom;background: #d0cece;}
+.td74{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 17px;vertical-align: bottom;background: #d0cece;}
+.td75{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 11px;vertical-align: bottom;background: #d0cece;}
+.td76{border-right: #d0cece 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 47px;vertical-align: bottom;background: #d0cece;}
+.td77{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 93px;vertical-align: bottom;background: #d0cece;}
+.td78{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 2px;vertical-align: bottom;}
+.td79{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;}
+.td80{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 9px;vertical-align: bottom;}
+.td81{padding: 0px;margin: 0px;width: 114px;vertical-align: bottom;}
+.td82{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 11px;vertical-align: bottom;}
+.td83{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 141px;vertical-align: bottom;}
+.td84{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 2px;vertical-align: bottom;}
+.td85{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;}
+.td86{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 9px;vertical-align: bottom;}
+.td87{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 11px;vertical-align: bottom;}
+.td88{border-left: #000000 1px solid;padding: 0px;margin: 0px;width: 92px;vertical-align: bottom;}
+.td89{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 90px;vertical-align: bottom;}
+.td90{padding: 0px;margin: 0px;width: 100px;vertical-align: bottom;}
+.td91{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 105px;vertical-align: bottom;}
+.td92{border-right: #d0cece 1px solid;padding: 0px;margin: 0px;width: 404px;vertical-align: bottom;background: #d0cece;}
+.td93{border-left: #000000 1px solid;border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 91px;vertical-align: bottom;}
+.td94{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 6px;vertical-align: bottom;}
+.td95{padding: 0px;margin: 0px;width: 84px;vertical-align: bottom;}
+.td96{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;}
+.td97{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 96px;vertical-align: bottom;}
+.td98{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 59px;vertical-align: bottom;}
+.td99{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 46px;vertical-align: bottom;}
+.td100{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 47px;vertical-align: bottom;}
+.td101{border-left: #000000 1px solid;border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 91px;vertical-align: bottom;}
+.td102{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 110px;vertical-align: bottom;}
+.td103{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 6px;vertical-align: bottom;}
+.td104{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 84px;vertical-align: bottom;}
+.td105{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 3px;vertical-align: bottom;}
+.td106{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 96px;vertical-align: bottom;}
+.td107{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 59px;vertical-align: bottom;}
+.td108{border-left: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 215px;vertical-align: bottom;}
+
+.tr0{height: 23px;}
+.tr1{height: 30px;}
+.tr2{height: 16px;}
+.tr3{height: 15px;}
+.tr4{height: 12px;}
+.tr5{height: 9px;}
+.tr6{height: 6px;}
+.tr7{height: 13px;}
+.tr8{height: 22px;}
+.tr9{height: 24px;}
+.tr10{height: 8px;}
+
+.t0{width: 684px;margin-top: 13px;font: bold 13px 'Times New Roman';}
+
+</STYLE>
+</HEAD>
+
+<BODY>
+<DIV id="page_1">
+<DIV id="p1dimg1">
+<IMG src="data:image/png;base64,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" id="p1img1"></DIV>
+
+
+<DIV class="dclr"></DIV>
+<P class="p0 ft0">Client Investment Folio Statement</P>
+<P class="p1 ft0">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021 LTD</P>
+<P class="p2 ft1">Statement Date: <NOBR>30-Sep-2021</NOBR></P>
+<TABLE cellpadding=0 cellspacing=0 class="t0">
+<TR>
+	<TD colspan=5 class="tr0 td0"><P class="p3 ft1">Personal Information</P></TD>
+	<TD class="tr0 td1"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td2"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td3"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=3 class="tr0 td4"><P class="p5 ft1">Folio No.: FIGFIS026</P></TD>
+	<TD colspan=3 class="tr0 td5"><P class="p6 ft1">Class: A3</P></TD>
+	<TD class="tr0 td6"><P class="p6 ft1">Yield:11.00%</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr1 td7"><P class="p3 ft1">XYZ ABC</P></TD>
+	<TD class="tr1 td8"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td9"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td10"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td11"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td12"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=3 class="tr1 td13"><P class="p5 ft1">Bank Account Details:</P></TD>
+	<TD class="tr1 td14"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td15"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td16"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td17"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr2 td18"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td19"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=3 class="tr2 td26"><P class="p5 ft3">Beneficiary Name:</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 1</P></TD>
+	<TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td32"><P class="p5 ft3">Bank Name</P></TD>
+	<TD class="tr3 td33"><P class="p7 ft3">:</P></TD>
+	<TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 2</P></TD>
+	<TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td32"><P class="p5 ft3">Branch</P></TD>
+	<TD class="tr3 td33"><P class="p8 ft3">:</P></TD>
+	<TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr2 td18"><P class="p3 ft3">Email</P></TD>
+	<TD class="tr2 td19"><P class="p7 ft3">:</P></TD>
+	<TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=3 class="tr2 td26"><P class="p5 ft3">Account Number :</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr2 td18"><P class="p3 ft3">Ph Off</P></TD>
+	<TD class="tr2 td19"><P class="p9 ft3">: <SPAN class="ft4">-</SPAN></P></TD>
+	<TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td32"><P class="p5 ft3">Swift Code</P></TD>
+	<TD colspan=2 class="tr2 td22"><P class="p7 ft3">: -</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr2 td31"><P class="p3 ft3">Mobile :</P></TD>
+	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td32"><P class="p5 ft3">IBAN</P></TD>
+	<TD colspan=2 class="tr2 td22"><P class="p5 ft3">: -</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr2 td35"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td36"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td37"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td38"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td39"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td40"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td41"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td42"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td43"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td44"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td45"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td46"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td47"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td48"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr1 td31"><P class="p3 ft1">Joint Holders</P></TD>
+	<TD class="tr1 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td32"><P class="p5 ft1">Nominee Details</P></TD>
+	<TD class="tr1 td33"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td34"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr4 td35"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td36"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td37"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td38"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td39"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td40"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td41"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td42"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td43"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td44"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td45"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td46"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td47"><P class="p4 ft5">&nbsp;</P></TD>
+	<TD class="tr4 td48"><P class="p4 ft5">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr1 td31"><P class="p3 ft3">Joint Holder 1: -</P></TD>
+	<TD class="tr1 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td32"><P class="p5 ft3">Nominee 1: -</P></TD>
+	<TD class="tr1 td33"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td34"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr2 td31"><P class="p3 ft3">Joint Holder 2: -</P></TD>
+	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td32"><P class="p5 ft3">Nominee 2: -</P></TD>
+	<TD class="tr2 td33"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td34"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Joint Holder 3: -</P></TD>
+	<TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td32"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td33"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr5 td49"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td50"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td36"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td37"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td38"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td39"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td40"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td41"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD colspan=2 class="tr5 td51"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td44"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td45"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td46"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td47"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td48"><P class="p4 ft6">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr3 td52"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td53"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td54"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td55"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td56"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td57"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=5 class="tr3 td58"><P class="p10 ft1">Summary of your Investment</P></TD>
+	<TD class="tr3 td59"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td60"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td61"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td62"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr5 td63"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td64"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td65"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td66"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td67"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td68"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td69"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td70"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td71"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td72"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td73"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td74"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td75"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td76"><P class="p4 ft6">&nbsp;</P></TD>
+	<TD class="tr5 td77"><P class="p4 ft6">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr3 td31"><P class="p11 ft1">Capital</P></TD>
+	<TD class="tr3 td78"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td79"><P class="p12 ft1">Capital Called</P></TD>
+	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td24"><P class="p13 ft1">Capital Paid</P></TD>
+	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td32"><P class="p14 ft1">Adjustment</P></TD>
+	<TD class="tr3 td80"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=2 class="tr3 td81"><P class="p15 ft1">Capital Paid after</P></TD>
+	<TD class="tr3 td82"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=2 class="tr3 td83"><P class="p16 ft1">Uncalled Capital</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr3 td31"><P class="p11 ft1">Commitment</P></TD>
+	<TD class="tr3 td78"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td79"><P class="p12 ft1">(USD)</P></TD>
+	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td24"><P class="p13 ft1">(USD)</P></TD>
+	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td32"><P class="p14 ft1">(USD)</P></TD>
+	<TD class="tr3 td80"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td34"><P class="p17 ft1">adjustment</P></TD>
+	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td82"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td30"><P class="p9 ft1">(USD)</P></TD>
+</TR>
+<TR>
+	<TD colspan=3 class="tr2 td31"><P class="p11 ft1">(USD)</P></TD>
+	<TD class="tr2 td78"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td79"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td32"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td80"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td34"><P class="p18 ft1">(USD)</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td82"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr6 td35"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td36"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td84"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td85"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td39"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td40"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td41"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td42"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td86"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td44"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td45"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td87"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td47"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td48"><P class="p4 ft7">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr3 td88"><P class="p19 ft1">500,000</P></TD>
+	<TD class="tr3 td20"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td78"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td79"><P class="p16 ft8">250,000</P></TD>
+	<TD colspan=2 class="tr3 td89"><P class="p16 ft8">249,990</P></TD>
+	<TD colspan=2 class="tr3 td90"><P class="p20 ft1">10</P></TD>
+	<TD class="tr3 td80"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td34"><P class="p17 ft8">250,000</P></TD>
+	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td82"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td29"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr3 td30"><P class="p21 ft8">250,000</P></TD>
+</TR>
+<TR>
+	<TD class="tr7 td49"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td50"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td36"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td84"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td85"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td39"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td40"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td41"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD colspan=2 class="tr7 td91"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td44"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td45"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td87"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td47"><P class="p4 ft9">&nbsp;</P></TD>
+	<TD class="tr7 td48"><P class="p4 ft9">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr1 td52"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td53"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td54"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td55"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=7 class="tr1 td92"><P class="p22 ft1">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021</P></TD>
+	<TD class="tr1 td59"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td60"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td61"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr1 td62"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD class="tr6 td63"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td64"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td65"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td66"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td67"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td68"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td69"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td70"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td71"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td72"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td73"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td74"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td75"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td76"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td77"><P class="p4 ft7">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr8 td93"><P class="p23 ft1">Date</P></TD>
+	<TD class="tr8 td20"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr8 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr8 td22"><P class="p24 ft1">Transaction</P></TD>
+	<TD class="tr8 td94"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr8 td95"><P class="p3 ft1">Distribution</P></TD>
+	<TD class="tr8 td96"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr8 td32"><P class="p25 ft1">Contribution</P></TD>
+	<TD class="tr8 td80"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr8 td97"><P class="p26 ft8">Price/Share</P></TD>
+	<TD class="tr8 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=2 class="tr8 td98"><P class="p27 ft1">No. of</P></TD>
+	<TD class="tr8 td30"><P class="p26 ft1">Balance</P></TD>
+</TR>
+<TR>
+	<TD class="tr2 td18"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td99"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td22"><P class="p28 ft1">Description</P></TD>
+	<TD class="tr2 td94"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td95"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td96"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr2 td32"><P class="p25 ft1">Amount (USD)</P></TD>
+	<TD class="tr2 td80"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD rowspan=2 class="tr9 td97"><P class="p16 ft1">(USD)</P></TD>
+	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=2 class="tr2 td98"><P class="p29 ft1">Shares</P></TD>
+	<TD class="tr2 td30"><P class="p16 ft8">Shares</P></TD>
+</TR>
+<TR>
+	<TD class="tr10 td18"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td99"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td20"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td21"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td22"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td94"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td95"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td96"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td32"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td80"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td27"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td28"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td100"><P class="p4 ft10">&nbsp;</P></TD>
+	<TD class="tr10 td30"><P class="p4 ft10">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr6 td101"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td36"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD colspan=2 class="tr6 td102"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td103"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td104"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td105"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td42"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td86"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td106"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td45"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD colspan=2 class="tr6 td107"><P class="p4 ft7">&nbsp;</P></TD>
+	<TD class="tr6 td48"><P class="p4 ft7">&nbsp;</P></TD>
+</TR>
+<TR>
+	<TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>29-Sep-2021</NOBR></P></TD>
+	<TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=2 class="tr0 td102"><P class="p30 ft3">Initial Contribution</P></TD>
+	<TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td104"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td42"><P class="p31 ft3">249,990.00</P></TD>
+	<TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td106"><P class="p16 ft3">1,000.00</P></TD>
+	<TD class="tr0 td45"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD colspan=2 class="tr0 td107"><P class="p29 ft3">250.00</P></TD>
+	<TD class="tr0 td48"><P class="p32 ft3">250.00</P></TD>
+</TR>
+<TR>
+	<TD colspan=5 class="tr0 td108"><P class="p3 ft1">Closing Share Balance: 250.00</P></TD>
+	<TD class="tr0 td39"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td104"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td41"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td42"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td43"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td44"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td45"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td46"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td47"><P class="p4 ft2">&nbsp;</P></TD>
+	<TD class="tr0 td48"><P class="p4 ft2">&nbsp;</P></TD>
+</TR>
+</TABLE>
+<P class="p33 ft1">Thank you for investing in FOCUS INDE GLOBAL FIXED INCOME FUND SERIES 2021 LTD.</P>
+<P class="p34 ft11">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021</P>
+<P class="p35 ft3">C/O Apex Fund & Corporate Services (Mauritius) Ltd.</P>
+<P class="p35 ft3">Lot 15 A3, 1<SPAN class="ft12">st </SPAN>Floor, Cybercity, Ebene 72201, Mauritius</P>
+</DIV>
+</BODY>
+</HTML>
