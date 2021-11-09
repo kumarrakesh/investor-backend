@@ -1,12 +1,28 @@
 const Folios = require('../modals/folio.modals')
+const FolioNewId = require('../modals/folioId.modals')
 
 exports.addFolio = async (req, res) => {
   const { userId, commitment, yield } = req.body
 
-  const newFolioId = await Folios.count({})
+  var FolioDB = await FolioNewId.find({})
+
+  // console.log(FolioDB)
+
+  var newFolioId = 0
+
+  if (FolioDB.length == 0) {
+    newFolioId = 1
+    const addFolioNewId = await FolioNewId.create({
+      folioId: 1,
+    })
+  } else {
+    FolioDB[0].folioId += 1
+    await FolioDB[0].save()
+    newFolioId = FolioDB[0].folioId
+  }
 
   const newFolio = await Folios.create({
-    folioId: newFolioId + 1,
+    folioId: newFolioId,
     user: userId,
     commitment: commitment,
     contribution: 0,
@@ -21,7 +37,7 @@ exports.addFolio = async (req, res) => {
 
   return res
     .status(200)
-    .json({ status: false, message: 'Folio Created', data: newFolio })
+    .json({ status: true, message: 'Folio Created', data: newFolio })
 }
 
 exports.editFolio = async (req, res) => {
@@ -38,7 +54,8 @@ exports.editFolio = async (req, res) => {
 }
 
 exports.getUserFolio = async (req, res) => {
-  const userFolio = await Folios.find({ user: req.user._id }).populate('user')
+  // console.log(req.user)
+  const userFolio = await Folios.find({ user: req.user._id })
 
   return res.status(200).json({ status: true, data: userFolio })
 }
@@ -56,7 +73,18 @@ exports.getFolioInfo = async (req, res) => {
 }
 
 exports.getNewFolioID = async (req, res) => {
-  const fundId = await Folios.count({})
+  const fundNewId = await FolioNewId.find({})
 
-  return res.status(200).json({ status: true, newFolioId: fundId + 1 })
+  console.log(fundNewId)
+  return res
+    .status(200)
+    .json({ status: true, newFolioId: fundNewId[0]?.folioId || 0 })
+}
+
+exports.deleteFolio = async (req, res) => {
+  const { folioId } = req.body
+
+  const deleteFolio = await Folios.remove({ _id: folioId })
+
+  return res.status(200).json({ status: true, message: 'Deleted Succesfully' })
 }

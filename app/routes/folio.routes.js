@@ -46,4 +46,10 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getNewFolioID
   )
+
+  app.delete(
+    '/api/folio/delete',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.deleteFolio
+  )
 }
