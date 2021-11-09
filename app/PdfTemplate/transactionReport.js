@@ -203,7 +203,7 @@ exports.transactionReport = async (transactions) => {
   </HEAD>
   
   <BODY>
-  <DIV id="page_1" style="margin-left:25vw;">
+  <DIV id="page_1">
   <DIV id="p1dimg1">
   <IMG src="https://tiwpe.com/image/tiw-logo.png" id="p1img1"></DIV>
   
