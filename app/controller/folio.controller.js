@@ -2,7 +2,7 @@ const Folios = require('../modals/folio.modals')
 const FolioNewId = require('../modals/folioId.modals')
 
 exports.addFolio = async (req, res) => {
-  const { userId, commitment, yield, date } = req.body
+  const { userId, commitment, yield, date, folioName } = req.body
 
   var FolioDB = await FolioNewId.find({})
 
@@ -22,6 +22,7 @@ exports.addFolio = async (req, res) => {
   }
 
   const newFolio = await Folios.create({
+    folioName: folioName,
     folioId: newFolioId,
     user: userId,
     commitment: commitment,

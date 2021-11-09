@@ -2,6 +2,10 @@ var mongoose = require('mongoose')
 require('@mongoosejs/double')
 
 var folioSchema = new mongoose.Schema({
+  folioName: {
+    type: String,
+    default: '',
+  },
   folioId: {
     type: Number,
     required: true,
