@@ -6,6 +6,8 @@ const FolioTransactions = require('../modals/folioTransaction.modals')
 
 const Users = require('../modals/user.modals')
 
+const { transactionReport } = require('../PdfTemplate/transactionReport')
+
 // const clearDb = async () => {
 //   var a = await FolioTransactions.remove({})
 //   var b = await FolioNewId.remove({})
@@ -75,4 +77,32 @@ exports.addTransaction = async (req, res) => {
 
 exports.editTransaction = async (req, res) => {}
 
-exports.getTransactionsPDF = async (req, res) => {}
+exports.getTransactionsPDF = async (req, res) => {
+  // const { fundname } = req.body
+  // const userId = req.user._id
+  var transaction = []
+  // if (!fundname) transaction = await Transactions.find({ user: userId })
+  // else
+  //   transaction = await Transactions.find({ user: userId, fundname: fundname })
+
+  // transaction.sort(function (a, b) {
+  //   var keyA = new Date(a.date),
+  //     keyB = new Date(b.date)
+  //   if (keyA < keyB) return 1
+  //   if (keyA > keyB) return -1
+  //   else {
+  //     if (a.sno < b.sno) {
+  //       return 1
+  //     } else {
+  //       return -1
+  //     }
+  //   }
+  //   return 0
+  // })
+
+  const pdffile = await transactionReport(transaction)
+
+  var data = pdffile
+  res.contentType('application/pdf')
+  res.send(data)
+}
