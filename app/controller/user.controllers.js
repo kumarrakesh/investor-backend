@@ -295,6 +295,52 @@ exports.allUsers = async (req, res) => {
   })
 }
 
+exports.allUsersNew = async (req, res) => {
+  const users = await Users.find({ role: '616d2f588d908648c28d63a1' }) //Only Users Not Admin
+
+  var usersData = JSON.parse(JSON.stringify(users))
+
+  var usersTotalInvested = await Folios.aggregate([
+    { $match: { _id: { $exists: true } } },
+    {
+      $group: {
+        _id: '$user',
+        totalCommited: {
+          $sum: '$commitment',
+        },
+        totalContributed: {
+          $sum: '$contribution',
+        },
+      },
+    },
+  ])
+
+  console.log(usersTotalInvested)
+
+  for (var i = 0; i < usersData.length; i++) {
+    usersData[i].dateOfCreation = usersData[i]?.maturity
+    var userData = usersTotalInvested.filter(
+      (ele) => ele._id == usersData[i]._id
+    )[0]
+
+    usersData[i].totalContributed = userData?.totalContributed || 0
+    usersData[i].totalCommited = userData?.totalCommited || 0
+  }
+
+  usersData.sort(function (a, b) {
+    var keyA = new Date(a.dateOfCreation).getTime(),
+      keyB = new Date(b.dateOfCreation).getTime()
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    return 0
+  })
+
+  return res.status(200).json({
+    success: true,
+    data: usersData,
+  })
+}
+
 exports.deleteUser = async (req, res) => {
   const db_ID = req.params.id
 
@@ -339,7 +385,7 @@ exports.getProfile = async (req, res) => {
     status: true,
     data: user,
     AmountCommited: usersTotalInvested[0]?.totalCommited || 0,
-    AmountContributed: usersTotalInvested[0]?.totalContribution || 0,
+    AmountContributed: usersTotalInvested[0]?.totalInvested || 0,
   })
 }
 

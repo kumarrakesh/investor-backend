@@ -10,11 +10,6 @@ module.exports = function (app) {
     )
     next()
   })
-  app.post(
-    '/api/transactions',
-    [verifyToken, authorize('USER', 'ADMIN')],
-    controller.getTransactions
-  )
 
   app.post(
     '/api/add/folio/transaction',

@@ -22,6 +22,12 @@ module.exports = function (app) {
 
   app.get('/api/users', [verifyToken, authorize('ADMIN')], controller.allUsers)
 
+  app.get(
+    '/api/users/new',
+    [verifyToken, authorize('ADMIN')],
+    controller.allUsersNew
+  )
+
   app.delete(
     '/api/user/:id',
     [verifyToken, authorize('ADMIN')],
