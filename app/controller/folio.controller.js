@@ -1,5 +1,6 @@
 const Folios = require('../modals/folio.modals')
 const FolioNewId = require('../modals/folioId.modals')
+const Users = require('../modals/user.modals')
 
 exports.addFolio = async (req, res) => {
   const { userId, commitment, yield, date, folioName } = req.body
@@ -7,6 +8,14 @@ exports.addFolio = async (req, res) => {
   var FolioDB = await FolioNewId.find({})
 
   // console.log(FolioDB)
+
+  const user = await Users.findOne({ username: userId.toLowerCase() })
+
+  if (!user) {
+    return res
+      .status(400)
+      .json({ status: false, error: 'No User with this passport exists' })
+  }
 
   var newFolioId = 0
 
@@ -24,7 +33,7 @@ exports.addFolio = async (req, res) => {
   const newFolio = await Folios.create({
     folioName: folioName,
     folioId: newFolioId,
-    user: userId,
+    user: user._id,
     commitment: commitment,
     contribution: 0,
     yield: yield,

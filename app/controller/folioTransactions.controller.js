@@ -8,15 +8,6 @@ const Users = require('../modals/user.modals')
 
 const { transactionReport } = require('../PdfTemplate/transactionReport')
 
-// const clearDb = async () => {
-//   var a = await FolioTransactions.remove({})
-//   var b = await FolioNewId.remove({})
-//   var c = await Folios.remove({})
-//   console.log(a, b, c)
-// }
-
-// clearDb()
-
 exports.getTransactions = async (req, res) => {
   const { folioId } = req.body
 
@@ -46,6 +37,17 @@ exports.addTransaction = async (req, res) => {
   const { userId, folioId, type, amount, date, narration } = req.body
 
   const userFolio = await Folios.findOne({ folioId: folioId })
+
+  const user = await Users.findOne({ username: userId.toLowerCase() })
+
+  if (!user) {
+    return res.status(400).json({
+      status: false,
+      error: 'No User Exits with this passport',
+    })
+  }
+
+  // Conditions Before Adding Trnsaction
 
   // Transaction Must be After or on Folio Creation Date
 
@@ -86,7 +88,7 @@ exports.addTransaction = async (req, res) => {
   await userFolio.save()
 
   const newFolioTransaction = await FolioTransactions.create({
-    user: userId,
+    user: user._id,
     folio: userFolio._id,
     addedBy: req.user._id,
     type: type,
@@ -101,7 +103,7 @@ exports.addTransaction = async (req, res) => {
       .json({ status: false, error: 'Something went wrong' })
   }
 
-  return res.status(400).json({ status: true, data: newFolioTransaction })
+  return res.status(200).json({ status: true, data: newFolioTransaction })
 }
 
 exports.editTransaction = async (req, res) => {}

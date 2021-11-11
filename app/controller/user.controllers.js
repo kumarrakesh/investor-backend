@@ -186,7 +186,7 @@ exports.updateProfile = async (req, res) => {
 }
 
 exports.updateProfileAdmin = async (req, res) => {
-  const {
+  var {
     userId,
     name,
     passport,
@@ -201,9 +201,27 @@ exports.updateProfileAdmin = async (req, res) => {
 
   var user = await Users.findById(userId)
 
-  console.log(user)
+  // console.log(user)
+
+  passport = passport.toLowerCase()
+
+  var searchuser = null
+
+  if (user.username != passport) {
+    searchuser = await Users.findOne({ username: passport })
+  }
+
+  // console.log(searchuser)
+
+  if (searchuser) {
+    return res.status(400).json({
+      success: false,
+      error: 'User is already registered with this passport',
+    })
+  }
 
   user.name = name
+  user.username = passport
   user.passport = passport
   user.maturity = maturity
   user.address = address

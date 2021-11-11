@@ -59,7 +59,7 @@ module.exports = function (app) {
   )
   app.post(
     '/api/update/profile/admin',
-    [verifyToken, authorize('USER', 'ADMIN'), uploadImage.single('profilePic')],
+    [verifyToken, authorize('ADMIN'), uploadImage.single('profilePic')],
     controller.updateProfileAdmin
   )
 }
