@@ -16,12 +16,18 @@ var folioSchema = new mongoose.Schema({
   },
   commitment: {
     type: mongoose.Schema.Types.Double,
+    default: 0,
   },
   contribution: {
     type: mongoose.Schema.Types.Double,
+    default: 0,
   },
   yield: {
     type: mongoose.Schema.Types.Double,
+  },
+  yieldAmount: {
+    type: mongoose.Schema.Types.Double,
+    default: 0,
   },
   date: {
     type: Date,

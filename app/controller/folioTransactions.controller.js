@@ -83,7 +83,13 @@ exports.addTransaction = async (req, res) => {
 
   userFolio.contribution += Amount
 
+  if (type == '2') {
+    userFolio.yieldAmount += Amount
+  }
+
   userFolio.lastTransactionDate = new Date(date)
+
+  console.log('User Folio ', userFolio)
 
   await userFolio.save()
 
