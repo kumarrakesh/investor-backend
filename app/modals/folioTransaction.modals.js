@@ -28,6 +28,10 @@ var transactionSchema = new mongoose.Schema({
     type: Date,
     required: [true, 'Date is required in transactiion'],
   },
+  narration: {
+    type: String,
+    default: '',
+  },
 })
 
 const FolioTransactions = mongoose.model('FolioTransactions', transactionSchema)

@@ -52,13 +52,17 @@ var userSchema = new mongoose.Schema({
     ref: 'Roles',
     required: true,
   },
-  amountInvested: {
-    type: mongoose.Schema.Types.Double,
-    default: 0,
+  email: {
+    type: String,
+    default: '',
   },
-  currentInvestedValue: {
-    type: mongoose.Schema.Types.Double,
-    default: 0,
+  mobileNo: {
+    type: String,
+    default: '',
+  },
+  phoneNo: {
+    type: String,
+    default: '',
   },
 })
 

@@ -24,15 +24,39 @@ exports.getTransactions = async (req, res) => {
     folio: folioId,
   }).populate('addedBy', 'name')
 
-  res.status(200).json({ status: true, data: transactions })
+  transactions.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
+
+  return res.status(200).json({ status: true, data: transactions })
 }
 
 exports.addTransaction = async (req, res) => {
-  const { userId, folioId, type, amount, date } = req.body
+  const { userId, folioId, type, amount, date, narration } = req.body
 
   const userFolio = await Folios.findOne({ folioId: folioId })
 
-  //type 1 for investment , 2 for yeildPayment 3 for withdrwal
+  // Transaction Must be After or on Folio Creation Date
+
+  if (new Date(userFolio.date).getTime() > new Date(date).getTime()) {
+    return res.status(400).json({
+      status: false,
+      error: 'Date must be greater or equal to folio creation date',
+    })
+  }
+
+  // Withdrwal Transaction must have enough contribution
 
   if (type == 3) {
     if (userFolio.contribution < Math.abs(amount)) {
@@ -42,28 +66,33 @@ exports.addTransaction = async (req, res) => {
     }
   }
 
-  if (new Date(userFolio.date).getTime() > new Date(date).getTime()) {
+  // Transaction must be after last transaction date
+
+  if (
+    new Date(userFolio.lastTransactionDate).getTime() > new Date(date).getTime()
+  ) {
     return res.status(400).json({
       status: false,
-      error: 'Date must be greater or equal to folio creation date',
+      error: 'Date must be after last transaction date',
     })
   }
-  userFolio.contribution +=
-    type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
+
+  var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
+
+  userFolio.contribution += Amount
+
+  userFolio.lastTransactionDate = new Date(date)
 
   await userFolio.save()
-
-  console.log(userFolio)
-
-  // console.log(req.user)
 
   const newFolioTransaction = await FolioTransactions.create({
     user: userId,
     folio: userFolio._id,
     addedBy: req.user._id,
     type: type,
-    amount: type == '3' ? -1 * parseFloat(amount) : parseFloat(amount),
+    amount: Amount,
     date: new Date(date),
+    narration: narration,
   })
 
   if (!newFolioTransaction) {
