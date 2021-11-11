@@ -9,7 +9,7 @@
 
 body {margin-top: 0px;margin-left: 0px;}
 
-#page_1 {position:relative; overflow: hidden;margin: 9px 0px 19px 96px;padding: 0px;border: none;width: 720px;}
+#page_1 {position:relative; overflow: hidden;margin: 9px 0px 19px 96px;padding: 0px;border: none;width:auto;}
 
 #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
 #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
@@ -198,7 +198,7 @@ body {margin-top: 0px;margin-left: 0px;}
 </HEAD>
 
 <BODY>
-<DIV id="page_1" style="margin-left:25vw;">
+<DIV id="page_1">
 <DIV id="p1dimg1">
 <IMG src="https://tiwpe.com/image/tiw-logo.png" id="p1img1"></DIV>
 
@@ -213,11 +213,11 @@ body {margin-top: 0px;margin-left: 0px;}
 	<TD class="tr0 td2"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr0 td3"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD colspan=3 class="tr0 td4"><P class="p5 ft1">Folio No.: ${folioId}</P></TD>
-	<TD colspan=3 class="tr0 td5"><P class="p6 ft1">Class: </P></TD>
+	<TD colspan=3 class="tr0 td5"><P class="p6 ft1">Class: NA</P></TD>
 	<TD class="tr0 td6"><P class="p6 ft1">Yield:${folioyeiled}%</P></TD>
 </TR>
 <TR>
-	<TD colspan=3 class="tr1 td7"><P class="p3 ft1">XYZ ABC</P></TD>
+	<TD colspan=3 class="tr1 td7"><P class="p3 ft1">${name}</P></TD>
 	<TD class="tr1 td8"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr1 td9"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr1 td10"><P class="p4 ft2">&nbsp;</P></TD>
@@ -238,21 +238,21 @@ body {margin-top: 0px;margin-left: 0px;}
 	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
-	<TD colspan=3 class="tr2 td26"><P class="p5 ft3">Beneficiary Name:</P></TD>
+	<TD colspan=3 class="tr2 td26"><P class="p5 ft3">Beneficiary Name: ${name}</P></TD>
 	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
 </TR>
 <TR>
-	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 1</P></TD>
+	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 1: ${Adress_line1}</P></TD>
 	<TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td32"><P class="p5 ft3">Bank Name</P></TD>
-	<TD class="tr3 td33"><P class="p7 ft3">:</P></TD>
+	<TD class="tr3 td33"><P class="p7 ft3">: ${bankName}</P></TD>
 	<TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
@@ -260,14 +260,14 @@ body {margin-top: 0px;margin-left: 0px;}
 	<TD class="tr3 td30"><P class="p4 ft2">&nbsp;</P></TD>
 </TR>
 <TR>
-	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 2</P></TD>
+	<TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 2 : ${Adress_line1}</P></TD>
 	<TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td32"><P class="p5 ft3">Branch</P></TD>
-	<TD class="tr3 td33"><P class="p8 ft3">:</P></TD>
+	<TD class="tr3 td33"><P class="p8 ft3">: NA</P></TD>
 	<TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
@@ -276,14 +276,14 @@ body {margin-top: 0px;margin-left: 0px;}
 </TR>
 <TR>
 	<TD class="tr2 td18"><P class="p3 ft3">Email</P></TD>
-	<TD class="tr2 td19"><P class="p7 ft3">:</P></TD>
+	<TD class="tr2 td19"><P class="p7 ft3">: NA</P></TD>
 	<TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
-	<TD colspan=3 class="tr2 td26"><P class="p5 ft3">Account Number :</P></TD>
+	<TD colspan=3 class="tr2 td26"><P class="p5 ft3">Account Number : ${folioId}</P></TD>
 	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
@@ -291,7 +291,7 @@ body {margin-top: 0px;margin-left: 0px;}
 </TR>
 <TR>
 	<TD class="tr2 td18"><P class="p3 ft3">Ph Off</P></TD>
-	<TD class="tr2 td19"><P class="p9 ft3">: <SPAN class="ft4">-</SPAN></P></TD>
+	<TD class="tr2 td19"><P class="p9 ft3">:- NA</P></TD>
 	<TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
@@ -299,21 +299,21 @@ body {margin-top: 0px;margin-left: 0px;}
 	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td32"><P class="p5 ft3">Swift Code</P></TD>
-	<TD colspan=2 class="tr2 td22"><P class="p7 ft3">: - TARUN</P></TD>
+	<TD colspan=2 class="tr2 td22"><P class="p7 ft3">: - NA</P></TD>
 	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
 </TR>
 <TR>
-	<TD colspan=3 class="tr2 td31"><P class="p3 ft3">Mobile :</P></TD>
+	<TD colspan=3 class="tr2 td31"><P class="p3 ft3">Mobile : NA</P></TD>
 	<TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td32"><P class="p5 ft3">IBAN</P></TD>
-	<TD colspan=2 class="tr2 td22"><P class="p5 ft3">: -</P></TD>
+	<TD colspan=2 class="tr2 td22"><P class="p5 ft3">: - NA</P></TD>
 	<TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
 	<TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
