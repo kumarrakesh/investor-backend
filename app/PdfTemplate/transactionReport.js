@@ -1,8 +1,51 @@
 var html_to_pdf = require('html-pdf-node')
+var pdf = require('html-pdf')
 
 let options = { format: 'A4' }
 
-exports.transactionReport = async (user, transactions) => {
+const displayTransaction = (t) => {
+  var html = ''
+  var total = 0
+  for (var i = t.length - 1; i >= 0; i--) {
+    var row = t[i]
+    total += row.amount
+    var data = `
+    <TR><TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${new Date(
+      row.date
+    ).toDateString()}</NOBR></P></TD>
+       <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
+       <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${
+         row.type == '1' ? 'Invested' : row.type == '3' ? 'Withdraw' : 'yeilded'
+       } </P></TD>
+       <TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
+       <TD class="tr0 td42"><P class="p31 ft3">${
+         row.type == '2' ? row.amount : ''
+       }</P></TD>
+       <TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
+       <TD class="tr0 td42"><P class="p31 ft3">${
+         row.type == '1' ? row.amount : ''
+       }</P></TD>
+       <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
+       <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${
+         row.type == '3' ? row.amount : ''
+       }</P></TD>
+       <TD class="tr0 td48"><P class="p32 ft3">${total}</P></TD>
+     </TR>`
+
+    html += data
+  }
+  return html
+}
+
+const showTotal = (t) => {
+  var total = 0
+  for (var i = t.length - 1; i >= 0; i--) {
+    total += t[i].amount
+  }
+  return total
+}
+
+exports.transactionReport = async (user, transaction, userFolio) => {
   const template = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <HTML>
   <HEAD>
@@ -14,7 +57,9 @@ exports.transactionReport = async (user, transactions) => {
   
   body {margin-top: 0px;margin-left: 0px;}
   
-  #page_1 {position:relative; overflow: hidden;margin: 9px 0px 19px 96px;padding: 0px;border: none;width: 720px;}
+  html { -webkit-print-color-adjust: exact; }
+  
+  #page_1 {position:relative; overflow: hidden;margin: 9px 0px 19px 96px;padding: 0px;border: none;width:auto;}
   
   #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
   #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
@@ -210,19 +255,21 @@ exports.transactionReport = async (user, transactions) => {
   <DIV class="dclr"></DIV>
   <P class="p0 ft0">Client Investment Folio Statement</P>
   <P class="p1 ft0">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021 LTD</P>
-  <P class="p2 ft1">Statement Date: <NOBR>30-Sep-2021</NOBR></P>
+  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toDateString()}</NOBR></P>
   <TABLE cellpadding=0 cellspacing=0 class="t0">
   <TR>
     <TD colspan=5 class="tr0 td0"><P class="p3 ft1">Personal Information</P></TD>
     <TD class="tr0 td1"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td2"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td3"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=3 class="tr0 td4"><P class="p5 ft1">Folio No.: FIGFIS026</P></TD>
-    <TD colspan=3 class="tr0 td5"><P class="p6 ft1">Class: A3</P></TD>
-    <TD class="tr0 td6"><P class="p6 ft1">Yield:11.00%</P></TD>
+    <TD colspan=3 class="tr0 td4"><P class="p5 ft1">Folio No.: ${
+      userFolio.folioId
+    }</P></TD>
+    <TD colspan=3 class="tr0 td5"><P class="p6 ft1">Class: NA</P></TD>
+    <TD class="tr0 td6"><P class="p6 ft1">Yield:${userFolio.yield}%</P></TD>
   </TR>
   <TR>
-    <TD colspan=3 class="tr1 td7"><P class="p3 ft1">XYZ ABC</P></TD>
+    <TD colspan=3 class="tr1 td7"><P class="p3 ft1">${user.name}</P></TD>
     <TD class="tr1 td8"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr1 td9"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr1 td10"><P class="p4 ft2">&nbsp;</P></TD>
@@ -243,21 +290,25 @@ exports.transactionReport = async (user, transactions) => {
     <TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=3 class="tr2 td26"><P class="p5 ft3">Beneficiary Name:</P></TD>
+    <TD colspan=3 class="tr2 td26"><P class="p5 ft3">Beneficiary Name: ${
+      user.name
+    }</P></TD>
     <TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
   </TR>
   <TR>
-    <TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 1</P></TD>
+    <TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 1: ${
+      user.address || ''
+    }</P></TD>
     <TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td32"><P class="p5 ft3">Bank Name</P></TD>
-    <TD class="tr3 td33"><P class="p7 ft3">:</P></TD>
+    <TD class="tr3 td33"><P class="p7 ft3">: ${userFolio.folioName}</P></TD>
     <TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
@@ -265,14 +316,16 @@ exports.transactionReport = async (user, transactions) => {
     <TD class="tr3 td30"><P class="p4 ft2">&nbsp;</P></TD>
   </TR>
   <TR>
-    <TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 2</P></TD>
+    <TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 2 : ${
+      user.address || ''
+    }</P></TD>
     <TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td23"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td32"><P class="p5 ft3">Branch</P></TD>
-    <TD class="tr3 td33"><P class="p8 ft3">:</P></TD>
+    <TD class="tr3 td33"><P class="p8 ft3">: NA</P></TD>
     <TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>
@@ -281,14 +334,16 @@ exports.transactionReport = async (user, transactions) => {
   </TR>
   <TR>
     <TD class="tr2 td18"><P class="p3 ft3">Email</P></TD>
-    <TD class="tr2 td19"><P class="p7 ft3">:</P></TD>
+    <TD class="tr2 td19"><P class="p7 ft3">: ${user.email || ''}</P></TD>
     <TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=3 class="tr2 td26"><P class="p5 ft3">Account Number :</P></TD>
+    <TD colspan=3 class="tr2 td26"><P class="p5 ft3">Account Number : ${
+      userFolio.folioId
+    }</P></TD>
     <TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
@@ -296,7 +351,7 @@ exports.transactionReport = async (user, transactions) => {
   </TR>
   <TR>
     <TD class="tr2 td18"><P class="p3 ft3">Ph Off</P></TD>
-    <TD class="tr2 td19"><P class="p9 ft3">: <SPAN class="ft4">-</SPAN></P></TD>
+    <TD class="tr2 td19"><P class="p9 ft3">:- ${user.phoneNo || ''}</P></TD>
     <TD class="tr2 td20"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
@@ -304,21 +359,23 @@ exports.transactionReport = async (user, transactions) => {
     <TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td32"><P class="p5 ft3">Swift Code</P></TD>
-    <TD colspan=2 class="tr2 td22"><P class="p7 ft3">: - TARUN</P></TD>
+    <TD colspan=2 class="tr2 td22"><P class="p7 ft3">: - NA</P></TD>
     <TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td30"><P class="p4 ft2">&nbsp;</P></TD>
   </TR>
   <TR>
-    <TD colspan=3 class="tr2 td31"><P class="p3 ft3">Mobile :</P></TD>
+    <TD colspan=3 class="tr2 td31"><P class="p3 ft3">Mobile : ${
+      user.mobileNo || ''
+    }</P></TD>
     <TD class="tr2 td21"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td22"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td23"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td25"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td32"><P class="p5 ft3">IBAN</P></TD>
-    <TD colspan=2 class="tr2 td22"><P class="p5 ft3">: -</P></TD>
+    <TD colspan=2 class="tr2 td22"><P class="p5 ft3">: - NA</P></TD>
     <TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td28"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td29"><P class="p4 ft2">&nbsp;</P></TD>
@@ -589,9 +646,8 @@ exports.transactionReport = async (user, transactions) => {
     <TD class="tr8 td96"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr8 td32"><P class="p25 ft1">Contribution</P></TD>
     <TD class="tr8 td80"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr8 td97"><P class="p26 ft8">Price/Share</P></TD>
-    <TD class="tr8 td27"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=2 class="tr8 td98"><P class="p27 ft1">No. of</P></TD>
+    <TD colspan=4 class="tr8 td97"><P class="p26 ft8">Withdrawal</P></TD>
+    
     <TD class="tr8 td30"><P class="p26 ft1">Balance</P></TD>
   </TR>
   <TR>
@@ -605,9 +661,8 @@ exports.transactionReport = async (user, transactions) => {
     <TD class="tr2 td96"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr2 td32"><P class="p25 ft1">Amount (USD)</P></TD>
     <TD class="tr2 td80"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD rowspan=2 class="tr9 td97"><P class="p16 ft1">(USD)</P></TD>
-    <TD class="tr2 td27"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=2 class="tr2 td98"><P class="p29 ft1">Shares</P></TD>
+    <TD rowspan=2 colspan=4 class="tr9 td97"><P class="p16 ft1">(USD)</P></TD>
+  
     <TD class="tr2 td30"><P class="p16 ft8">Shares</P></TD>
   </TR>
   <TR>
@@ -621,9 +676,6 @@ exports.transactionReport = async (user, transactions) => {
     <TD class="tr10 td96"><P class="p4 ft10">&nbsp;</P></TD>
     <TD class="tr10 td32"><P class="p4 ft10">&nbsp;</P></TD>
     <TD class="tr10 td80"><P class="p4 ft10">&nbsp;</P></TD>
-    <TD class="tr10 td27"><P class="p4 ft10">&nbsp;</P></TD>
-    <TD class="tr10 td28"><P class="p4 ft10">&nbsp;</P></TD>
-    <TD class="tr10 td100"><P class="p4 ft10">&nbsp;</P></TD>
     <TD class="tr10 td30"><P class="p4 ft10">&nbsp;</P></TD>
   </TR>
   <TR>
@@ -640,22 +692,45 @@ exports.transactionReport = async (user, transactions) => {
     <TD colspan=2 class="tr6 td107"><P class="p4 ft7">&nbsp;</P></TD>
     <TD class="tr6 td48"><P class="p4 ft7">&nbsp;</P></TD>
   </TR>
+  ${
+    displayTransaction(transaction)
+    // transaction
+    // .map((row) => {
+    //   return `<TR>
+    //   <TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${new Date(
+    //     row.date
+    //   ).toDateString()}</NOBR></P></TD>
+    //   <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
+    //   <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${
+    //     row.type == '1' ? 'Invested' : row.type == '3' ? 'Withdraw' : 'yeilded'
+    //   } </P></TD>
+    //   <TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
+    //   <TD class="tr0 td42"><P class="p31 ft3">${row.amount}</P></TD>
+    //   <TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
+    //   <TD class="tr0 td42"><P class="p31 ft3">${row.amount}</P></TD>
+    //   <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
+    //   <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${row.amount}</P></TD>
+    //   <TD class="tr0 td48"><P class="p32 ft3">${row.amount}</P></TD>
+    // </TR>`
+    // })
+    // .join(' ')
+  }
   <TR>
-    <TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>29-Sep-2021</NOBR></P></TD>
+    <TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${''}</NOBR></P></TD>
     <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=2 class="tr0 td102"><P class="p30 ft3">Initial Contribution</P></TD>
+    <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${''} </P></TD>
     <TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr0 td104"><P class="p4 ft2">&nbsp;</P></TD>
+    <TD class="tr0 td42"><P class="p31 ft3">${''}</P></TD>
     <TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr0 td42"><P class="p31 ft3">249,990.00</P></TD>
+    <TD class="tr0 td42"><P class="p31 ft3">${''}</P></TD>
     <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr0 td106"><P class="p16 ft3">1,000.00</P></TD>
-    <TD class="tr0 td45"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=2 class="tr0 td107"><P class="p29 ft3">250.00</P></TD>
-    <TD class="tr0 td48"><P class="p32 ft3">250.00</P></TD>
+    <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${''}</P></TD>
+    <TD class="tr0 td48"><P class="p32 ft3">${''}</P></TD>
   </TR>
   <TR>
-    <TD colspan=5 class="tr0 td108"><P class="p3 ft1">Closing Share Balance: 250.00</P></TD>
+    <TD colspan=5 class="tr0 td108"><P class="p3 ft1">Closing Share Balance: ${showTotal(
+      transaction
+    )}</P></TD>
     <TD class="tr0 td39"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td104"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td41"><P class="p4 ft2">&nbsp;</P></TD>
@@ -681,5 +756,10 @@ exports.transactionReport = async (user, transactions) => {
     name: 'example.pdf',
   }
   const buffer = await html_to_pdf.generatePdf(file, options)
+
+  // pdf.create(template).toBuffer(function (err, buffer) {
+  //   res.contentType('application/pdf')
+  //   res.send(buffer)
+  // })
   return buffer
 }

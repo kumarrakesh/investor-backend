@@ -120,13 +120,36 @@ exports.getTransactionsPDF = async (req, res) => {
 
   const user = req.user
 
+  const userFolio = await Folios.findById(folioId)
+
+  console.log(user)
+
   const transaction = await FolioTransactions.find({ folio: folioId })
 
-  console.log(transaction)
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
 
-  const pdffile = await transactionReport(user, transaction)
+  const pdffile = await transactionReport(user, transaction, userFolio)
 
   var data = pdffile
   res.contentType('application/pdf')
   res.send(data)
 }
+// exports.getTransactionsPDF2 = async (req, res) => {
+//   const pdffile = await transactionReport()
+//   var data = pdffile
+//   res.contentType('application/pdf')
+//   res.send(data)
+// }

@@ -34,4 +34,6 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getTransactionsPDF
   )
+
+  // app.get('/api/download/folio/transaction', controller.getTransactionsPDF2)
 }
