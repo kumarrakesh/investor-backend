@@ -502,3 +502,30 @@ exports.getDashboard = async (req, res) => {
   }
   return res.json({ status: true, data: response })
 }
+
+exports.getUsername = async (req, res) => {
+  var { passport } = req.body
+
+  if (!passport) {
+    return res.status(404).json({
+      success: false,
+      error: 'passport required',
+    })
+  }
+
+  passport = passport.toLowerCase()
+
+  const user = await Users.findOne({ username: passport })
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      error: 'No User Exists',
+    })
+  }
+
+  return res.status(200).json({
+    success: false,
+    name: user.name,
+  })
+}
