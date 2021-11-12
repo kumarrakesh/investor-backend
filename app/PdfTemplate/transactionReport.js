@@ -58,13 +58,10 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   
   html { -webkit-print-color-adjust: exact; }
   
-  #page_1 {position:relative; overflow: hidden;margin: 9px 0px 19px 96px;padding: 0px;border: none;width:auto;}
+  #page_1 {position:relative;overflow:hidden;margin-left:20px;margin-top:20px;padding: 0px;border: none;width:auto;}
   
   #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
   #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
-  
-  
-  
   
   .dclr {clear:both;float:none;height:1px;margin:0px;padding:0px;overflow:hidden;}
   
@@ -116,7 +113,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   .p31{text-align: right;padding-right: 14px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
   .p32{text-align: right;padding-right: 29px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
   .p33{text-align: left;padding-left: 58px;margin-top: 30px;margin-bottom: 0px;}
-  .p34{text-align: left;margin-top: 239px;margin-bottom: 0px;}
+  .p34{text-align: left;margin-top:10px;margin-bottom: 0px;}
   .p35{text-align: left;margin-top: 0px;margin-bottom: 0px;}
   
   .td0{border-left: #000000 1px solid;border-right: #d0cece 1px solid;border-top: #000000 1px solid;border-bottom: #d0cece 1px solid;padding: 0px;margin: 0px;width: 214px;vertical-align: bottom;background: #d0cece;}
@@ -316,7 +313,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   </TR>
   <TR>
     <TD colspan=3 class="tr3 td31"><P class="p3 ft3">Address Line 2 : ${
-      user.address || ''
+      user.city + ',' + user.pincode
     }</P></TD>
     <TD class="tr3 td21"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td22"><P class="p4 ft2">&nbsp;</P></TD>
@@ -578,18 +575,22 @@ exports.transactionReport = async (user, transaction, userFolio) => {
     <TD class="tr6 td48"><P class="p4 ft7">&nbsp;</P></TD>
   </TR>
   <TR>
-    <TD colspan=2 class="tr3 td88"><P class="p19 ft1">500,000</P></TD>
+    <TD colspan=2 class="tr3 td88"><P class="p19 ft1">${
+      userFolio.commitment
+    }</P></TD>
     <TD class="tr3 td20"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td78"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr3 td79"><P class="p16 ft8">250,000</P></TD>
-    <TD colspan=2 class="tr3 td89"><P class="p16 ft8">249,990</P></TD>
+    <TD class="tr3 td79"><P class="p16 ft8">NA</P></TD>
+    <TD colspan=2 class="tr3 td89"><P class="p16 ft8">${
+      userFolio.contribution
+    }</P></TD>
     <TD colspan=2 class="tr3 td90"><P class="p20 ft1">10</P></TD>
     <TD class="tr3 td80"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr3 td34"><P class="p17 ft8">250,000</P></TD>
+    <TD class="tr3 td34"><P class="p17 ft8">NA</P></TD>
     <TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td82"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td29"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr3 td30"><P class="p21 ft8">250,000</P></TD>
+    <TD class="tr3 td30"><P class="p21 ft8">NA</P></TD>
   </TR>
   <TR>
     <TD class="tr7 td49"><P class="p4 ft9">&nbsp;</P></TD>
@@ -691,45 +692,27 @@ exports.transactionReport = async (user, transaction, userFolio) => {
     <TD colspan=2 class="tr6 td107"><P class="p4 ft7">&nbsp;</P></TD>
     <TD class="tr6 td48"><P class="p4 ft7">&nbsp;</P></TD>
   </TR>
-  ${
-    displayTransaction(transaction)
-    // transaction
-    // .map((row) => {
-    //   return `<TR>
-    //   <TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${new Date(
-    //     row.date
-    //   ).toDateString()}</NOBR></P></TD>
-    //   <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
-    //   <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${
-    //     row.type == '1' ? 'Invested' : row.type == '3' ? 'Withdraw' : 'yeilded'
-    //   } </P></TD>
-    //   <TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
-    //   <TD class="tr0 td42"><P class="p31 ft3">${row.amount}</P></TD>
-    //   <TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
-    //   <TD class="tr0 td42"><P class="p31 ft3">${row.amount}</P></TD>
-    //   <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
-    //   <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${row.amount}</P></TD>
-    //   <TD class="tr0 td48"><P class="p32 ft3">${row.amount}</P></TD>
-    // </TR>`
-    // })
-    // .join(' ')
-  }
+     ${displayTransaction(transaction)}
   <TR>
-    <TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${''}</NOBR></P></TD>
-    <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${''} </P></TD>
-    <TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr0 td42"><P class="p31 ft3">${''}</P></TD>
-    <TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD class="tr0 td42"><P class="p31 ft3">${''}</P></TD>
-    <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
-    <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${''}</P></TD>
-    <TD class="tr0 td48"><P class="p32 ft3">${''}</P></TD>
-  </TR>
-  <TR>
+
+<TR>
+<TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${''}</NOBR></P></TD>
+<TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
+<TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${''} </P></TD>
+<TD class="tr0 td103"><P class="p4 ft2">&nbsp;</P></TD>
+<TD class="tr0 td42"><P class="p31 ft3">${''}</P></TD>
+<TD class="tr0 td105"><P class="p4 ft2">&nbsp;</P></TD>
+<TD class="tr0 td42"><P class="p31 ft3">${''}</P></TD>
+<TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
+<TD colspan=4 class="tr0 td106"><P class="p16 ft3">${''}</P></TD>
+<TD class="tr0 td48"><P class="p32 ft3">${''}</P></TD>
+</TR>
+<TR>
+</TR>
     <TD colspan=5 class="tr0 td108"><P class="p3 ft1">Closing Share Balance: ${showTotal(
       transaction
     )}</P></TD>
+
     <TD class="tr0 td39"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td104"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td41"><P class="p4 ft2">&nbsp;</P></TD>
@@ -742,10 +725,12 @@ exports.transactionReport = async (user, transaction, userFolio) => {
     <TD class="tr0 td48"><P class="p4 ft2">&nbsp;</P></TD>
   </TR>
   </TABLE>
+  <div>
   <P class="p33 ft1">Thank you for investing in FOCUS INDE GLOBAL FIXED INCOME FUND SERIES 2021 LTD.</P>
   <P class="p34 ft11">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021</P>
   <P class="p35 ft3">C/O Apex Fund & Corporate Services (Mauritius) Ltd.</P>
   <P class="p35 ft3">Lot 15 A3, 1<SPAN class="ft12">st </SPAN>Floor, Cybercity, Ebene 72201, Mauritius</P>
+  </div>
   </DIV>
   </BODY>
   </HTML>

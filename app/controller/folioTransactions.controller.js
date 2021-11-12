@@ -118,7 +118,7 @@ exports.getTransactionsPDF = async (req, res) => {
   const { folioId } = req.body
   const userId = req.user._id
 
-  const user = req.user
+  const user = await Users.findById(req.user._id)
 
   const userFolio = await Folios.findById(folioId)
 
@@ -147,8 +147,36 @@ exports.getTransactionsPDF = async (req, res) => {
   res.contentType('application/pdf')
   res.send(data)
 }
+
 // exports.getTransactionsPDF2 = async (req, res) => {
-//   const pdffile = await transactionReport()
+//   const folioId = '618a4a03537eb2a3707aaf45'
+//   const userId = '617bec3aa1cb758124df9741'
+
+//   const user = await Users.findById(userId)
+
+//   const userFolio = await Folios.findById(folioId)
+
+//   // console.log(user)
+
+//   const transaction = await FolioTransactions.find({ folio: folioId })
+
+//   transaction.sort(function (a, b) {
+//     var keyA = new Date(a.date),
+//       keyB = new Date(b.date)
+//     if (keyA < keyB) return 1
+//     if (keyA > keyB) return -1
+//     else {
+//       if (a.sno < b.sno) {
+//         return 1
+//       } else {
+//         return -1
+//       }
+//     }
+//     return 0
+//   })
+
+//   const pdffile = await transactionReport(user, transaction, userFolio)
+
 //   var data = pdffile
 //   res.contentType('application/pdf')
 //   res.send(data)

@@ -513,9 +513,7 @@ exports.getUsername = async (req, res) => {
     })
   }
 
-  passport = passport.toLowerCase()
-
-  const user = await Users.findOne({ username: passport })
+  const user = await Users.findOne({ username: passport.toLowerCase() })
 
   if (!user) {
     return res.status(404).json({
