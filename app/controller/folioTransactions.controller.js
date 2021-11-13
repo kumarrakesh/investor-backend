@@ -11,6 +11,7 @@ const { transactionReport } = require('../PdfTemplate/transactionReport')
 exports.getTransactions = async (req, res) => {
   const { folioId } = req.body
 
+  console.log('GET TRANSACTION  BODY ', req.body)
   const folio = await Folios.findOne({ folioId: folioId })
 
   console.log(folio)
@@ -62,7 +63,7 @@ exports.addTransaction = async (req, res) => {
   if (new Date(userFolio.date).getTime() > new Date(date).getTime()) {
     return res.status(400).json({
       status: false,
-      error: 'Date must be greater or equal to folio creation date',
+      error: 'Date Must be on or after Folio Registration date',
     })
   }
 
@@ -72,7 +73,7 @@ exports.addTransaction = async (req, res) => {
     if (userFolio.contribution < Math.abs(amount)) {
       return res
         .status(400)
-        .json({ status: false, error: "You Can'nt Withdrwal" })
+        .json({ status: false, error: 'Insufficient Contributed Amount' })
     }
   }
 
@@ -83,7 +84,7 @@ exports.addTransaction = async (req, res) => {
   ) {
     return res.status(400).json({
       status: false,
-      error: 'Date must be after last transaction date',
+      error: 'Transaction Date must be after or on last transaction date',
     })
   }
 
@@ -97,7 +98,7 @@ exports.addTransaction = async (req, res) => {
 
   userFolio.lastTransactionDate = new Date(date)
 
-  console.log('User Folio ', userFolio)
+  // console.log('User Folio ', userFolio)
 
   await userFolio.save()
 
