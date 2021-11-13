@@ -48,6 +48,8 @@ exports.getTransactions = async (req, res) => {
 exports.addTransaction = async (req, res) => {
   const { userId, folioId, type, amount, date, narration } = req.body
 
+  console.log(req.body)
+
   const userFolio = await Folios.findOne({ folioId: folioId })
 
   const user = await Users.findOne({ username: userId.toLowerCase() })
@@ -114,6 +116,7 @@ exports.addTransaction = async (req, res) => {
     date: new Date(date),
     narration: narration,
   })
+  console.log(newFolioTransaction)
 
   if (!newFolioTransaction) {
     return res
