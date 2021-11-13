@@ -68,6 +68,21 @@ exports.getUserFolio = async (req, res) => {
   // console.log(req.user)
   const userFolio = await Folios.find({ user: req.user._id })
 
+  userFolio.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
+
   return res.status(200).json({ status: true, data: userFolio })
 }
 exports.getAllFolio = async (req, res) => {
