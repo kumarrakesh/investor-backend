@@ -128,11 +128,11 @@ exports.getTransactionsPDF = async (req, res) => {
 
   const user = await Users.findById(req.user._id)
 
-  const userFolio = await Folios.findById(folioId)
+  const folio = await Folios.findOne({ folioId: folioId })
 
-  console.log(user)
+  const userFolio = await Folios.findOne({ folioId: folioId })
 
-  const transaction = await FolioTransactions.find({ folio: folioId })
+  const transaction = await FolioTransactions.find({ folio: folio._id })
 
   transaction.sort(function (a, b) {
     var keyA = new Date(a.date),
