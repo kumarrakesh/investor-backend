@@ -11,7 +11,7 @@ const displayTransaction = (t) => {
     var data = `
     <TR><TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${new Date(
       row.date
-    ).toDateString()}</NOBR></P></TD>
+    ).toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })}</NOBR></P></TD>
        <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
        <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${
          row.type == '1' ? 'Invested' : row.type == '3' ? 'Withdraw' : 'yeilded'
@@ -58,7 +58,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   
   html { -webkit-print-color-adjust: exact; }
   
-  #page_1 {position:relative;overflow:hidden;margin-left:20px;margin-top:20px;padding: 0px;border: none;width:auto;}
+  #page_1 {position:relative;overflow:hidden;margin-left:150px;margin-top:15px;padding: 0px;border: none;width:auto;}
   
   #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
   #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
@@ -251,7 +251,11 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   <DIV class="dclr"></DIV>
   <P class="p0 ft0">Client Investment Folio Statement</P>
   <P class="p1 ft0">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021 LTD</P>
-  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toDateString()}</NOBR></P>
+  
+  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toLocaleString(
+    undefined,
+    { timeZone: 'Asia/Kolkata' }
+  )}</NOBR></P>
   <TABLE cellpadding=0 cellspacing=0 class="t0">
   <TR>
     <TD colspan=5 class="tr0 td0"><P class="p3 ft1">Personal Information</P></TD>

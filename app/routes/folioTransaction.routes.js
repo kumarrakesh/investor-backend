@@ -35,5 +35,5 @@ module.exports = function (app) {
     controller.getTransactionsPDF
   )
 
-  // app.get('/api/download/folio/transaction', controller.getTransactionsPDF2)
+  app.get('/api/download/folio/transaction', controller.getTransactionsPDF2)
 }

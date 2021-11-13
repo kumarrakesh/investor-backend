@@ -11,6 +11,9 @@ const { transactionReport } = require('../PdfTemplate/transactionReport')
 exports.getTransactions = async (req, res) => {
   const { folioId } = req.body
 
+  if (!folioId) {
+    return res.status(400).json({ status: false, error: 'FolioId needed' })
+  }
   console.log('GET TRANSACTION  BODY ', req.body)
   const folio = await Folios.findOne({ folioId: folioId })
 
@@ -157,36 +160,36 @@ exports.getTransactionsPDF = async (req, res) => {
   res.send(data)
 }
 
-// exports.getTransactionsPDF2 = async (req, res) => {
-//   const folioId = '618a4a03537eb2a3707aaf45'
-//   const userId = '617bec3aa1cb758124df9741'
+exports.getTransactionsPDF2 = async (req, res) => {
+  const folioId = '618a4a03537eb2a3707aaf45'
+  const userId = '617bec3aa1cb758124df9741'
 
-//   const user = await Users.findById(userId)
+  const user = await Users.findById(userId)
 
-//   const userFolio = await Folios.findById(folioId)
+  const userFolio = await Folios.findById(folioId)
 
-//   // console.log(user)
+  // console.log(user)
 
-//   const transaction = await FolioTransactions.find({ folio: folioId })
+  const transaction = await FolioTransactions.find({ folio: folioId })
 
-//   transaction.sort(function (a, b) {
-//     var keyA = new Date(a.date),
-//       keyB = new Date(b.date)
-//     if (keyA < keyB) return 1
-//     if (keyA > keyB) return -1
-//     else {
-//       if (a.sno < b.sno) {
-//         return 1
-//       } else {
-//         return -1
-//       }
-//     }
-//     return 0
-//   })
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
 
-//   const pdffile = await transactionReport(user, transaction, userFolio)
+  const pdffile = await transactionReport(user, transaction, userFolio)
 
-//   var data = pdffile
-//   res.contentType('application/pdf')
-//   res.send(data)
-// }
+  var data = pdffile
+  res.contentType('application/pdf')
+  res.send(data)
+}
