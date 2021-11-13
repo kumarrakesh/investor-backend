@@ -93,7 +93,7 @@ exports.getAllFolio = async (req, res) => {
 exports.getFolioInfo = async (req, res) => {
   const { folioId } = req.body
 
-  const folio = await Folios.findById(folioId).populate('user')
+  const folio = await Folios.findOne({ folioId }).populate('user')
 
   return res.status(200).json({ status: true, data: folio })
 }
