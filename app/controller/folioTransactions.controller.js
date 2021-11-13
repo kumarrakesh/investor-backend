@@ -11,8 +11,16 @@ const { transactionReport } = require('../PdfTemplate/transactionReport')
 exports.getTransactions = async (req, res) => {
   const { folioId } = req.body
 
+  const folio = await Folios.findOne({ folioId: folioId })
+
+  console.log(folio)
+
+  if (!folio) {
+    return res.status(400).json({ status: false, error: 'No Folio Exists' })
+  }
+
   const transactions = await FolioTransactions.find({
-    folio: folioId,
+    folio: folio._id,
   }).populate('addedBy', 'name')
 
   transactions.sort(function (a, b) {
