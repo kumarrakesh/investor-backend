@@ -113,7 +113,13 @@ exports.addTransaction = async (req, res) => {
     addedBy: req.user._id,
     type: type,
     amount: Amount,
-    date: new Date(date),
+    date: new Date(
+      new Date(date).setHours(
+        new Date().getHours(),
+        new Date().getMinutes(),
+        new Date().getSeconds()
+      )
+    ),
     narration: narration,
   })
   console.log(newFolioTransaction)
