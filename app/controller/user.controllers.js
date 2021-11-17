@@ -27,6 +27,7 @@ exports.getSignIn = async (req, res) => {
     }
 
     const match = await bycryptjs.compare(password, user.password)
+
     if (match) {
       const token = jwt.sign(
         {

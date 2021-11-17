@@ -5,6 +5,7 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Username is required'],
     unique: true,
+    index: true,
   },
   password: {
     type: String,
@@ -65,6 +66,8 @@ var userSchema = new mongoose.Schema({
     default: '',
   },
 })
+
+userSchema.index({ username: 1 })
 
 const Users = mongoose.model('Users', userSchema)
 module.exports = Users
