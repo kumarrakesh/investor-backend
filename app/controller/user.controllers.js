@@ -16,17 +16,15 @@ const Folios = require('../modals/folio.modals')
 
 exports.getSignIn = async (req, res) => {
   try {
-    var { username, password } = req.body
-
     const user = await Users.findOne({
-      username: username.toLowerCase(),
+      username: req.body.username.toLowerCase(),
     }).populate('role')
 
     if (!user) {
       return res.status(404).json({ status: false, error: 'User not found' })
     }
 
-    const match = await bycryptjs.compare(password, user.password)
+    const match = await bycryptjs.compare(req.body.password, user.password)
 
     if (match) {
       const token = jwt.sign(
