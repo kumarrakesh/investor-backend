@@ -1,53 +1,43 @@
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 var mongoose = require('mongoose')
 const bycryptjs = require('bcrypt')
-
 const Users = require('../modals/user.modals')
-const Roles = require('../modals/roles.modals')
 const Funds = require('../modals/funds.modals')
 const UserFunds = require('../modals/userFunds.modals')
 const Transactions = require('../modals/transaction.modals')
-
 const AWS = require('../utils/aws')
-
-const { validateEmail } = require('../utils/validate')
 const Folios = require('../modals/folio.modals')
+require('dotenv').config()
 
 exports.getSignIn = async (req, res) => {
-  try {
-    const user = await Users.findOne({
-      username: req.body.username.toLowerCase(),
-    }).populate('role')
+  const user = await Users.findOne({
+    username: req.body.username.toLowerCase(),
+  }).populate('role')
 
-    if (!user) {
-      return res.status(404).json({ status: false, error: 'User not found' })
-    }
+  if (!user) {
+    return res.status(404).json({ status: false, error: 'User not found' })
+  }
+  // console.log(user)
 
-    const match = await bycryptjs.compare(req.body.password, user.password)
+  const match = await bycryptjs.compare(req.body.password, user.password)
 
-    if (match) {
-      const token = jwt.sign(
-        {
-          user: user,
-        },
-        process.env.JWT_SECRET_KEY,
-        {
-          expiresIn: '30d',
-        }
-      )
-      return res
-        .status(200)
-        .json({ status: true, token: token, role: user.role.role })
-    }
+  if (match) {
+    const token = jwt.sign(
+      {
+        user: user,
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '30d',
+      }
+    )
     return res
       .status(200)
-      .json({ status: false, error: 'Invalid Username and password ' })
-  } catch {
-    return res
-      .status(404)
-      .json({ status: false, error: 'Something went wrong' })
+      .json({ status: true, token: token, role: user.role.role })
   }
+  return res
+    .status(200)
+    .json({ status: false, error: 'Invalid Username and password ' })
 }
 
 exports.getProfilePic = async (req, res) => {
