@@ -18,23 +18,13 @@ exports.getSignIn = async (req, res) => {
   try {
     var { username, password } = req.body
 
-    if (!username || !password) {
-      return res.json({ error: 'Both Username and password required' })
-    }
-
-    username = username.toLowerCase()
-
-    // console.log(username)
-
-    const user = await Users.findOne({ username })
-
-    console.log(user)
+    const user = await Users.findOne({
+      username: username.toLowerCase(),
+    }).populate('role')
 
     if (!user) {
       return res.status(404).json({ status: false, error: 'User not found' })
     }
-
-    const role = await Roles.findById(user.role)
 
     const match = await bycryptjs.compare(password, user.password)
     if (match) {
@@ -49,7 +39,7 @@ exports.getSignIn = async (req, res) => {
       )
       return res
         .status(200)
-        .json({ status: true, token: token, role: role.role })
+        .json({ status: true, token: token, role: user.role.role })
     }
     return res
       .status(200)
