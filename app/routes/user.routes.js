@@ -20,7 +20,11 @@ module.exports = function (app) {
     controller.addUser
   )
 
-  app.get('/api/users', [verifyToken, authorize('ADMIN')], controller.allUsers)
+  app.get(
+    '/api/users',
+    [verifyToken, authorize('ADMIN')],
+    controller.allUsersNew
+  )
 
   app.get(
     '/api/users/new',

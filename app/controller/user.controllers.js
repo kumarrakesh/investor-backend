@@ -260,8 +260,6 @@ exports.allUsers = async (req, res) => {
     },
   ])
 
-  // console.log(usersTotalInvested)
-
   for (var i = 0; i < usersData.length; i++) {
     var timestamp = usersData[i]._id.toString().substring(0, 8)
 
@@ -324,7 +322,7 @@ exports.allUsersNew = async (req, res) => {
     },
   ])
 
-  console.log(usersTotalInvested)
+  // console.log(usersTotalInvested)
 
   for (var i = 0; i < usersData.length; i++) {
     usersData[i].dateOfCreation = usersData[i]?.maturity

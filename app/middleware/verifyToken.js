@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken')
-const Users = require('../modals/user.modals')
-
 require('dotenv').config()
 
 const verifyToken = (req, res, next) => {
@@ -20,7 +18,6 @@ const verifyToken = (req, res, next) => {
     }
     req.user = decoded.user
 
-    // console.log(req.user)
     next()
   })
 }
