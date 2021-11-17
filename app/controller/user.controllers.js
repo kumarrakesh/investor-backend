@@ -19,9 +19,9 @@ exports.getSignIn = async (req, res) => {
   }
   // console.log(user)
 
-  // const match = await bycryptjs.compare(req.body.password, user.password)
+  const match = await bycryptjs.compare(req.body.password, user.password)
 
-  if (true) {
+  if (match) {
     const token = jwt.sign(
       {
         user: user,
