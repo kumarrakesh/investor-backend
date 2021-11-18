@@ -1,6 +1,6 @@
 var html_to_pdf = require('html-pdf-node')
 
-let options = { format: 'A4' }
+let options = { format: 'A3' }
 
 const displayTransaction = (t) => {
   var html = ''
