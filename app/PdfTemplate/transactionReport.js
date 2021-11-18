@@ -8,10 +8,11 @@ const displayTransaction = (t) => {
   for (var i = t.length - 1; i >= 0; i--) {
     var row = t[i]
     total += row.amount
+   // dateWithouthSecond.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
     var data = `
     <TR><TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${new Date(
       row.date
-    ).toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })}</NOBR></P></TD>
+    ).toLocaleString("it-IT", { timeZone: 'Asia/Kolkata', year: "numeric", month: "2-digit", day: "numeric", hour: '2-digit', minute:'2-digit'})}</NOBR></P></TD>
        <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
        <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${
          row.type == '1' ? 'Invested' : row.type == '3' ? 'Withdraw' : 'yeilded'
@@ -58,18 +59,18 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   
   html { -webkit-print-color-adjust: exact; }
   
-  #page_1 {position:relative;overflow:hidden;margin-left:150px;margin-top:15px;padding: 0px;border: none;width:auto;}
+  #page_1 {position:relative;overflow:hidden;margin-left:50px;margin-top:15px;padding: 0px;border: none;width:auto;}
   
   #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
   #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
   
   .dclr {clear:both;float:none;height:1px;margin:0px;padding:0px;overflow:hidden;}
   
-  .ft0{font: bold 15px 'Times New Roman';line-height: 17px;}
-  .ft1{font: bold 13px 'Times New Roman';line-height: 15px;}
+  .ft0{font: bold 10px 'Times New Roman';line-height: 17px;}
+  .ft1{font: bold 10px 'Times New Roman';line-height: 15px;}
   .ft2{font: 1px 'Times New Roman';line-height: 1px;}
-  .ft3{font: 13px 'Times New Roman';line-height: 15px;}
-  .ft4{font: 15px 'Times New Roman';line-height: 16px;}
+  .ft3{font: 10px 'Times New Roman';line-height: 15px;}
+  .ft4{font: 10px 'Times New Roman';line-height: 16px;}
   .ft5{font: 1px 'Times New Roman';line-height: 12px;}
   .ft6{font: 1px 'Times New Roman';line-height: 9px;}
   .ft7{font: 1px 'Times New Roman';line-height: 6px;}
@@ -251,11 +252,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   <DIV class="dclr"></DIV>
   <P class="p0 ft0">Client Investment Folio Statement</P>
   <P class="p1 ft0">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021 LTD</P>
-  
-  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toLocaleString(
-    undefined,
-    { timeZone: 'Asia/Kolkata' }
-  )}</NOBR></P>
+  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toLocaleString("it-IT", { timeZone: 'Asia/Kolkata', year: "numeric", month: "2-digit", day: "numeric", hour: '2-digit', minute:'2-digit'})}</NOBR></P>
   <TABLE cellpadding=0 cellspacing=0 class="t0">
   <TR>
     <TD colspan=5 class="tr0 td0"><P class="p3 ft1">Personal Information</P></TD>

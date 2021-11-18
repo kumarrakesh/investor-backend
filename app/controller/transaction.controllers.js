@@ -318,3 +318,5 @@ exports.downloadReport = async (req, res) => {
   res.contentType('application/pdf')
   res.send(data)
 }
+
+
