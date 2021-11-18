@@ -59,7 +59,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   
   html { -webkit-print-color-adjust: exact; }
   
-  #page_1 {position:relative;overflow:hidden;margin-left:10px;margin-top:15px;padding: 0px;border: none;width:auto;}
+  #page_1 {position:relative;overflow:hidden;margin-left:50px;margin-top:15px;padding: 0px;border: none;width:auto;}
   
   #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
   #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
