@@ -1,6 +1,6 @@
 var html_to_pdf = require('html-pdf-node')
 
-let options = { format: 'A3' }
+let options = { format: 'A4' }
 
 const displayTransaction = (t) => {
   var html = ''
@@ -27,7 +27,7 @@ const displayTransaction = (t) => {
        }</P></TD>
        <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
        <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${
-         row.type == '3' ? row.amount : ''
+         row.type == '3' ? -1*row.amount : ''
        }</P></TD>
        <TD class="tr0 td48"><P class="p32 ft3">${total}</P></TD>
      </TR>`
