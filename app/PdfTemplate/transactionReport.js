@@ -59,7 +59,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   
   html { -webkit-print-color-adjust: exact; }
   
-  #page_1 {position:relative;overflow:hidden;margin-left:50px;margin-top:15px;padding: 0px;border: none;width:auto;}
+  #page_1 {position:relative;overflow:hidden;margin-left:10px;margin-top:15px;padding: 0px;border: none;width:auto;}
   
   #page_1 #p1dimg1 {position:absolute;top:0px;left:553px;z-index:-1;width:141px;height:93px;}
   #page_1 #p1dimg1 #p1img1 {width:141px;height:93px;}
@@ -74,10 +74,10 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   .ft5{font: 1px 'Times New Roman';line-height: 12px;}
   .ft6{font: 1px 'Times New Roman';line-height: 9px;}
   .ft7{font: 1px 'Times New Roman';line-height: 6px;}
-  .ft8{font: bold 12px 'Times New Roman';line-height: 15px;}
+  .ft8{font: bold 10px 'Times New Roman';line-height: 15px;}
   .ft9{font: 1px 'Times New Roman';line-height: 13px;}
   .ft10{font: 1px 'Times New Roman';line-height: 8px;}
-  .ft11{font: bold 13px 'Times New Roman';color: #4472c4;line-height: 15px;}
+  .ft11{font: bold 10px 'Times New Roman';color: #4472c4;line-height: 15px;}
   .ft12{font: 9px 'Times New Roman';line-height: 12px;position: relative; bottom: 5px;}
   
   .p0{text-align: left;padding-left: 199px;margin-top: 88px;margin-bottom: 0px;}
