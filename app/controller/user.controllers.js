@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 var mongoose = require('mongoose')
-const bycryptjs = require('bcrypt')
+const bycryptjs = require('bcryptjs')
 const Users = require('../modals/user.modals')
 const Funds = require('../modals/funds.modals')
 const UserFunds = require('../modals/userFunds.modals')
@@ -17,27 +17,26 @@ exports.getSignIn = async (req, res) => {
   if (!user) {
     return res.status(404).json({ status: false, error: 'User not found' })
   }
-  // console.log(user)
 
-  const match = await bycryptjs.compare(req.body.password, user.password)
+  var match = bycryptjs.compareSync(req.body.password, user.password)
 
-  if (match) {
-    const token = jwt.sign(
-      {
-        user: user,
-      },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: '30d',
-      }
-    )
+  if (!match) {
     return res
       .status(200)
-      .json({ status: true, token: token, role: user.role.role })
+      .json({ status: false, error: 'Invalid Username and password ' })
   }
+  const token = jwt.sign(
+    {
+      user: user,
+    },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: '30d',
+    }
+  )
   return res
     .status(200)
-    .json({ status: false, error: 'Invalid Username and password ' })
+    .json({ status: true, token: token, role: user.role.role })
 }
 
 exports.getProfilePic = async (req, res) => {
