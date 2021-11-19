@@ -9,18 +9,6 @@ const AWS = require('../utils/aws')
 const Folios = require('../modals/folio.modals')
 require('dotenv').config()
 
-// const updateUser = async () => {
-//   var users = await Users.find()
-
-//   for (var i = 0; i < users.length; i++) {
-//     users[i].password = '12345678'
-//     await users[i].save()
-//     console.log(users)
-//   }
-// }
-
-//updateUser
-
 exports.getSignIn = async (req, res) => {
   const user = await Users.findOne({
     username: req.body.username.toLowerCase(),
