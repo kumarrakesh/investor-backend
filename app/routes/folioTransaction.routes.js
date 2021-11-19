@@ -35,5 +35,11 @@ module.exports = function (app) {
     controller.getTransactionsPDF
   )
 
+  app.post(
+    '/api/download/folio/transaction/admin',
+    [verifyToken, authorize('ADMIN')],
+    controller.getTransactionsPDFAdmin
+  )
+
   app.get('/api/download/folio/transaction', controller.getTransactionsPDF2)
 }
