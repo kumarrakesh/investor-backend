@@ -157,8 +157,7 @@ exports.updateProfile = async (req, res) => {
   user.pincode = pincode
 
   if (password) {
-    user.password = password
-    //await bycryptjs.hash(password, 12)
+    user.password = await bycryptjs.hash(password, 12)
   }
 
   if (req.file) {
@@ -220,8 +219,7 @@ exports.updateProfileAdmin = async (req, res) => {
   user.pincode = pincode
 
   if (password) {
-    user.password = password
-    //await bycryptjs.hash(password, 12)
+    user.password = await bycryptjs.hash(password, 12)
   }
 
   if (req.file) {
