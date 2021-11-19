@@ -48,7 +48,7 @@ exports.getTransactions = async (req, res) => {
 exports.addTransaction = async (req, res) => {
   const { userId, folioId, type, amount, date, narration } = req.body
 
-  console.log(req.body)
+  // console.log(req.body)
 
   const userFolio = await Folios.findOne({ folioId: folioId })
 
@@ -93,6 +93,15 @@ exports.addTransaction = async (req, res) => {
     })
   }
 
+  //Amount Must be Positive
+
+  if (amount <= 0) {
+    return res.status(400).json({
+      status: false,
+      error: 'Amount must be greater than zero',
+    })
+  }
+
   var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
 
   userFolio.contribution += Amount
@@ -122,7 +131,8 @@ exports.addTransaction = async (req, res) => {
     ),
     narration: narration,
   })
-  console.log(newFolioTransaction)
+
+  //console.log(newFolioTransaction)
 
   if (!newFolioTransaction) {
     return res
