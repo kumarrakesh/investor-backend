@@ -9,15 +9,15 @@ const AWS = require('../utils/aws')
 const Folios = require('../modals/folio.modals')
 require('dotenv').config()
 
-const updateUser = async () => {
-  var users = await Users.find()
+// const updateUser = async () => {
+//   var users = await Users.find()
 
-  for (var i = 0; i < users.length; i++) {
-    users[i].password = '12345678'
-    await users[i].save()
-    console.log(users)
-  }
-}
+//   for (var i = 0; i < users.length; i++) {
+//     users[i].password = '12345678'
+//     await users[i].save()
+//     console.log(users)
+//   }
+// }
 
 //updateUser
 
@@ -29,9 +29,10 @@ exports.getSignIn = async (req, res) => {
   if (!user) {
     return res.status(404).json({ status: false, error: 'User not found' })
   }
-  //var match = bycryptjs.compareSync(req.body.password, user.password)
 
-  if (req.body.password === user.password) {
+  var match = bycryptjs.compareSync(req.body.password, user.password)
+
+  if (match) {
     const token = jwt.sign(
       {
         user: user,
