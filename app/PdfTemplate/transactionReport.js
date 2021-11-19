@@ -8,11 +8,18 @@ const displayTransaction = (t) => {
   for (var i = t.length - 1; i >= 0; i--) {
     var row = t[i]
     total += row.amount
-   // dateWithouthSecond.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+    // dateWithouthSecond.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
     var data = `
     <TR><TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${new Date(
       row.date
-    ).toLocaleString("it-IT", { timeZone: 'Asia/Kolkata', year: "numeric", month: "2-digit", day: "numeric", hour: '2-digit', minute:'2-digit'})}</NOBR></P></TD>
+    ).toLocaleString('it-IT', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })}</NOBR></P></TD>
        <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
        <TD colspan=2 class="tr0 td102"><P class="p30 ft3"> ${
          row.type == '1' ? 'Invested' : row.type == '3' ? 'Withdraw' : 'yeilded'
@@ -27,7 +34,7 @@ const displayTransaction = (t) => {
        }</P></TD>
        <TD class="tr0 td86"><P class="p4 ft2">&nbsp;</P></TD>
        <TD colspan=4 class="tr0 td106"><P class="p16 ft3">${
-         row.type == '3' ? -1*row.amount : ''
+         row.type == '3' ? -1 * row.amount : ''
        }</P></TD>
        <TD class="tr0 td48"><P class="p32 ft3">${total}</P></TD>
      </TR>`
@@ -247,12 +254,19 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   <BODY>
   <DIV id="page_1">
   <DIV id="p1dimg1">
-  <IMG src="https://tiwpe.com/image/tiw-logo.png" id="p1img1"></DIV>
+  <IMG src="https://www.ledr.com/colours/grey.jpg" id="p1img1"></DIV>
   
   <DIV class="dclr"></DIV>
   <P class="p0 ft0">Client Investment Folio Statement</P>
   <P class="p1 ft0">FOCUS INDE GLOBAL FIXED INCOME SERIES 2021 LTD</P>
-  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toLocaleString("it-IT", { timeZone: 'Asia/Kolkata', year: "numeric", month: "2-digit", day: "numeric", hour: '2-digit', minute:'2-digit'})}</NOBR></P>
+  <P class="p2 ft1">Statement Date: <NOBR>${new Date().toLocaleString('it-IT', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: '2-digit',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })}</NOBR></P>
   <TABLE cellpadding=0 cellspacing=0 class="t0">
   <TR>
     <TD colspan=5 class="tr0 td0"><P class="p3 ft1">Personal Information</P></TD>

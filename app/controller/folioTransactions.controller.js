@@ -48,7 +48,7 @@ exports.getTransactions = async (req, res) => {
 exports.addTransaction = async (req, res) => {
   const { userId, folioId, type, amount, date, narration } = req.body
 
-  console.log(req.body)
+  // console.log(req.body)
 
   const userFolio = await Folios.findOne({ folioId: folioId })
 
@@ -93,6 +93,15 @@ exports.addTransaction = async (req, res) => {
     })
   }
 
+  //Amount Must be Positive
+
+  if (amount <= 0) {
+    return res.status(400).json({
+      status: false,
+      error: 'Amount must be greater than zero',
+    })
+  }
+
   var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
 
   userFolio.contribution += Amount
@@ -122,7 +131,8 @@ exports.addTransaction = async (req, res) => {
     ),
     narration: narration,
   })
-  console.log(newFolioTransaction)
+
+  //console.log(newFolioTransaction)
 
   if (!newFolioTransaction) {
     return res
@@ -169,9 +179,43 @@ exports.getTransactionsPDF = async (req, res) => {
   res.send(data)
 }
 
+exports.getTransactionsPDFAdmin = async (req, res) => {
+  const { folioId } = req.body
+
+  const folio = await Folios.findOne({ folioId: folioId })
+
+  const user = await Users.findById(folio.user)
+
+  const userFolio = await Folios.findOne({ folioId: folioId })
+
+  const transaction = await FolioTransactions.find({ folio: folio._id })
+
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
+
+  const pdffile = await transactionReport(user, transaction, userFolio)
+
+  var data = pdffile
+  res.contentType('application/pdf')
+  res.send(data)
+}
+
 exports.getTransactionsPDF2 = async (req, res) => {
   const folioId = '618a4a03537eb2a3707aaf45'
   const userId = '617bec3aa1cb758124df9741'
+  0
 
   const user = await Users.findById(userId)
 
