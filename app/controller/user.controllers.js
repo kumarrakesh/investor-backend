@@ -9,18 +9,6 @@ const AWS = require('../utils/aws')
 const Folios = require('../modals/folio.modals')
 require('dotenv').config()
 
-const updateUser = async () => {
-  var users = await Users.find()
-
-  for (var i = 0; i < users.length; i++) {
-    users[i].password = '12345678'
-    await users[i].save()
-    console.log(users)
-  }
-}
-
-//updateUser
-
 exports.getSignIn = async (req, res) => {
   const user = await Users.findOne({
     username: req.body.username.toLowerCase(),
@@ -29,9 +17,10 @@ exports.getSignIn = async (req, res) => {
   if (!user) {
     return res.status(404).json({ status: false, error: 'User not found' })
   }
-  //var match = bycryptjs.compareSync(req.body.password, user.password)
 
-  if (req.body.password === user.password) {
+  var match = bycryptjs.compareSync(req.body.password, user.password)
+
+  if (match) {
     const token = jwt.sign(
       {
         user: user,
@@ -78,7 +67,7 @@ exports.addUser = async (req, res) => {
     } = req.body
 
     // console.log(req.body)
-    req.body.password = password
+    req.body.password = await bycryptjs.hash(password, 12)
 
     req.body.role = '616d2f588d908648c28d63a1'
 
@@ -156,8 +145,7 @@ exports.updateProfile = async (req, res) => {
   user.pincode = pincode
 
   if (password) {
-    user.password = password
-    //await bycryptjs.hash(password, 12)
+    user.password = await bycryptjs.hash(password, 12)
   }
 
   if (req.file) {
@@ -219,8 +207,7 @@ exports.updateProfileAdmin = async (req, res) => {
   user.pincode = pincode
 
   if (password) {
-    user.password = password
-    //await bycryptjs.hash(password, 12)
+    user.password = await bycryptjs.hash(password, 12)
   }
 
   if (req.file) {
