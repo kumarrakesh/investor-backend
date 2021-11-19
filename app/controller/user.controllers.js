@@ -5,8 +5,6 @@ const Users = require('../modals/user.modals')
 const Funds = require('../modals/funds.modals')
 const UserFunds = require('../modals/userFunds.modals')
 const Transactions = require('../modals/transaction.modals')
-
-Roles
 const AWS = require('../utils/aws')
 const Folios = require('../modals/folio.modals')
 require('dotenv').config()
