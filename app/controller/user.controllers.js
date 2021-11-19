@@ -5,9 +5,23 @@ const Users = require('../modals/user.modals')
 const Funds = require('../modals/funds.modals')
 const UserFunds = require('../modals/userFunds.modals')
 const Transactions = require('../modals/transaction.modals')
+
+Roles
 const AWS = require('../utils/aws')
 const Folios = require('../modals/folio.modals')
 require('dotenv').config()
+
+const updateUser = async () => {
+  var users = await Users.find()
+
+  for (var i = 0; i < users.length; i++) {
+    users[i].password = '12345678'
+    await users[i].save()
+    console.log(users)
+  }
+}
+
+//updateUser
 
 exports.getSignIn = async (req, res) => {
   const user = await Users.findOne({
@@ -17,26 +31,23 @@ exports.getSignIn = async (req, res) => {
   if (!user) {
     return res.status(404).json({ status: false, error: 'User not found' })
   }
+  //var match = bycryptjs.compareSync(req.body.password, user.password)
 
-  var match = bycryptjs.compareSync(req.body.password, user.password)
-
-  if (!match) {
-    return res
-      .status(200)
-      .json({ status: false, error: 'Invalid Username and password ' })
+  if (req.body.password === user.password) {
+    const token = jwt.sign(
+      {
+        user: user,
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '30d',
+      }
+    )
+    return res.json({ status: true, token: token, role: user.role.role })
   }
-  const token = jwt.sign(
-    {
-      user: user,
-    },
-    process.env.JWT_SECRET_KEY,
-    {
-      expiresIn: '30d',
-    }
-  )
   return res
     .status(200)
-    .json({ status: true, token: token, role: user.role.role })
+    .json({ status: false, error: 'Invalid Username and password ' })
 }
 
 exports.getProfilePic = async (req, res) => {
@@ -69,7 +80,7 @@ exports.addUser = async (req, res) => {
     } = req.body
 
     // console.log(req.body)
-    req.body.password = await bycryptjs.hash(password, 12)
+    req.body.password = password
 
     req.body.role = '616d2f588d908648c28d63a1'
 
