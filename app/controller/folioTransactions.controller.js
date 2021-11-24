@@ -46,11 +46,11 @@ exports.getTransactions = async (req, res) => {
 }
 
 exports.addTransaction = async (req, res) => {
-  const { userId, folioId, type, amount, date, narration } = req.body
+  const { userId, folioNumber, type, amount, date, narration } = req.body
 
   // console.log(req.body)
 
-  const userFolio = await Folios.findOne({ folioId: folioId })
+  const userFolio = await Folios.findOne({ folioNumber: folioNumber })
 
   const user = await Users.findOne({ username: userId.toLowerCase() })
 
