@@ -4,7 +4,7 @@ const FolioTransactions = require('../modals/folioTransaction.modals')
 
 const Users = require('../modals/user.modals')
 
-const { transactionReport } = require('../PdfTemplate/transactionReport')
+const { transactionReport } = require('../transactionPdf/transactionReport')
 
 exports.getTransactions = async (req, res) => {
   const { folioNumber } = req.body

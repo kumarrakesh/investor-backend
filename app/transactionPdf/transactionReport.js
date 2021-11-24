@@ -274,7 +274,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
     <TD class="tr0 td2"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td3"><P class="p4 ft2">&nbsp;</P></TD>
     <TD colspan=3 class="tr0 td4"><P class="p5 ft1">Folio No.: ${
-      userFolio.folioId
+      userFolio.folioNumber
     }</P></TD>
     <TD colspan=3 class="tr0 td5"><P class="p6 ft1">Class: NA</P></TD>
     <TD class="tr0 td6"><P class="p6 ft1">Yield:${userFolio.yield}%</P></TD>
@@ -319,7 +319,7 @@ exports.transactionReport = async (user, transaction, userFolio) => {
     <TD class="tr3 td24"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td25"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td32"><P class="p5 ft3">Bank Name</P></TD>
-    <TD class="tr3 td33"><P class="p7 ft3">: ${userFolio.folioName}</P></TD>
+    <TD class="tr3 td33"><P class="p7 ft3">: ${userFolio.folioNumber}</P></TD>
     <TD class="tr3 td34"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td27"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr3 td28"><P class="p4 ft2">&nbsp;</P></TD>

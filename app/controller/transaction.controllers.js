@@ -3,7 +3,7 @@ const userFunds = require('../modals/userFunds.modals')
 const Funds = require('../modals/funds.modals')
 const Querys = require('../modals/query.modals')
 const Users = require('../modals/user.modals')
-const { transactionReport } = require('../PdfTemplate/transactionReport')
+const { transactionReport } = require('../transactionPdf/transactionReport')
 
 exports.getTransactions = async (req, res) => {
   // console.log(req.user)
@@ -318,5 +318,3 @@ exports.downloadReport = async (req, res) => {
   res.contentType('application/pdf')
   res.send(data)
 }
-
-
