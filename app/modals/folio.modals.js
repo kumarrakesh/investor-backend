@@ -2,12 +2,8 @@ var mongoose = require('mongoose')
 require('@mongoosejs/double')
 
 var folioSchema = new mongoose.Schema({
-  folioName: {
+  folioNumber: {
     type: String,
-    default: '',
-  },
-  folioId: {
-    type: Number,
     required: true,
   },
   user: {

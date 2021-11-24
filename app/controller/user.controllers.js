@@ -66,21 +66,11 @@ exports.addUser = async (req, res) => {
       role,
     } = req.body
 
-    // console.log(req.body)
     req.body.password = await bycryptjs.hash(password, 12)
 
-    req.body.role = '616d2f588d908648c28d63a1'
+    req.body.role = '616d2f588d908648c28d63a1' //HARDCODED ROLE FOR USER , It is object id from role.modals
 
-    // if (!validateEmail(username)) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     error: 'Username is not valid Use email format',
-    //   })
-    // }
-
-    username = username.toLowerCase()
-
-    const searchuser = await Users.findOne({ username: username })
+    const searchuser = await Users.findOne({ username: username.toLowerCase() })
 
     if (searchuser) {
       return res.status(400).json({
@@ -98,6 +88,7 @@ exports.addUser = async (req, res) => {
     req.body.userId = usersCount + 1
 
     req.body.username = username.toLowerCase()
+    req.body.passport = passport.toLowerCase()
 
     const user = await Users.create(req.body)
 
@@ -177,14 +168,10 @@ exports.updateProfileAdmin = async (req, res) => {
 
   var user = await Users.findById(userId)
 
-  // console.log(user)
-
-  passport = passport.toLowerCase()
-
   var searchuser = null
 
   if (user.username != passport) {
-    searchuser = await Users.findOne({ username: passport })
+    searchuser = await Users.findOne({ username: passport.toLowerCase() })
   }
 
   // console.log(searchuser)
@@ -197,8 +184,8 @@ exports.updateProfileAdmin = async (req, res) => {
   }
 
   user.name = name
-  user.username = passport
-  user.passport = passport
+  user.username = passport.toLowerCase()
+  user.passport = passport.toLowerCase()
   user.maturity = maturity
   user.address = address
   user.city = city
@@ -499,5 +486,30 @@ exports.getUsername = async (req, res) => {
   return res.status(200).json({
     success: false,
     name: user.name,
+  })
+}
+
+exports.searchUserBypassport = async (req, res) => {
+  var { passport } = req.body
+
+  if (!passport) {
+    return res.status(404).json({
+      success: false,
+      error: 'passport required',
+    })
+  }
+
+  const user = await Users.findOne({ username: passport.toLowerCase() })
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      error: 'No User Exists',
+    })
+  }
+
+  return res.status(200).json({
+    success: true,
+    user: user,
   })
 }

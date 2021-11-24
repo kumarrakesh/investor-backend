@@ -1,13 +1,14 @@
 const Folios = require('../modals/folio.modals')
-const FolioNewId = require('../modals/folioId.modals')
+const FolioTransactions = require('../modals/folioTransaction.modals')
 const Users = require('../modals/user.modals')
+const { validateFolioNumber } = require('../utils/validate')
 
 exports.addFolio = async (req, res) => {
-  const { userId, commitment, yield, date, folioName } = req.body
+  const { userId, commitment, yield, date, folioNumber } = req.body
 
-  var FolioDB = await FolioNewId.find({})
-
-  // console.log(FolioDB)
+  if (!folioNumber) {
+    return res.status(400).json({ error: 'Folio Number is Required' })
+  }
 
   const user = await Users.findOne({ username: userId.toLowerCase() })
 
@@ -17,22 +18,22 @@ exports.addFolio = async (req, res) => {
       .json({ status: false, error: 'No User with this passport exists' })
   }
 
-  var newFolioId = 0
+  if (!validateFolioNumber(folioNumber, res)) {
+    return res
+      .status(400)
+      .json({ status: false, error: 'Folio Number is not Alphanumeric' })
+  }
 
-  if (FolioDB.length == 0) {
-    newFolioId = 1
-    const addFolioNewId = await FolioNewId.create({
-      folioId: 1,
-    })
-  } else {
-    FolioDB[0].folioId += 1
-    await FolioDB[0].save()
-    newFolioId = FolioDB[0].folioId
+  const folio = await Folios.findOne({ folioNumber: folioNumber.toUpperCase() })
+
+  if (folio) {
+    return res
+      .status(400)
+      .json({ status: false, error: 'FOLIO NAME IS NOT UNIQUE' })
   }
 
   const newFolio = await Folios.create({
-    folioName: folioName,
-    folioId: newFolioId,
+    folioNumber: folioNumber.toUpperCase(),
     user: user._id,
     commitment: commitment,
     contribution: 0,
@@ -76,26 +77,27 @@ exports.getAllFolio = async (req, res) => {
   return res.status(200).json({ status: true, data: allFolio })
 }
 exports.getFolioInfo = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
 
-  const folio = await Folios.findOne({ folioId }).populate('user')
+  const folio = await Folios.findOne({ folioNumber }).populate('user')
 
   return res.status(200).json({ status: true, data: folio })
 }
 
 exports.getNewFolioID = async (req, res) => {
-  const fundNewId = await FolioNewId.find({})
+  res.send('Stopped')
+  // const fundNewId = await FolioNewId.find({})
 
-  console.log(fundNewId)
-  return res
-    .status(200)
-    .json({ status: true, newFolioId: fundNewId[0]?.folioId || 0 })
+  // console.log(fundNewId)
+  // return res
+  //   .status(200)
+  //   .json({ status: true, newFolioId: fundNewId[0]?.folioId || 0 })
 }
 
 exports.deleteFolio = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
 
-  const deleteFolio = await Folios.remove({ _id: folioId })
+  const deleteFolio = await Folios.remove({ folioNumber: folioNumber })
 
   return res.status(200).json({ status: true, message: 'Deleted Succesfully' })
 }
