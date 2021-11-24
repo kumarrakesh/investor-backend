@@ -1,13 +1,18 @@
 const Folios = require('../modals/folio.modals')
-const FolioNewId = require('../modals/folioId.modals')
 const Users = require('../modals/user.modals')
 
+const validateFolioNumber = (folioNumber, res) => {
+  var regex = '^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$'
+  if (!regex.test(folioNumber)) {
+    return res.status(400).json({ error: 'Folio Number is Not alpha numeric' })
+  }
+}
 exports.addFolio = async (req, res) => {
-  const { userId, commitment, yield, date, folioName } = req.body
+  const { userId, commitment, yield, date, folioNumber } = req.body
 
-  var FolioDB = await FolioNewId.find({})
-
-  // console.log(FolioDB)
+  if (!folioNumber) {
+    return res.status(400).json({ error: 'Folio Number is Required' })
+  }
 
   const user = await Users.findOne({ username: userId.toLowerCase() })
 
@@ -17,22 +22,18 @@ exports.addFolio = async (req, res) => {
       .json({ status: false, error: 'No User with this passport exists' })
   }
 
-  var newFolioId = 0
+  await validateFolioNumber(folioNumber, res)
 
-  if (FolioDB.length == 0) {
-    newFolioId = 1
-    const addFolioNewId = await FolioNewId.create({
-      folioId: 1,
-    })
-  } else {
-    FolioDB[0].folioId += 1
-    await FolioDB[0].save()
-    newFolioId = FolioDB[0].folioId
+  const folio = await Folios.findOne({ folioNumber: folioNumber.toUpperCase() })
+
+  if (folio) {
+    return res
+      .status(400)
+      .json({ status: false, error: 'FOLIO NAME IS NOT UNIQUE' })
   }
 
   const newFolio = await Folios.create({
-    folioName: folioName,
-    folioId: newFolioId,
+    folioNumber: folioNumber.toUpperCase(),
     user: user._id,
     commitment: commitment,
     contribution: 0,
