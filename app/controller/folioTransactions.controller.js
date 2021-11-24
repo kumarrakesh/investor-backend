@@ -1,7 +1,5 @@
 const Folios = require('../modals/folio.modals')
 
-const FolioNewId = require('../modals/folioId.modals')
-
 const FolioTransactions = require('../modals/folioTransaction.modals')
 
 const Users = require('../modals/user.modals')
@@ -9,13 +7,15 @@ const Users = require('../modals/user.modals')
 const { transactionReport } = require('../PdfTemplate/transactionReport')
 
 exports.getTransactions = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
 
-  if (!folioId) {
-    return res.status(400).json({ status: false, error: 'FolioId needed' })
+  if (!folioNumber) {
+    return res.status(400).json({ status: false, error: 'Folio Number needed' })
   }
+
   console.log('GET TRANSACTION  BODY ', req.body)
-  const folio = await Folios.findOne({ folioId: folioId })
+
+  const folio = await Folios.findOne({ folioNumber: folioNumber })
 
   console.log(folio)
 
