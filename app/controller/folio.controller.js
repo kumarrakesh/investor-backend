@@ -1,4 +1,5 @@
 const Folios = require('../modals/folio.modals')
+const FolioTransactions = require('../modals/folioTransaction.modals')
 const Users = require('../modals/user.modals')
 
 const validateFolioNumber = (folioNumber, res) => {
@@ -7,6 +8,7 @@ const validateFolioNumber = (folioNumber, res) => {
     return res.status(400).json({ error: 'Folio Number is Not alpha numeric' })
   }
 }
+
 exports.addFolio = async (req, res) => {
   const { userId, commitment, yield, date, folioNumber } = req.body
 
