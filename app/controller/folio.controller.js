@@ -77,26 +77,27 @@ exports.getAllFolio = async (req, res) => {
   return res.status(200).json({ status: true, data: allFolio })
 }
 exports.getFolioInfo = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
 
-  const folio = await Folios.findOne({ folioId }).populate('user')
+  const folio = await Folios.findOne({ folioNumber }).populate('user')
 
   return res.status(200).json({ status: true, data: folio })
 }
 
 exports.getNewFolioID = async (req, res) => {
-  const fundNewId = await FolioNewId.find({})
+  res.send('Stopped')
+  // const fundNewId = await FolioNewId.find({})
 
-  console.log(fundNewId)
-  return res
-    .status(200)
-    .json({ status: true, newFolioId: fundNewId[0]?.folioId || 0 })
+  // console.log(fundNewId)
+  // return res
+  //   .status(200)
+  //   .json({ status: true, newFolioId: fundNewId[0]?.folioId || 0 })
 }
 
 exports.deleteFolio = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
 
-  const deleteFolio = await Folios.remove({ _id: folioId })
+  const deleteFolio = await Folios.remove({ folioNumber: folioNumber })
 
   return res.status(200).json({ status: true, message: 'Deleted Succesfully' })
 }
