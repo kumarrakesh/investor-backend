@@ -1,13 +1,7 @@
 const Folios = require('../modals/folio.modals')
 const FolioTransactions = require('../modals/folioTransaction.modals')
 const Users = require('../modals/user.modals')
-
-const validateFolioNumber = (folioNumber, res) => {
-  var regex = '^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$'
-  if (!regex.test(folioNumber)) {
-    return res.status(400).json({ error: 'Folio Number is Not alpha numeric' })
-  }
-}
+const { validateFolioNumber } = require('../utils/validate')
 
 exports.addFolio = async (req, res) => {
   const { userId, commitment, yield, date, folioNumber } = req.body
@@ -24,7 +18,11 @@ exports.addFolio = async (req, res) => {
       .json({ status: false, error: 'No User with this passport exists' })
   }
 
-  await validateFolioNumber(folioNumber, res)
+  if (!validateFolioNumber(folioNumber, res)) {
+    return res
+      .status(400)
+      .json({ status: false, error: 'Folio Number is not Alphanumeric' })
+  }
 
   const folio = await Folios.findOne({ folioNumber: folioNumber.toUpperCase() })
 
