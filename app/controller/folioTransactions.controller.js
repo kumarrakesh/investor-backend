@@ -46,13 +46,13 @@ exports.getTransactions = async (req, res) => {
 }
 
 exports.addTransaction = async (req, res) => {
-  const { userId, folioNumber, type, amount, date, narration } = req.body
+  const { folioNumber, type, amount, date, narration } = req.body
 
   // console.log(req.body)
 
   const userFolio = await Folios.findOne({ folioNumber: folioNumber })
 
-  const user = await Users.findOne({ username: userId.toLowerCase() })
+  const user = await Users.findById(userFolio.user)
 
   if (!user) {
     return res.status(400).json({
@@ -147,13 +147,14 @@ exports.editTransaction = async (req, res) => {}
 
 exports.getTransactionsPDF = async (req, res) => {
   const { folioNumber } = req.body
-  const userId = req.user._id
 
   const user = await Users.findById(req.user._id)
 
   // const folio = await Folios.findOne({ folioNumber: folioNumber })
 
-  const userFolio = await Folios.findOne({ folioNumber: folioNumber })
+  const userFolio = await Folios.findOne({
+    folioNumber: folioNumber.toUpperCase(),
+  })
 
   const transaction = await FolioTransactions.find({ folio: userFolio._id })
 
@@ -182,7 +183,9 @@ exports.getTransactionsPDF = async (req, res) => {
 exports.getTransactionsPDFAdmin = async (req, res) => {
   const { folioNumber } = req.body
 
-  const userFolio = await Folios.findOne({ folioNumber: folioNumber })
+  const userFolio = await Folios.findOne({
+    folioNumber: folioNumber.toUpperCase(),
+  })
 
   const user = await Users.findById(userFolio.user)
 
