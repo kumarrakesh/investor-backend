@@ -68,4 +68,10 @@ module.exports = function (app) {
   )
 
   app.post('/api/user/name/get', controller.getUsername)
+
+  app.post(
+    '/api/user/search/passport',
+    [verifyToken, authorize('USER', 'ADMIN')],
+    controller.searchUserBypassport
+  )
 }
