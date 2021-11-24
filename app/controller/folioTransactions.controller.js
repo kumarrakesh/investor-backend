@@ -146,16 +146,16 @@ exports.addTransaction = async (req, res) => {
 exports.editTransaction = async (req, res) => {}
 
 exports.getTransactionsPDF = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
   const userId = req.user._id
 
   const user = await Users.findById(req.user._id)
 
-  const folio = await Folios.findOne({ folioId: folioId })
+  // const folio = await Folios.findOne({ folioNumber: folioNumber })
 
-  const userFolio = await Folios.findOne({ folioId: folioId })
+  const userFolio = await Folios.findOne({ folioNumber: folioNumber })
 
-  const transaction = await FolioTransactions.find({ folio: folio._id })
+  const transaction = await FolioTransactions.find({ folio: userFolio._id })
 
   transaction.sort(function (a, b) {
     var keyA = new Date(a.date),
@@ -180,15 +180,13 @@ exports.getTransactionsPDF = async (req, res) => {
 }
 
 exports.getTransactionsPDFAdmin = async (req, res) => {
-  const { folioId } = req.body
+  const { folioNumber } = req.body
 
-  const folio = await Folios.findOne({ folioId: folioId })
+  const userFolio = await Folios.findOne({ folioNumber: folioNumber })
 
-  const user = await Users.findById(folio.user)
+  const user = await Users.findById(userFolio.user)
 
-  const userFolio = await Folios.findOne({ folioId: folioId })
-
-  const transaction = await FolioTransactions.find({ folio: folio._id })
+  const transaction = await FolioTransactions.find({ folio: userFolio._id })
 
   transaction.sort(function (a, b) {
     var keyA = new Date(a.date),
