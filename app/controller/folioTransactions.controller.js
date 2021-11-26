@@ -6,6 +6,42 @@ const Users = require('../modals/user.modals')
 
 const { transactionReport } = require('../transactionPdf/transactionReport')
 
+const isValid = async (type, amount, date, userFolio) => {
+  // Transaction must be after Folio Creation Date
+
+  var trxTime = new Date(date).getTime()
+  var lastTrxTime = new Date(userFolio.lastTransactionDate).getTime()
+  var folioStartTime = new Date(userFolio.date).getTime()
+  var currentContribution = userFolio.contribution
+
+  if (folioStartTime > trxTime)
+    return {
+      error: 'Date Must be on or after Folio Registration date',
+      valid: false,
+    }
+
+  //Must have suffeicent amount for withdrwal
+
+  if (type == 3)
+    if (currentContribution < Math.abs(amount))
+      return { error: 'Insufficient Contributed Amount', valid: false }
+
+  // Transaction must be after last transaction date
+
+  if (lastTrxTime > trxTime)
+    return {
+      error: 'Transaction Date must be after or on last transaction date',
+      valid: false,
+    }
+
+  //Amount Must be Positive
+
+  if (amount <= 0)
+    return { error: 'Amount must be greater than zero', valid: false }
+
+  return { valid: true }
+}
+
 exports.getTransactions = async (req, res) => {
   const { folioNumber } = req.body
 
@@ -46,11 +82,9 @@ exports.getTransactions = async (req, res) => {
 }
 
 exports.addTransaction = async (req, res) => {
-  const { folioNumber, type, amount, date, narration } = req.body
+  const { folioNumber, statements } = req.body
 
-  // console.log(req.body)
-
-  const userFolio = await Folios.findOne({ folioNumber: folioNumber })
+  var userFolio = await Folios.findOne({ folioNumber: folioNumber })
 
   const user = await Users.findById(userFolio.user)
 
@@ -61,86 +95,46 @@ exports.addTransaction = async (req, res) => {
     })
   }
 
-  // Conditions Before Adding Trnsaction
+  for (var i = 0; i < statements.length; i++) {
+    var type = statements[i].type
+    var amount = statements[i].amount
+    var date = statements[i].date
+    var narration = statements[i].narration
 
-  // Transaction Must be After or on Folio Creation Date
+    // var check = await isValid(type, amount, date, userFolio)
 
-  if (new Date(userFolio.date).getTime() > new Date(date).getTime()) {
-    return res.status(400).json({
-      status: false,
-      error: 'Date Must be on or after Folio Registration date',
+    // if (!check.valid)
+    //   return res.status(400).json({ status: false, error: check.error })
+
+    var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
+
+    if (type == '2') userFolio.yieldAmount += Amount
+    userFolio.contribution += Amount
+    userFolio.lastTransactionDate = new Date(date)
+
+    const newFolioTransaction = await FolioTransactions.create({
+      user: user._id,
+      folio: userFolio._id,
+      addedBy: req.user._id,
+      type: type,
+      amount: Amount,
+      date: new Date(
+        new Date(date).setHours(
+          new Date().getHours(),
+          new Date().getMinutes(),
+          new Date().getSeconds()
+        )
+      ),
+      narration: narration,
     })
+    // console.log('Transaction added ', newFolioTransaction)
   }
-
-  // Withdrwal Transaction must have enough contribution
-
-  if (type == 3) {
-    if (userFolio.contribution < Math.abs(amount)) {
-      return res
-        .status(400)
-        .json({ status: false, error: 'Insufficient Contributed Amount' })
-    }
-  }
-
-  // Transaction must be after last transaction date
-
-  if (
-    new Date(userFolio.lastTransactionDate).getTime() > new Date(date).getTime()
-  ) {
-    return res.status(400).json({
-      status: false,
-      error: 'Transaction Date must be after or on last transaction date',
-    })
-  }
-
-  //Amount Must be Positive
-
-  if (amount <= 0) {
-    return res.status(400).json({
-      status: false,
-      error: 'Amount must be greater than zero',
-    })
-  }
-
-  var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
-
-  userFolio.contribution += Amount
-
-  if (type == '2') {
-    userFolio.yieldAmount += Amount
-  }
-
-  userFolio.lastTransactionDate = new Date(date)
-
-  // console.log('User Folio ', userFolio)
 
   await userFolio.save()
 
-  const newFolioTransaction = await FolioTransactions.create({
-    user: user._id,
-    folio: userFolio._id,
-    addedBy: req.user._id,
-    type: type,
-    amount: Amount,
-    date: new Date(
-      new Date(date).setHours(
-        new Date().getHours(),
-        new Date().getMinutes(),
-        new Date().getSeconds()
-      )
-    ),
-    narration: narration,
-  })
-
-  //console.log(newFolioTransaction)
-
-  if (!newFolioTransaction) {
-    return res
-      .status(400)
-      .json({ status: false, error: 'Something went wrong' })
-  }
-
-  return res.status(200).json({ status: true, data: newFolioTransaction })
+  return res
+    .status(200)
+    .json({ status: true, data: userFolio, message: 'All Transaction added' })
 }
 
 exports.editTransaction = async (req, res) => {}
@@ -149,8 +143,6 @@ exports.getTransactionsPDF = async (req, res) => {
   const { folioNumber } = req.body
 
   const user = await Users.findById(req.user._id)
-
-  // const folio = await Folios.findOne({ folioNumber: folioNumber })
 
   const userFolio = await Folios.findOne({
     folioNumber: folioNumber.toUpperCase(),
@@ -221,8 +213,6 @@ exports.getTransactionsPDF2 = async (req, res) => {
   const user = await Users.findById(userId)
 
   const userFolio = await Folios.findById(folioId)
-
-  // console.log(user)
 
   const transaction = await FolioTransactions.find({ folio: folioId })
 
