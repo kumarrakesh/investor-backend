@@ -7,6 +7,7 @@ const UserFunds = require('../modals/userFunds.modals')
 const Transactions = require('../modals/transaction.modals')
 const AWS = require('../utils/aws')
 const Folios = require('../modals/folio.modals')
+const Roles = require('../modals/roles.modals')
 require('dotenv').config()
 
 exports.getSignIn = async (req, res) => {
@@ -68,7 +69,14 @@ exports.addUser = async (req, res) => {
 
     req.body.password = await bycryptjs.hash(password, 12)
 
-    req.body.role = '616d2f588d908648c28d63a1' //HARDCODED ROLE FOR USER , It is object id from role.modals
+    var role_ID = await Roles.findOne({ role: 'USER' })
+
+    // if (!role_ID) {
+    //   role_ID = await Roles.create({ role: 'USER' })
+    //   console.log('USER ROLE ADDED', role_ID)
+    // }
+
+    req.body.role = role_ID._id
 
     const searchuser = await Users.findOne({ username: username.toLowerCase() })
 
@@ -213,7 +221,9 @@ exports.updateProfileAdmin = async (req, res) => {
 }
 
 exports.allUsers = async (req, res) => {
-  const users = await Users.find({ role: '616d2f588d908648c28d63a1' }) //Only Users Not Admin
+  const role_ID = await Roles.findOne({ role: 'USER' })
+
+  const users = await Users.find({ role: role_ID._id }) //Only Users Not Admin
 
   var usersData = JSON.parse(JSON.stringify(users))
 
@@ -275,7 +285,11 @@ exports.allUsers = async (req, res) => {
 }
 
 exports.allUsersNew = async (req, res) => {
-  const users = await Users.find({ role: '616d2f588d908648c28d63a1' }) //Only Users Not Admin
+  const role_ID = await Roles.findOne({ role: 'USER' })
+
+  // console.log(role_ID)
+
+  const users = await Users.find({ role: role_ID._id }) //Only Users Not Admin
 
   var usersData = JSON.parse(JSON.stringify(users))
 
