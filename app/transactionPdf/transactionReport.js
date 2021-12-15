@@ -1,6 +1,6 @@
 var html_to_pdf = require('html-pdf-node')
 
-let options = { format: 'A3' }
+let options = { format: 'A4' }
 
 const displayTransaction = (t) => {
   var html = ''
@@ -709,7 +709,6 @@ exports.transactionReport = async (user, transaction, userFolio) => {
   </TR>
      ${displayTransaction(transaction)}
   <TR>
-
 <TR>
 <TD colspan=2 class="tr0 td101"><P class="p23 ft3"><NOBR>${''}</NOBR></P></TD>
 <TD class="tr0 td36"><P class="p4 ft2">&nbsp;</P></TD>
@@ -727,7 +726,6 @@ exports.transactionReport = async (user, transaction, userFolio) => {
     <TD colspan=5 class="tr0 td108"><P class="p3 ft1">Closing Share Balance: ${showTotal(
       transaction
     )}</P></TD>
-
     <TD class="tr0 td39"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td104"><P class="p4 ft2">&nbsp;</P></TD>
     <TD class="tr0 td41"><P class="p4 ft2">&nbsp;</P></TD>

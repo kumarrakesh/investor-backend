@@ -206,15 +206,15 @@ exports.getTransactionsPDFAdmin = async (req, res) => {
 }
 
 exports.getTransactionsPDF2 = async (req, res) => {
-  const folioId = '618a4a03537eb2a3707aaf45'
-  const userId = '617bec3aa1cb758124df9741'
-  0
+  const folioNumber = 'FOLIO24NOV'
 
-  const user = await Users.findById(userId)
+  const userFolio = await Folios.findOne({
+    folioNumber: folioNumber.toUpperCase(),
+  })
 
-  const userFolio = await Folios.findById(folioId)
+  const user = await Users.findById(userFolio.user)
 
-  const transaction = await FolioTransactions.find({ folio: folioId })
+  const transaction = await FolioTransactions.find({ folio: userFolio._id })
 
   transaction.sort(function (a, b) {
     var keyA = new Date(a.date),
