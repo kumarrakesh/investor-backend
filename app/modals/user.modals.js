@@ -38,15 +38,18 @@ var userSchema = new mongoose.Schema({
   },
   city: {
     type: String,
+    default: null,
   },
   state: {
     type: String,
+    default: null,
   },
   country: {
     type: String,
   },
   pincode: {
     type: String,
+    default: null,
   },
   role: {
     type: mongoose.SchemaTypes.ObjectId,

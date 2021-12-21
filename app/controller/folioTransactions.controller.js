@@ -4,7 +4,21 @@ const FolioTransactions = require('../modals/folioTransaction.modals')
 
 const Users = require('../modals/user.modals')
 
+const Configs = require('../modals/config.modals')
+
 const { transactionReport } = require('../transactionPdf/transactionReport')
+
+const createConfig = async () => {
+  const isPresent = await Configs.count({})
+  if (!isPresent) {
+    const addConfig = await Configs.create({})
+    console.log('Default Confg added', addConfig)
+  } else {
+    console.log('Configration present')
+  }
+}
+
+createConfig()
 
 const isValid = async (type, amount, date, userFolio) => {
   // Transaction must be after Folio Creation Date
@@ -144,6 +158,8 @@ exports.getTransactionsPDF = async (req, res) => {
 
   const user = await Users.findById(req.user._id)
 
+  const config = await Configs.find({})
+
   const userFolio = await Folios.findOne({
     folioNumber: folioNumber.toUpperCase(),
   })
@@ -165,7 +181,12 @@ exports.getTransactionsPDF = async (req, res) => {
     return 0
   })
 
-  const pdffile = await transactionReport(user, transaction, userFolio)
+  const pdffile = await transactionReport(
+    user,
+    transaction,
+    userFolio,
+    config[0]
+  )
 
   var data = pdffile
   res.contentType('application/pdf')
@@ -179,6 +200,8 @@ exports.getTransactionsPDFAdmin = async (req, res) => {
     folioNumber: folioNumber.toUpperCase(),
   })
 
+  const config = await Configs.find({})
+
   const user = await Users.findById(userFolio.user)
 
   const transaction = await FolioTransactions.find({ folio: userFolio._id })
@@ -198,7 +221,12 @@ exports.getTransactionsPDFAdmin = async (req, res) => {
     return 0
   })
 
-  const pdffile = await transactionReport(user, transaction, userFolio)
+  const pdffile = await transactionReport(
+    user,
+    transaction,
+    userFolio,
+    config[0]
+  )
 
   var data = pdffile
   res.contentType('application/pdf')
@@ -206,34 +234,48 @@ exports.getTransactionsPDFAdmin = async (req, res) => {
 }
 
 exports.getTransactionsPDF2 = async (req, res) => {
-  const folioNumber = 'FOLIO24NOV'
+  try {
+    const folioNumber = 'FOLIO24NOV'
 
-  const userFolio = await Folios.findOne({
-    folioNumber: folioNumber.toUpperCase(),
-  })
+    const config = await Configs.find({})
 
-  const user = await Users.findById(userFolio.user)
+    console.log(config)
 
-  const transaction = await FolioTransactions.find({ folio: userFolio._id })
+    const userFolio = await Folios.findOne({
+      folioNumber: folioNumber.toUpperCase(),
+    })
 
-  transaction.sort(function (a, b) {
-    var keyA = new Date(a.date),
-      keyB = new Date(b.date)
-    if (keyA < keyB) return 1
-    if (keyA > keyB) return -1
-    else {
-      if (a.sno < b.sno) {
-        return 1
-      } else {
-        return -1
+    const user = await Users.findById(userFolio.user)
+
+    const transaction = await FolioTransactions.find({ folio: userFolio._id })
+
+    transaction.sort(function (a, b) {
+      var keyA = new Date(a.date),
+        keyB = new Date(b.date)
+      if (keyA < keyB) return 1
+      if (keyA > keyB) return -1
+      else {
+        if (a.sno < b.sno) {
+          return 1
+        } else {
+          return -1
+        }
       }
-    }
-    return 0
-  })
+      return 0
+    })
 
-  const pdffile = await transactionReport(user, transaction, userFolio)
+    const pdffile = await transactionReport(
+      user,
+      transaction,
+      userFolio,
+      config[0]
+    )
 
-  var data = pdffile
-  res.contentType('application/pdf')
-  res.send(data)
+    var data = pdffile
+    res.contentType('application/pdf')
+    res.send(data)
+  } catch (err) {
+    console.log(err)
+    res.send('error')
+  }
 }
