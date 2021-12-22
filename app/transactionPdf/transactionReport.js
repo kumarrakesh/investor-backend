@@ -12,11 +12,13 @@ const displayTransaction = (t) => {
         border-radius:10px;
         padding-bottom: 12px;
         font-family: 700;
+        font-size:150%;
         background-color: #e8eef9;
         color: rgb(0, 0, 0);">Date</th>
         <th style=" padding-top: 12px;
         padding-left: 15px;
         padding-bottom: 12px;
+        font-size:150%;
         border: 1px solid rgb(107, 106, 106);
         font-family: 700;
         background-color: #e8eef9;
@@ -26,6 +28,7 @@ const displayTransaction = (t) => {
         padding-bottom: 12px;
         border: 1px solid rgb(107, 106, 106);
         font-family: 700;
+        font-size:150%;
         background-color: #e8eef9;
         color: rgb(0, 0, 0);">Distribution</th>
         <th style=" padding-top: 12px;
@@ -33,6 +36,7 @@ const displayTransaction = (t) => {
         padding-bottom: 12px;
         border: 1px solid rgb(107, 106, 106);
         font-family: 700;
+        font-size:150%;
         background-color: #e8eef9;
         color: rgb(0, 0, 0);">Contribution</th>
         <th style=" padding-top: 12px;
@@ -40,6 +44,7 @@ const displayTransaction = (t) => {
         padding-bottom: 12px;
         border: 1px solid rgb(107, 106, 106);
         font-family: 700;
+        font-size:150%;
         background-color: #e8eef9;
         color: rgb(0, 0, 0);">Redemption</th>
         </tr>`
@@ -48,7 +53,7 @@ const displayTransaction = (t) => {
     var row = t[i]
     var data = `
      <tr>
-     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:large;font-weight:500">${new Date(
+     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:150%;font-weight:500">${new Date(
        row.date
      ).toLocaleString('it-IT', {
        timeZone: 'Asia/Kolkata',
@@ -56,20 +61,20 @@ const displayTransaction = (t) => {
        month: '2-digit',
        day: 'numeric',
      })}</td>
-     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;">${
+     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:150%;">${
        row.type == '1'
          ? 'Contribution'
          : row.type == '3'
          ? 'Redemption'
          : 'Distribution'
      }</td>
-     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;">${
+     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:150%">${
        row.type == '2' ? row.amount : ''
      }</td>
-     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;">${
+     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:150%;">${
        row.type == '1' ? row.amount : ''
      }</td>
-     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;">${
+     <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:150%">${
        row.type == '3' ? -1 * row.amount : ''
      }</td>
    </tr>`
@@ -121,16 +126,16 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
     </head>
     <body>
      <div style="display: flex;flex-direction: row;justify-content: space-around;">
-      <div style="width: 10px;height: 80px;background-color:rgb(255, 58, 32);margin-top: 40px;margin-right: -180px;">
-  
+      <div style="width: 10px;height: 80px;background-color:rgb(255, 58, 32);margin-top: 40px;margin-left:90px;">
       </div>
-         <div style="margin-top:35px;margin:2% 6%">
-            <h2 style="color:rgb(107, 106, 106);">Client Investment Folio Statement</h2>
-            <h2>
+         <div style="margin-top:35px;margin:2% 6%;margin-left:10px;">
+            <h2 style="color:rgb(107, 106, 106);font-weight:700;">Client Investment Folio Statement</h2>
+            <h2 style="font-weight:700;">
             ${config.companyName}
             </h2>
          </div>
          <div>
+         <h1 style="width:250px;visibility: hidden;">TIW</h1>
          </div>
      </div>
      <h3 style="padding-left: 120px;">Statement Date : ${new Date().toLocaleString(
@@ -146,13 +151,13 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
          <h4 style="font-weight: 700;">Personal Information</h4>
          <div  style="display: flex;flex-direction: row;">
            <div><h2 style="color:#2b4b82">${user.name}</h2></div>
-           <div style="margin-left: 150px;"><h3 style="color:rgb(107, 106, 106)">| Folio No. <span style="color:#2b4b82">${
+           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)">| Folio No. <span style="color:#2b4b82">${
              userFolio.folioNumber
            }</span> </h3></div>
-           <div style="margin-left: 100px;"><h3 style="color:rgb(107, 106, 106)">| Yield  <span style="color:#2b4b82">${
+           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)">| Yield  <span style="color:#2b4b82">${
              userFolio.yield
            }%</span></h3></div>
-           <div style="margin-left: 100px;"><h3 style="color:rgb(107, 106, 106)">| Currency  <span style="color:#2b4b82">${
+           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)">| Currency  <span style="color:#2b4b82">${
              userFolio.currency
            }</span></h3></div>
          </div>
@@ -160,7 +165,7 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
          <div style="display: flex;flex-direction: row;margin-top: 2%;justify-content: space-around;align-items:center;">
              <div style="margin-left: -250px;">
                   <h3 style="color:rgb(107, 106, 106)">Address 1</h3>
-                  <h3>${user.address || ''}</h3>
+                  <h3>${user.address || 'NA'}</h3>
                   <h3 style="color:rgb(107, 106, 106);margin-top: 30px;">Email ID</h3>
                   <h3>${user.email || ''}</h3>
              </div>
@@ -209,7 +214,7 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
       ${displayTransaction(transaction)}
     </table>
      </div">
-     <h5 style="margin-top:10px;padding-left: 120px;">Thank you for investing in ${
+     <h5 style="margin-top:10px;padding-left: 120px;font-size:150%;font-weight:500;">Thank you for investing in ${
        config.companyName
      }</h5>
      <div style="margin-bottom: -15px; margin-top: 6%;background-color:#e8eef9;padding:30px;padding-left: 120px;">
@@ -275,7 +280,7 @@ const nextPageTemplate = (transaction, config) => {
       ${displayTransaction(transaction)}         
     </table>
     </div">
-     <h5 style="margin-top:10px;padding-left: 120px;">Thank you for investing in ${
+     <h5 style="margin-top:10px;padding-left: 120px;font-size:150%;font-weight:500;">Thank you for investing in ${
        config.companyName
      }</h5>
      <div style="margin-bottom: -15px; margin-top: 6%;background-color:#e8eef9;padding:30px;padding-left: 120px;">
@@ -302,7 +307,7 @@ exports.transactionReport = async (user, transaction, userFolio, config) => {
 
   var firstPageTrnx
 
-  if (transaction.length < 4) {
+  if (transaction.length < 3) {
     firstPageTrnx = transaction
 
     let file = {
@@ -315,7 +320,7 @@ exports.transactionReport = async (user, transaction, userFolio, config) => {
 
     transaction = []
   } else {
-    firstPageTrnx = transaction.slice(0, 4)
+    firstPageTrnx = transaction.slice(0, 3)
 
     let file = {
       content: firstPageTemplate(user, firstPageTrnx, userFolio, config),
@@ -325,7 +330,7 @@ exports.transactionReport = async (user, transaction, userFolio, config) => {
 
     pdfsBuffers.push(pdfBuffer)
 
-    transaction.splice(0, 4)
+    transaction.splice(0, 3)
   }
 
   var nextPageTrx = []

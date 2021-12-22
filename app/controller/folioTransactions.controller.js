@@ -157,7 +157,7 @@ exports.getTransactionsPDF = async (req, res) => {
   const { folioNumber } = req.body
 
   if (!folioNumber) {
-    res.send('error')
+    return res.send('error')
   }
   const user = await Users.findById(req.user._id)
 
@@ -168,7 +168,7 @@ exports.getTransactionsPDF = async (req, res) => {
   })
 
   if (!userFolio) {
-    res.send('error')
+    return res.send('error')
   }
   console.log(userFolio)
 
@@ -205,7 +205,7 @@ exports.getTransactionsPDFAdmin = async (req, res) => {
   const { folioNumber } = req.body
 
   if (!folioNumber) {
-    res.send('erro')
+    return res.send('error')
   }
 
   const userFolio = await Folios.findOne({
@@ -213,7 +213,7 @@ exports.getTransactionsPDFAdmin = async (req, res) => {
   })
 
   if (!userFolio) {
-    res.send('error')
+    return res.send('error')
   }
 
   const config = await Configs.find({})
