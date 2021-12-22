@@ -25,6 +25,10 @@ var folioSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Double,
     default: 0,
   },
+  currency: {
+    type: String,
+    default: 'USD',
+  },
   date: {
     type: Date,
     required: true,

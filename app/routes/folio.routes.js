@@ -52,4 +52,5 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.deleteFolio
   )
+  app.get('/api/avaliable/currency', controller.avaliableCurrency)
 }

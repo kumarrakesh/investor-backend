@@ -156,6 +156,9 @@ exports.editTransaction = async (req, res) => {}
 exports.getTransactionsPDF = async (req, res) => {
   const { folioNumber } = req.body
 
+  if (!folioNumber) {
+    res.send('error')
+  }
   const user = await Users.findById(req.user._id)
 
   const config = await Configs.find({})
@@ -163,6 +166,11 @@ exports.getTransactionsPDF = async (req, res) => {
   const userFolio = await Folios.findOne({
     folioNumber: folioNumber.toUpperCase(),
   })
+
+  if (!userFolio) {
+    res.send('error')
+  }
+  console.log(userFolio)
 
   const transaction = await FolioTransactions.find({ folio: userFolio._id })
 
@@ -196,9 +204,17 @@ exports.getTransactionsPDF = async (req, res) => {
 exports.getTransactionsPDFAdmin = async (req, res) => {
   const { folioNumber } = req.body
 
+  if (!folioNumber) {
+    res.send('erro')
+  }
+
   const userFolio = await Folios.findOne({
     folioNumber: folioNumber.toUpperCase(),
   })
+
+  if (!userFolio) {
+    res.send('error')
+  }
 
   const config = await Configs.find({})
 

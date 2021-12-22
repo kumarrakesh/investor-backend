@@ -7,7 +7,13 @@ exports.validateEmail = (username) => {
 exports.validatePassword = (password) => {}
 
 exports.validateFolioNumber = (folioNumber) => {
-  const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$/
+  const regexAlphaNumeric = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$/
+  const regexAlphaOnly = /^[A-Za-z]+$/
+  const regexNumeric = /^[0-9]*$/
 
-  return regex.test(folioNumber)
+  return (
+    regexAlphaNumeric.test(folioNumber) ||
+    regexAlphaOnly.test(folioNumber) ||
+    regexNumeric.test(folioNumber)
+  )
 }

@@ -1,10 +1,11 @@
 const Folios = require('../modals/folio.modals')
+const Configs = require('../modals/config.modals')
 const FolioTransactions = require('../modals/folioTransaction.modals')
 const Users = require('../modals/user.modals')
 const { validateFolioNumber } = require('../utils/validate')
 
 exports.addFolio = async (req, res) => {
-  const { userId, commitment, yield, date, folioNumber } = req.body
+  const { userId, commitment, yield, date, folioNumber, currency } = req.body
 
   if (!folioNumber) {
     return res.status(400).json({ error: 'Folio Number is Required' })
@@ -19,9 +20,10 @@ exports.addFolio = async (req, res) => {
   }
 
   if (!validateFolioNumber(folioNumber, res)) {
-    return res
-      .status(400)
-      .json({ status: false, error: 'Folio Number is not Alphanumeric' })
+    return res.status(400).json({
+      status: false,
+      error: 'Folio Number can be Alphanumeric,Numeric and Alphabets only',
+    })
   }
 
   const folio = await Folios.findOne({ folioNumber: folioNumber.toUpperCase() })
@@ -38,6 +40,7 @@ exports.addFolio = async (req, res) => {
     commitment: commitment,
     contribution: 0,
     yield: yield,
+    currency: currency,
     date: new Date(new Date(date).setHours(0, 0, 0, 0)),
   })
 
@@ -100,4 +103,18 @@ exports.deleteFolio = async (req, res) => {
   const deleteFolio = await Folios.remove({ folioNumber: folioNumber })
 
   return res.status(200).json({ status: true, message: 'Deleted Succesfully' })
+}
+
+exports.avaliableCurrency = async (req, res) => {
+  try {
+    const config = await Configs.find({})
+
+    return res.json({
+      status: true,
+      message: 'Avaliable Currency',
+      data: config[0].currency,
+    })
+  } catch (err) {
+    console.log(err)
+  }
 }

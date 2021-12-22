@@ -146,33 +146,31 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
          <h4 style="font-weight: 700;">Personal Information</h4>
          <div  style="display: flex;flex-direction: row;">
            <div><h2 style="color:#2b4b82">${user.name}</h2></div>
-           <div style="margin-left: 200px;"><h3 style="color:rgb(107, 106, 106)">| Folio No. <span style="color:#2b4b82">${
+           <div style="margin-left: 150px;"><h3 style="color:rgb(107, 106, 106)">| Folio No. <span style="color:#2b4b82">${
              userFolio.folioNumber
            }</span> </h3></div>
-           <div style="margin-left: 200px;"><h3 style="color:rgb(107, 106, 106)">| Yield  <span style="color:#2b4b82">${
+           <div style="margin-left: 100px;"><h3 style="color:rgb(107, 106, 106)">| Yield  <span style="color:#2b4b82">${
              userFolio.yield
            }%</span></h3></div>
+           <div style="margin-left: 100px;"><h3 style="color:rgb(107, 106, 106)">| Currency  <span style="color:#2b4b82">${
+             userFolio.currency
+           }</span></h3></div>
          </div>
         
          <div style="display: flex;flex-direction: row;margin-top: 2%;justify-content: space-around;align-items:center;">
              <div style="margin-left: -250px;">
                   <h3 style="color:rgb(107, 106, 106)">Address 1</h3>
-                  <h3>${user.address || 'NA'}</h3>
-
+                  <h3>${user.address || ''}</h3>
                   <h3 style="color:rgb(107, 106, 106);margin-top: 30px;">Email ID</h3>
-                  <h3>${user.email}</h3>
+                  <h3>${user.email || ''}</h3>
              </div>
              <div style="margin-right: -30px;">
               <h3 style="color:rgb(107, 106, 106)">Address 2</h3>
-              <h3>${
-                user.city ||
-                ' ' + ' ' + user.state ||
-                ' ' + ' ' + user.pincode ||
-                ' ' + ' '
-              }</h3>
-  
+              <h3>${user.city || ''},${user.state || ''},${
+    user.pincode || ''
+  } </h3>
               <h3 style="color:rgb(107, 106, 106);margin-top: 30px;">Phone Number</h3>
-              <h3>${user.phoneNo}</h3>
+              <h3>${user.phoneNo || ''}</h3>
              </div>
          </div>
      </div>

@@ -55,7 +55,6 @@ exports.addUser = async (req, res) => {
   try {
     var {
       name,
-      username,
       password,
       passport,
       maturity,
@@ -65,20 +64,17 @@ exports.addUser = async (req, res) => {
       country,
       pincode,
       role,
+      phoneNo,
+      email,
     } = req.body
 
     req.body.password = await bycryptjs.hash(password, 12)
 
     var role_ID = await Roles.findOne({ role: 'USER' })
 
-    // if (!role_ID) {
-    //   role_ID = await Roles.create({ role: 'USER' })
-    //   console.log('USER ROLE ADDED', role_ID)
-    // }
-
     req.body.role = role_ID._id
 
-    const searchuser = await Users.findOne({ username: username.toLowerCase() })
+    const searchuser = await Users.findOne({ username: passport.toLowerCase() })
 
     if (searchuser) {
       return res.status(400).json({
@@ -86,21 +82,21 @@ exports.addUser = async (req, res) => {
         error: 'User is already registered',
       })
     }
-    // console.log(req.file)
+
     if (req.file) {
       const profilePic = await AWS.uploadImage(req)
       req.body.profilePic = profilePic
     }
+
     const usersCount = await Users.count()
 
     req.body.userId = usersCount + 1
 
-    req.body.username = username.toLowerCase()
+    req.body.username = passport.toLowerCase()
+
     req.body.passport = passport.toLowerCase()
 
     const user = await Users.create(req.body)
-
-    console.log(user)
 
     return res.status(200).json({
       success: true,
@@ -126,13 +122,11 @@ exports.updateProfile = async (req, res) => {
     country,
     pincode,
     password,
+    email,
+    phoneNo,
   } = req.body
 
-  console.log(req.body)
-
   var user = await Users.findById(req.user._id)
-
-  console.log(user)
 
   user.name = name
   user.passport = passport
@@ -142,6 +136,8 @@ exports.updateProfile = async (req, res) => {
   user.state = state
   user.country = country
   user.pincode = pincode
+  user.email = email
+  user.phoneNo = phoneNo
 
   if (password) {
     user.password = await bycryptjs.hash(password, 12)
@@ -172,6 +168,8 @@ exports.updateProfileAdmin = async (req, res) => {
     country,
     pincode,
     password,
+    phoneNo,
+    email,
   } = req.body
 
   var user = await Users.findById(userId)
@@ -181,8 +179,6 @@ exports.updateProfileAdmin = async (req, res) => {
   if (user.username != passport) {
     searchuser = await Users.findOne({ username: passport.toLowerCase() })
   }
-
-  // console.log(searchuser)
 
   if (searchuser) {
     return res.status(400).json({
@@ -200,6 +196,8 @@ exports.updateProfileAdmin = async (req, res) => {
   user.state = state
   user.country = country
   user.pincode = pincode
+  user.phoneNo = phoneNo
+  user.email = email
 
   if (password) {
     user.password = await bycryptjs.hash(password, 12)
@@ -211,8 +209,6 @@ exports.updateProfileAdmin = async (req, res) => {
   }
 
   await user.save()
-
-  // console.log(user)
 
   return res.status(200).json({
     success: true,
@@ -263,7 +259,6 @@ exports.allUsers = async (req, res) => {
       var fund = await Funds.findOne({ fundname: userFunds[j].fundname })
 
       currentValue += userFunds[j].totalUnits * fund.nav
-      // console.log(userFunds[j].totalUnits * fund.nav)
     }
 
     usersData[i].totalInvested = userData?.totalInvested || 0
@@ -287,8 +282,6 @@ exports.allUsers = async (req, res) => {
 exports.allUsersNew = async (req, res) => {
   const role_ID = await Roles.findOne({ role: 'USER' })
 
-  // console.log(role_ID)
-
   const users = await Users.find({ role: role_ID._id }) //Only Users Not Admin
 
   var usersData = JSON.parse(JSON.stringify(users))
@@ -307,8 +300,6 @@ exports.allUsersNew = async (req, res) => {
       },
     },
   ])
-
-  // console.log(usersTotalInvested)
 
   for (var i = 0; i < usersData.length; i++) {
     usersData[i].dateOfCreation = usersData[i]?.maturity
@@ -369,8 +360,6 @@ exports.getProfile = async (req, res) => {
       },
     },
   ])
-
-  //console.log(usersTotalInvested)
 
   return res.status(200).json({
     status: true,

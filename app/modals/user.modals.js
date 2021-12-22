@@ -60,10 +60,6 @@ var userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  mobileNo: {
-    type: String,
-    default: '',
-  },
   phoneNo: {
     type: String,
     default: '',
