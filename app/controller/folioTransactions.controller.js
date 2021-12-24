@@ -122,8 +122,14 @@ exports.addTransaction = async (req, res) => {
 
     var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
 
-    if (type == '2') userFolio.yieldAmount += Amount
-    userFolio.contribution += Amount
+    if (type == '2') {
+      userFolio.yieldAmount += Amount
+    } else if (type == '1') {
+      userFolio.contribution += Amount
+    } else {
+      userFolio.redemptionAmount += -1 * Amount
+    }
+
     userFolio.lastTransactionDate = new Date(date)
 
     const newFolioTransaction = await FolioTransactions.create({
@@ -141,7 +147,6 @@ exports.addTransaction = async (req, res) => {
       ),
       narration: narration,
     })
-    // console.log('Transaction added ', newFolioTransaction)
   }
 
   await userFolio.save()

@@ -4,6 +4,50 @@ const { merge } = require('merge-pdf-buffers')
 
 // page 1 - 6 nd others 23
 
+const addEmptySpaceIfNoTransactionFirstPage = (length) => {
+  console.log(length)
+  const left = 3 - length
+  var extraDives = ''
+  for (var i = 0; i < left; i++) {
+    extraDives += `<div style="padding:10px;visibility: hidden;">EXTRA SPACE</div>`
+  }
+  return extraDives
+}
+
+const addEmptySpaceIfNoTransactionNextPage = (length) => {
+  console.log(length)
+  var left = 18 - length
+  left = left * 2
+  var extraDives = ''
+  for (var i = 0; i < left; i++) {
+    extraDives += `<div style="padding:10px;visibility: hidden;">EXTRA SPACE</div>`
+  }
+  return extraDives
+}
+const showAddress2 = (city, state, pincode) => {
+  var address = null
+  if (city) {
+    address = city
+  }
+  if (state) {
+    if (address) {
+      address += ' ,' + state
+    } else {
+      address = state
+    }
+  }
+  if (pincode) {
+    if (address) {
+      address += ' ,' + pincode
+    } else {
+      address = pincode
+    }
+  }
+
+  if (address) return address
+  return 'NA'
+}
+
 const displayTransaction = (t) => {
   var html = `<tr>
         <th style=" padding-top: 12px;
@@ -49,7 +93,7 @@ const displayTransaction = (t) => {
         color: rgb(0, 0, 0);">Redemption</th>
         </tr>`
 
-  for (var i = t.length - 1; i >= 0; i--) {
+  for (var i = 0; i < t.length; i++) {
     var row = t[i]
     var data = `
      <tr>
@@ -126,10 +170,10 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
     </head>
     <body>
      <div style="display: flex;flex-direction: row;justify-content: space-around;">
-      <div style="width: 10px;height: 80px;background-color:rgb(255, 58, 32);margin-top: 40px;margin-left:90px;">
+      <div style="width: 10px;height: 90px;background-color:rgb(255, 58, 32);margin-top: 40px;margin-left:80px;">
       </div>
          <div style="margin-top:35px;margin:2% 6%;margin-left:10px;">
-            <h2 style="color:rgb(107, 106, 106);font-weight:700;">Client Investment Folio Statement</h2>
+            <h2 style="color:rgb(107, 106, 100);font-weight:700;">Client Investment Folio Statement</h2>
             <h2 style="font-weight:700;">
             ${config.companyName}
             </h2>
@@ -138,7 +182,7 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
          <h1 style="width:250px;visibility: hidden;">TIW</h1>
          </div>
      </div>
-     <h3 style="padding-left: 120px;">Statement Date : ${new Date().toLocaleString(
+     <h3 style="padding-left: 90px;padding-bottom:-10px;">Statement Date : ${new Date().toLocaleString(
        'it-IT',
        {
          timeZone: 'Asia/Kolkata',
@@ -148,55 +192,61 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
        }
      )}</h3>
      <div style="padding: 40px;border: 1px solid rgb(107, 106, 106);margin:2% 6%;border-radius:10px;">
-         <h4 style="font-weight: 700;">Personal Information</h4>
+         <h4 style="font-weight: 700;margin-left:25px;">Personal Information</h4>
          <div  style="display: flex;flex-direction: row;">
-           <div><h2 style="color:#2b4b82">${user.name}</h2></div>
+           <div><h2 style="color:#2b4b82;margin-left:25px;width:210px;">${
+             user.name || 'NA'
+           }</h2></div>
            <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)">| Folio No. <span style="color:#2b4b82">${
              userFolio.folioNumber
            }</span> </h3></div>
-           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)">| Yield  <span style="color:#2b4b82">${
+           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)"> Yield  <span style="color:#2b4b82">${
              userFolio.yield
            }%</span></h3></div>
-           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)">| Currency  <span style="color:#2b4b82">${
+           <div style="margin-left: 80px;"><h3 style="color:rgb(107, 106, 106)"> Currency  <span style="color:#2b4b82">${
              userFolio.currency
            }</span></h3></div>
          </div>
         
-         <div style="display: flex;flex-direction: row;margin-top: 2%;justify-content: space-around;align-items:center;">
-             <div style="margin-left: -250px;">
+         <div style="display: flex;flex-direction: row;margin-left:20px;margin-top: 2%;justify-content: space-around;align-items:center;">
+             <div style="flex:0.5;">
                   <h3 style="color:rgb(107, 106, 106)">Address 1</h3>
                   <h3>${user.address || 'NA'}</h3>
                   <h3 style="color:rgb(107, 106, 106);margin-top: 30px;">Email ID</h3>
-                  <h3>${user.email || ''}</h3>
+                  <h3>${user.email || 'NA'}</h3>
              </div>
-             <div style="margin-right: -30px;">
+             <div style="flex:0.5;">
               <h3 style="color:rgb(107, 106, 106)">Address 2</h3>
-              <h3>${user.city || ''},${user.state || ''},${
-    user.pincode || ''
-  } </h3>
+              <h3>${showAddress2(user.city, user.state, user.pincode)} </h3>
               <h3 style="color:rgb(107, 106, 106);margin-top: 30px;">Phone Number</h3>
-              <h3>${user.phoneNo || ''}</h3>
+              <h3>${user.phoneNo || 'NA'}</h3>
              </div>
          </div>
      </div>
      <div>
          <div style=" margin:2% 6%;border: 1px solid rgb(107, 106, 106);;padding:40px;border-radius:10px;">     
-          <h4 style="font-weight: 700;margin-bottom: 20px;">Summary of Your Investment</h4>
+          <h4 style="font-weight: 700;margin-bottom: 20px;margin-left:25px;">Summary of Your Investment</h4>
           <div  style="display: flex;flex-direction: row;justify-content: space-between;">
-            <div>
-              <h4 style="color:rgb(107, 106, 106);">Capital Commited (USD)</h4>
+            <div style="margin-left:22px;">
+              <h4 style="color:rgb(107, 106, 106);">Capital Commited (${
+                userFolio.currency
+              })</h4>
               <h4 style="color:#2b4b82;font-weight:700;">${
                 userFolio.commitment
               }</h4>
           </div>
           <div style="margin-left: 150px;">
-              <h4 style="color:rgb(107, 106, 106)">Capital Contributed (USD)</h4>
+              <h4 style="color:rgb(107, 106, 106)">Capital Contributed (${
+                userFolio.currency
+              })</h4>
               <h4 style="color:#2b4b82;font-weight:700;">${
                 userFolio.contribution
               }</h4>
           </div>
           <div style="margin-left: 150px;">
-              <h4 style="color:rgb(107, 106, 106)">Pending Amount (USD)</h4>
+              <h4 style="color:rgb(107, 106, 106)">Pending Amount (${
+                userFolio.currency
+              })</h4>
               <h4 style="color:#2b4b82;font-weight:700;">${
                 userFolio.commitment - userFolio.contribution
               }</h4>
@@ -207,16 +257,17 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
          </div>
      </div>
      <div style="margin:2% 6%;">
-         <h4 style="font-weight: 700;border:1px solid rgb(107, 106, 106);margin-bottom: -2px;padding: 30px;">
+         <h4 style="font-weight: 700;border:1px solid rgb(107, 106, 106);margin-bottom: -2px;padding: 30px;padding-left:60px;">
              ${config.companyName}
          </h4>
   <table style="width:100%;">
       ${displayTransaction(transaction)}
     </table>
-     </div">
-     <h5 style="margin-top:10px;padding-left: 120px;font-size:150%;font-weight:500;">Thank you for investing in ${
+     </div>
+     <h5 style="margin-top:10px;padding-left: 250px;font-size:150%;font-weight:500;">Thank you for investing in ${
        config.companyName
      }</h5>
+     ${addEmptySpaceIfNoTransactionFirstPage(transaction.length)}
      <div style="margin-bottom: -15px; margin-top: 6%;background-color:#e8eef9;padding:30px;padding-left: 120px;">
          <h5 style="color:rgb(14, 76, 170);font-weight: 700;">${
            config.companyName
@@ -270,8 +321,7 @@ const nextPageTemplate = (transaction, config) => {
       ></script> 
       <title>PDF</title>
     </head>
-    <body>
-     
+    <body style="heigth:100vh;">
      <div style="margin:2% 6%;">
          <h4 style="font-weight: 700;border:1px solid rgb(107, 106, 106);margin-bottom: -2px;padding: 30px;">
              ${config.companyName}
@@ -279,11 +329,11 @@ const nextPageTemplate = (transaction, config) => {
   <table style="width:100%;">
       ${displayTransaction(transaction)}         
     </table>
-    </div">
+    </div>
      <h5 style="margin-top:10px;padding-left: 120px;font-size:150%;font-weight:500;">Thank you for investing in ${
        config.companyName
      }</h5>
-     <div style="margin-bottom: -15px; margin-top: 6%;background-color:#e8eef9;padding:30px;padding-left: 120px;">
+     <div style="margin-bottom: -15px;position:relative;bottom:0;margin-top: 6%;background-color:#e8eef9;padding:30px;padding-left: 120px;">
          <h5 style="color:rgb(14, 76, 170);font-weight: 700;">${
            config.companyName
          }</h5>
@@ -335,8 +385,8 @@ exports.transactionReport = async (user, transaction, userFolio, config) => {
 
   var nextPageTrx = []
   while (transaction.length > 0) {
-    if (transaction.length > 20) {
-      nextPageTrx = transaction.slice(0, 20)
+    if (transaction.length > 18) {
+      nextPageTrx = transaction.slice(0, 18)
 
       let file = {
         content: nextPageTemplate(nextPageTrx, config),
@@ -345,7 +395,7 @@ exports.transactionReport = async (user, transaction, userFolio, config) => {
       var pdfBuffer = await html_to_pdf.generatePdf(file, options)
 
       pdfsBuffers.push(pdfBuffer)
-      transaction.splice(0, 20)
+      transaction.splice(0, 18)
     } else {
       nextPageTrx = transaction
       let file = {
