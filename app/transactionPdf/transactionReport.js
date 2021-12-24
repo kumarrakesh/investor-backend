@@ -267,7 +267,6 @@ const firstPageTemplate = (user, transaction, userFolio, config) => {
      <h5 style="margin-top:10px;padding-left: 250px;font-size:150%;font-weight:500;">Thank you for investing in ${
        config.companyName
      }</h5>
-     ${addEmptySpaceIfNoTransactionFirstPage(transaction.length)}
      <div style="margin-bottom: -15px; margin-top: 6%;background-color:#e8eef9;padding:30px;padding-left: 120px;">
          <h5 style="color:rgb(14, 76, 170);font-weight: 700;">${
            config.companyName
