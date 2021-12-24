@@ -164,9 +164,6 @@ exports.getTransactionsPDF = async (req, res) => {
   if (!folioNumber) {
     return res.send('error')
   }
-  const user = await Users.findById(req.user._id)
-
-  const config = await Configs.find({})
 
   const userFolio = await Folios.findOne({
     folioNumber: folioNumber.toUpperCase(),
@@ -175,7 +172,10 @@ exports.getTransactionsPDF = async (req, res) => {
   if (!userFolio) {
     return res.send('error')
   }
-  console.log(userFolio)
+
+  const config = await Configs.find({})
+
+  const user = await Users.findById(userFolio.user)
 
   const transaction = await FolioTransactions.find({ folio: userFolio._id })
 
