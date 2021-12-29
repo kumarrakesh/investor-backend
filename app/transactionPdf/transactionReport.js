@@ -94,7 +94,15 @@ const displayTransaction = (t) => {
         </tr>`
 
   for (var i = 0; i < t.length; i++) {
-    var row = t[i]
+    var editHistoryLength = t[i].editHistory.length
+    var row =
+      editHistoryLength == 0
+        ? t[i]
+        : {
+            date: t[i].date,
+            type: t[i].editHistory[editHistoryLength - 1].type,
+            amount: t[i].editHistory[editHistoryLength - 1].amount,
+          }
     var data = `
      <tr>
      <td style="  border: 1px solid rgb(107, 106, 106);padding:10px;font-size:150%;font-weight:500">${new Date(

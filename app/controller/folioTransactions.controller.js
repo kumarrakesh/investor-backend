@@ -193,7 +193,7 @@ exports.editTransaction = async (req, res) => {
   const { transactionId, type, amount, narration, date } = req.body
 
   const transaction = await FolioTransactions.findById(transactionId).sort({
-    'history.sno': 1,
+    'editHistory.sno': 1,
   })
 
   var oldTransaction =
@@ -231,7 +231,7 @@ exports.editTransaction = async (req, res) => {
 
   const oldEditHistoryLength = transaction.editHistory.length
 
-  transaction.push({
+  transaction.editHistory.push({
     type: type,
     amount: newAmount,
     narration: narration,
@@ -256,7 +256,7 @@ exports.editTransaction = async (req, res) => {
 
 exports.getTransactionsPDF2 = async (req, res) => {
   try {
-    const folioNumber = 'FOLIO24NOV'
+    const folioNumber = 'FOLIO30DEC'
 
     const config = await Configs.find({})
 
