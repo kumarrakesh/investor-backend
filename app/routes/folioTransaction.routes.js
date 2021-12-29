@@ -22,7 +22,6 @@ module.exports = function (app) {
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.editTransaction
   )
-
   app.post(
     '/api/get/folio/transaction',
     [verifyToken, authorize('USER', 'ADMIN')],
@@ -33,12 +32,6 @@ module.exports = function (app) {
     '/api/download/folio/transaction',
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getTransactionsPDF
-  )
-
-  app.post(
-    '/api/download/folio/transaction/admin',
-    [verifyToken, authorize('ADMIN')],
-    controller.getTransactionsPDFAdmin
   )
 
   app.get('/api/download/folio/transaction', controller.getTransactionsPDF2)

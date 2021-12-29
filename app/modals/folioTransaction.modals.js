@@ -30,8 +30,25 @@ var transactionSchema = new mongoose.Schema({
   },
   narration: {
     type: String,
-    default: '',
+    default: null,
   },
+  editHistory: [
+    {
+      type: {
+        type: String,
+      },
+      amount: {
+        type: Number,
+      },
+      narration: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
+      sno: { type: Number },
+    },
+  ],
 })
 
 const FolioTransactions = mongoose.model('FolioTransactions', transactionSchema)

@@ -37,9 +37,6 @@ var folioSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  lastTransactionDate: {
-    type: Date,
-  },
 })
 
 const Folios = mongoose.model('Folios', folioSchema)

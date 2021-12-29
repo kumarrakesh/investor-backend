@@ -8,18 +8,6 @@ const Configs = require('../modals/config.modals')
 
 const { transactionReport } = require('../transactionPdf/transactionReport')
 
-const createConfig = async () => {
-  const isPresent = await Configs.count({})
-  if (!isPresent) {
-    const addConfig = await Configs.create({})
-    console.log('Default Confg added', addConfig)
-  } else {
-    console.log('Configration present')
-  }
-}
-
-createConfig()
-
 const isValid = async (type, amount, date, userFolio) => {
   // Transaction must be after Folio Creation Date
 
@@ -59,15 +47,10 @@ const isValid = async (type, amount, date, userFolio) => {
 exports.getTransactions = async (req, res) => {
   const { folioNumber } = req.body
 
-  if (!folioNumber) {
+  if (!folioNumber)
     return res.status(400).json({ status: false, error: 'Folio Number needed' })
-  }
-
-  console.log('GET TRANSACTION  BODY ', req.body)
 
   const folio = await Folios.findOne({ folioNumber: folioNumber })
-
-  console.log(folio)
 
   if (!folio) {
     return res.status(400).json({ status: false, error: 'No Folio Exists' })
@@ -122,15 +105,16 @@ exports.addTransaction = async (req, res) => {
 
     var Amount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
 
-    if (type == '2') {
-      userFolio.yieldAmount += Amount
-    } else if (type == '1') {
+    if (type == '1') {
+      //CONTRIBUTION
       userFolio.contribution += Amount
+    } else if (type == '2') {
+      // YEILD PAYMENT
+      userFolio.yieldAmount += Amount
     } else {
+      // REDEMPTION AMOUNT
       userFolio.redemptionAmount += -1 * Amount
     }
-
-    userFolio.lastTransactionDate = new Date(date)
 
     const newFolioTransaction = await FolioTransactions.create({
       user: user._id,
@@ -146,6 +130,7 @@ exports.addTransaction = async (req, res) => {
         )
       ),
       narration: narration,
+      editHistory: [],
     })
   }
 
@@ -155,8 +140,6 @@ exports.addTransaction = async (req, res) => {
     .status(200)
     .json({ status: true, data: userFolio, message: 'All Transaction added' })
 }
-
-exports.editTransaction = async (req, res) => {}
 
 exports.getTransactionsPDF = async (req, res) => {
   const { folioNumber } = req.body
@@ -206,53 +189,70 @@ exports.getTransactionsPDF = async (req, res) => {
   res.send(data)
 }
 
-exports.getTransactionsPDFAdmin = async (req, res) => {
-  const { folioNumber } = req.body
+exports.editTransaction = async (req, res) => {
+  const { transactionId, type, amount, narration, date } = req.body
 
-  if (!folioNumber) {
-    return res.send('error')
-  }
-
-  const userFolio = await Folios.findOne({
-    folioNumber: folioNumber.toUpperCase(),
+  const transaction = await FolioTransactions.findById(transactionId).sort({
+    'history.sno': 1,
   })
 
-  if (!userFolio) {
-    return res.send('error')
+  var oldTransaction =
+    transaction.editHistory.length == 0
+      ? { type: transaction.type, amount: transaction.amount }
+      : transaction.editHistory[transaction.editHistory.length - 1]
+
+  const userFolio = await Folios.findById(transaction.folio)
+
+  const oldType = oldTransaction.type
+
+  const oldAmount = oldTransaction.amount
+
+  // REMOVING OLD
+  if (oldType == '1') {
+    userFolio.contribution -= oldAmount
+  } else if (oldType == '2') {
+    userFolio.yieldAmount -= oldAmount
+  } else {
+    var positiveAmount = -1 * oldAmount
+    userFolio.redemptionAmount -= positiveAmount
   }
 
-  const config = await Configs.find({})
+  var newAmount = type == '3' ? -1 * parseFloat(amount) : parseFloat(amount)
 
-  const user = await Users.findById(userFolio.user)
+  //ADDING NEW
+  if (type == '1') {
+    userFolio.contribution += newAmount
+  } else if (type == '2') {
+    userFolio.yieldAmount += newAmount
+  } else {
+    var positiveAmount = -1 * newAmount
+    userFolio.redemptionAmount += positiveAmount
+  }
 
-  const transaction = await FolioTransactions.find({ folio: userFolio._id })
+  const oldEditHistoryLength = transaction.editHistory.length
 
-  transaction.sort(function (a, b) {
-    var keyA = new Date(a.date),
-      keyB = new Date(b.date)
-    if (keyA < keyB) return 1
-    if (keyA > keyB) return -1
-    else {
-      if (a.sno < b.sno) {
-        return 1
-      } else {
-        return -1
-      }
-    }
-    return 0
+  transaction.push({
+    type: type,
+    amount: newAmount,
+    narration: narration,
+    date: new Date(
+      new Date(date).setHours(
+        new Date().getHours(),
+        new Date().getMinutes(),
+        new Date().getSeconds()
+      )
+    ),
+    sno: oldEditHistoryLength + 1,
   })
 
-  const pdffile = await transactionReport(
-    user,
-    transaction,
-    userFolio,
-    config[0]
-  )
+  await transaction.save()
+  await userFolio.save()
 
-  var data = pdffile
-  res.contentType('application/pdf')
-  res.send(data)
+  return res
+    .status(200)
+    .json({ status: true, data: transaction, message: 'New Edit Added' })
 }
+// FOR TESTING
 
 exports.getTransactionsPDF2 = async (req, res) => {
   try {

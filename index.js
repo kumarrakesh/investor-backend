@@ -12,6 +12,7 @@ const port = process.env.PORT || 8000
 //DB connection
 
 require('./app/config/mongoose')
+require('./app/config/create-config')
 console.log('hello')
 app.use(cors())
 app.use(express.json())
