@@ -18,7 +18,7 @@ var transactionSchema = new mongoose.Schema({
   },
   type: {
     type: Number,
-    required: true,
+    required: [true, 'Trnsaction Type is required'],
   },
   amount: {
     type: mongoose.Schema.Types.Double,
@@ -31,6 +31,20 @@ var transactionSchema = new mongoose.Schema({
   narration: {
     type: String,
     default: null,
+  },
+  status: {
+    type: String,
+    default: 'VALID',
+    uppercase: true,
+    validate: {
+      validator: function (status) {
+        var avaliableStatus = ['VALID', 'INVALID']
+
+        if (avaliableStatus.includes(status)) return true
+        return false
+      },
+      message: 'Not a Valid status',
+    },
   },
   editHistory: [
     {

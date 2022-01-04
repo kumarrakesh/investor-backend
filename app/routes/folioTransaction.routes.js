@@ -29,6 +29,12 @@ module.exports = function (app) {
   )
 
   app.post(
+    '/api/invalid/folio/transaction',
+    [verifyToken, authorize('ADMIN')],
+    controller.invalidateTransaction
+  )
+
+  app.post(
     '/api/download/folio/transaction',
     [verifyToken, authorize('USER', 'ADMIN')],
     controller.getTransactionsPDF

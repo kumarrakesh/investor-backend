@@ -75,7 +75,11 @@ exports.getTransactions = async (req, res) => {
     return 0
   })
 
-  return res.status(200).json({ status: true, data: transactions })
+  var editTransaction = JSON.parse(JSON.stringify(transactions))
+
+  editTransaction[0].canInvalidate = true
+
+  return res.status(200).json({ status: true, data: editTransaction })
 }
 
 exports.addTransaction = async (req, res) => {
@@ -130,6 +134,7 @@ exports.addTransaction = async (req, res) => {
         )
       ),
       narration: narration,
+      status: 'VALID',
       editHistory: [],
     })
   }
@@ -141,54 +146,50 @@ exports.addTransaction = async (req, res) => {
     .json({ status: true, data: userFolio, message: 'All Transaction added' })
 }
 
-exports.getTransactionsPDF = async (req, res) => {
-  const { folioNumber } = req.body
+exports.invalidateTransaction = async (req, res) => {
+  try {
+    const { transactionId } = req.body
 
-  if (!folioNumber) {
-    return res.send('error')
-  }
+    const transaction = await FolioTransactions.findById(transactionId).sort({
+      'editHistory.sno': 1,
+    })
 
-  const userFolio = await Folios.findOne({
-    folioNumber: folioNumber.toUpperCase(),
-  })
+    var oldTransaction =
+      transaction.editHistory.length == 0
+        ? { type: transaction.type, amount: transaction.amount }
+        : transaction.editHistory[transaction.editHistory.length - 1]
 
-  if (!userFolio) {
-    return res.send('error')
-  }
+    const userFolio = await Folios.findById(transaction.folio)
 
-  const config = await Configs.find({})
+    const oldType = oldTransaction.type
 
-  const user = await Users.findById(userFolio.user)
+    const oldAmount = oldTransaction.amount
 
-  const transaction = await FolioTransactions.find({ folio: userFolio._id })
-
-  transaction.sort(function (a, b) {
-    var keyA = new Date(a.date),
-      keyB = new Date(b.date)
-    if (keyA < keyB) return 1
-    if (keyA > keyB) return -1
-    else {
-      if (a.sno < b.sno) {
-        return 1
-      } else {
-        return -1
-      }
+    // REMOVING OLD
+    if (oldType == '1') {
+      userFolio.contribution -= oldAmount
+    } else if (oldType == '2') {
+      userFolio.yieldAmount -= oldAmount
+    } else {
+      var positiveAmount = -1 * oldAmount
+      userFolio.redemptionAmount -= positiveAmount
     }
-    return 0
-  })
 
-  const pdffile = await transactionReport(
-    user,
-    transaction,
-    userFolio,
-    config[0]
-  )
+    transaction.status = 'INVALID'
 
-  var data = pdffile
-  res.contentType('application/pdf')
-  res.send(data)
+    await transaction.save()
+    await userFolio.save()
+
+    return res
+      .status(200)
+      .json({ status: true, data: transaction, message: 'Done' })
+  } catch (err) {
+    console.log(err)
+    return res
+      .status(400)
+      .json({ status: false, error: 'Something went wrong' })
+  }
 }
-
 exports.editTransaction = async (req, res) => {
   const { transactionId, type, amount, narration, date } = req.body
 
@@ -252,6 +253,57 @@ exports.editTransaction = async (req, res) => {
     .status(200)
     .json({ status: true, data: transaction, message: 'New Edit Added' })
 }
+
+exports.getTransactionsPDF = async (req, res) => {
+  const { folioNumber } = req.body
+
+  if (!folioNumber) {
+    return res.send('error')
+  }
+
+  const userFolio = await Folios.findOne({
+    folioNumber: folioNumber.toUpperCase(),
+  })
+
+  if (!userFolio) {
+    return res.send('error')
+  }
+
+  const config = await Configs.find({})
+
+  const user = await Users.findById(userFolio.user)
+
+  const transaction = await FolioTransactions.find({
+    folio: userFolio._id,
+    status: 'VALID',
+  })
+
+  transaction.sort(function (a, b) {
+    var keyA = new Date(a.date),
+      keyB = new Date(b.date)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    else {
+      if (a.sno < b.sno) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+    return 0
+  })
+
+  const pdffile = await transactionReport(
+    user,
+    transaction,
+    userFolio,
+    config[0]
+  )
+
+  var data = pdffile
+  res.contentType('application/pdf')
+  res.send(data)
+}
 // FOR TESTING
 
 exports.getTransactionsPDF2 = async (req, res) => {
@@ -268,7 +320,10 @@ exports.getTransactionsPDF2 = async (req, res) => {
 
     const user = await Users.findById(userFolio.user)
 
-    const transaction = await FolioTransactions.find({ folio: userFolio._id })
+    const transaction = await FolioTransactions.find({
+      folio: userFolio._id,
+      status: 'VALID',
+    })
 
     transaction.sort(function (a, b) {
       var keyA = new Date(a.date),

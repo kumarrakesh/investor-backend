@@ -60,7 +60,6 @@ exports.addFolio = async (req, res) => {
     return res.status(400).json({ status: true, error: 'Something went wrong' })
   }
 }
-
 exports.editFolio = async (req, res) => {
   try {
     //NOT REQUIRED FOR NOW
