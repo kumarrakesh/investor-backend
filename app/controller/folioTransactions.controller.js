@@ -77,7 +77,10 @@ exports.getTransactions = async (req, res) => {
 
   var editTransaction = JSON.parse(JSON.stringify(transactions))
 
-  editTransaction[0].canInvalidate = true
+  if(editTransaction.length > 0 ) {
+    editTransaction[0].canInvalidate = true
+  }
+
 
   return res.status(200).json({ status: true, data: editTransaction })
 }
@@ -273,9 +276,14 @@ exports.getTransactionsPDF = async (req, res) => {
 
   const user = await Users.findById(userFolio.user)
 
-  const transaction = await FolioTransactions.find({
-    folio: userFolio._id,
-    status: 'VALID',
+  const transaction = await FolioTransactions.find(
+  {
+    //Query: where folio matches userFolio.id and
+    //status is either missing or if present is VALID
+    //TODO: instead of 'or' query for missing column, consider cleaning the data for missing 'status' column
+    $and:
+        [{folio: userFolio._id},
+          {$or: [{status: { $exists: false }}, {status: 'VALID' } ]}]
   })
 
   transaction.sort(function (a, b) {

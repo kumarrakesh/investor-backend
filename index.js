@@ -4,7 +4,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 const morgan = require('morgan')
 const cors = require('cors')
-// const dbChangeSet = require('./app/db-changesets/initialize-db')
+//Do not comment this out, try fixing the issue instead or seek help
+const dbChangeSet = require('./app/db-changesets/initialize-db')
 
 //port
 const port = process.env.PORT || 8000
